@@ -1,0 +1,46 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <h2>Using the Compile method</h2>
+
+  <input type="text" ng-model="compiletext">
+  <div repeat-y="5" text="{{compiletext}}">{{compiletext}}</div>
+
+  <p>$observe() is a method on the Attributes object, and as such, it can only be used to observe/watch the value change of a DOM attribute. It is only used/called inside directives. Use $observe when you need to observe/watch a DOM attribute that contains interpolation (i.e., {{}}'s).
+  E.g., attr1="Name: {{name}}", then in a directive: attrs.$observe('attr1', ...).
+  (If you try scope.$watch(attrs.attr1, ...) it won't work because of the {{}}s -- you'll get undefined.) Use $watch for everything else.</p>
+
+  <script>
+  var app = angular.module('app', []);
+
+  app.directive('repeatY', function () {
+    return {
+      compile: function(element, attributes) {
+        for (var i=0; i < Number(attributes.repeatY)-1; i++) {
+          element.after(element.clone().attr('repeat-y', 0));
+        }
+        return function(scope, element, attributes, controller) {
+
+          attributes.$observe('text', function(newValue) {
+            console.log(newValue);
+            if (newValue === 'hello') {
+              element.css('color', 'red');
+            } else {
+              element.removeAttr('style');
+            }
+          });
+        }
+      }
+    }
+  })
+
+
+
+
+
+  </script>
+</body>
+</html>

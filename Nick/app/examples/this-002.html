@@ -1,0 +1,32 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <div ng-controller="ParentCtrl">
+     <a ng-click="logThisAndScope()">log "this" and $scope</a> - parent scope
+     <div ng-controller="ChildCtrl">
+        <a ng-click="logThisAndScope()">log "this" and $scope</a> - child scope
+     </div>
+  </div>
+
+  <script>
+   var myApp = angular.module('myApp', []);
+
+   //myApp.directive('myDirective', function() {});
+   //myApp.factory('myService', function() {});
+
+   function ParentCtrl($scope) {
+
+      $scope.logThisAndScope = function() {
+        console.log('this', this);
+        console.log('$scope', $scope);
+        console.log(this === $scope);
+      }
+   }
+   function ChildCtrl($scope) {}
+
+  </script>
+</body>
+</html>

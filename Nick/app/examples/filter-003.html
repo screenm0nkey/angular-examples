@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+
+  <div ng-app="myApp">
+    <div ng-controller="MainCtrl">
+      <p>Type a few numbers below to watch the filter</p>
+      <input type="text" ng-model="lowerBound" />
+      <ul>
+        <li ng-repeat="number in numbers | filter:greaterThanNum">
+          {{ number }}
+        </li>
+      </ul>
+    </div>
+
+
+    <script>
+    var myApp = angular.module('myApp', []);
+
+    myApp.controller('MainCtrl', ['$scope', function ($scope) {
+      $scope.numbers = [10, 25, 35, 45, 60, 80, 100];
+      $scope.lowerBound = 42;
+
+      $scope.greaterThanNum = function (item) {
+        return item > $scope.lowerBound;
+      };
+    }]);
+    </script>
+  </body>
+  </html>

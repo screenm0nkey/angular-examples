@@ -1,0 +1,37 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+
+  <ntimes repeat=3>
+      <p>{{hello}} {{count}}</p>
+  </ntimes>
+
+  <ntimes repeat=2>
+      <p>{{hello}} {{count}}</p>
+  </ntimes>
+
+  <script>
+  angular.module('app', []).directive('ntimes', function() {
+   return {
+     restrict: 'E',
+     compile: function(tElement, attrs) {
+       var content = tElement.children();
+       for (var i = 0; i < attrs.repeat - 1; i++) {
+         tElement.append(content.clone());
+       }
+       tElement.replaceWith(tElement.children());
+
+       return function(scope, element, attributes, controller) {
+          scope.count = attributes.repeat;
+          scope.hello = "Hi";
+       }
+     }
+   }
+ });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+
+  <div ng-controller="MainCtrl">
+    MainCtrl:
+    <input type="text" ng-model="user.name">
+  </div>
+  <div ng-controller="SecondCtrl">
+    SecondCtrl:
+    <input type="text" ng-model="user.name">
+  </div>
+
+  <script>
+    var app = angular.module('app', []);
+    //share a scope using a serivce
+    app.factory('UserInformation', function() {
+      return {
+        name: "Angular.js"
+      };
+    });
+
+    app.controller('MainCtrl', function($scope, UserInformation) {
+      $scope.user = UserInformation
+    });
+
+    app.controller('SecondCtrl', function($scope, UserInformation) {
+      $scope.user = UserInformation
+    });
+
+
+  </script>
+</body>
+</html>

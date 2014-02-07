@@ -1,0 +1,67 @@
+<!doctype html>
+<html ng-app="ngApp">
+<head>
+  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+
+  <div class='row'>
+
+    <span class='span4'>
+      controller version
+    </span>
+    <span class='span8'>
+      <input type="checkbox" id='checkbox' ng-model="isChecked">
+      <input id="name">
+    </span>
+  </div>
+
+  <div class='row'>
+    <span class='span4'>
+      directive version
+    </span>
+    <span class='span8'>
+      <input type="checkbox" ng-model="isChecked2">
+      <input xng-focus='isChecked2'>
+    </span>
+  </div>
+
+
+  <div class='row'>
+    <span class='span4'>
+      directive version (reusable)
+    </span>
+    <span class='span8'>
+      <input type="checkbox" ng-model="isChecked3">
+      <input xng-focus='isChecked3'>
+    </span>
+  </div>
+
+  <script>
+  var app = angular.module('ngApp', []);
+
+  app.directive('xngFocus', function() {
+   return function(scope, element, attrs) {
+    scope.$watch(attrs.xngFocus,
+      function (newValue) {
+        newValue && element.focus();
+      },true);
+  };
+});
+
+  app.controller('MainCtrl', ['$scope', function ($scope) {
+   'use strict';
+   $scope.count = 0;
+   $scope.$watch(function () {
+      console.log(++$scope.count, $scope);
+    });
+
+   $scope.$watch('isChecked', function(newV){
+     newV && $('#name').focus();
+   },true);
+ }]);
+
+  </script>
+</body>
+</html>

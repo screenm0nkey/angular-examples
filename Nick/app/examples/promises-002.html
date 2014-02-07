@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+</head>
+<body>
+
+  <testlist/>
+
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+  var app = angular.module('app', []);
+  // angualr version 1.2 needs this for deferreds to work with ng repeat
+  app.config(function ($parseProvider) {
+    $parseProvider.unwrapPromises(true);
+  })
+
+  app.factory('dataService', function ($q) {
+   return {
+     getData : function () {
+       var deferred = $q.defer();
+       setTimeout(function () {
+         deferred.resolve([{id:1},{id:2},{id:3},{id:4}]);
+       },1000);
+       return deferred.promise;
+     }
+   };
+ });
+
+
+  app.directive('testlist', ['dataService', function(dataService) {
+   return {
+    restrict: 'E',
+    replace: true,
+    scope : {},
+    template: '<div ng-repeat="data in objects">{{inspect(data)}}{{data.id}}</div>',
+    controller: function($scope) {
+      $scope.objects = dataService.getData();
+      $scope.inspect = function (obj) {
+        console.log(obj)
+      }
+    }
+  }
+}]);
+
+  </script>
+</body>
+</html>

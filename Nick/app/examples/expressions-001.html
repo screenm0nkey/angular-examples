@@ -1,0 +1,22 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <div ng-controller="TestController">
+    {{ 10 * 3 }} <br>
+    {{ [1,2,3][2] }}<br>
+    {{ Math.min(2,3) }}<br>
+    {{ 'hello ' + 'world' }}<br>
+  </div>
+
+  <script>
+   var app = angular.module('app',[]);
+   app.controller('TestController', function ($scope) {
+
+   })
+
+  </script>
+</body>
+</html>

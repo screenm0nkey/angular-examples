@@ -1,0 +1,20 @@
+<!doctype html>
+<html ng-app="invoice1">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/angular/angular-sanitize.js"></script>
+</head>
+<body ng-controller="InvoiceController">
+
+
+
+  <script>
+    window.app = angular.module('invoice1', ['ngSanitize'])
+    app.controller('InvoiceController', function ($scope, $sanitize, $sce) {
+      console.log($sce);
+      // console.log($sce.parseAsHtml('<h1>Nick</h1>'))
+    })
+
+  </script>
+</body>
+</html>

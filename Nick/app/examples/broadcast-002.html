@@ -1,0 +1,37 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <div ng-controller="ParentCtrl">
+    <p>{{foo}}</p>
+    <div ng-controller="ChildCtrl">
+      <button ng-click="onButtonClick()">{{buttonTitle}}</button>
+    </div>
+  </div>
+
+  <script>
+  var app = angular.module('app',[]);
+
+  app.controller('ParentCtrl', function ParentCtrl($scope){
+    $scope.foo = "Hello";
+
+    $scope.$on("UPDATE_PARENT", function(event, message){
+      // updates the scope and then ng-click causes a digest loop
+      $scope.foo = message;
+    });
+  });
+
+  // emit goes up to the parent controllers
+  app.controller('ChildCtrl', function ($scope) {
+    $scope.buttonTitle = "Update Parent";
+    $scope.onButtonClick = function(){
+      //Emit to Parent example part 1
+      this.$emit("UPDATE_PARENT", "Updated");
+    };
+  });
+
+   </script>
+ </body>
+ </html>

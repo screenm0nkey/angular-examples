@@ -1,0 +1,45 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+
+  <table>
+    <tr ng-repeat="thing in things">
+      <td>{{thing.name}}</td>
+    </tr>
+  </table>
+
+  <table>
+    <tr nicktest></tr>
+  </table>
+
+  <script>
+  var app = angular.module('app', []);
+
+  app.controller('MainCtrl', function ($scope) {
+    $scope.things = [{name:'nick'},{name:'liz'},{name:'pixie'}]
+  });
+
+  app.directive('nicktest', function() {
+    return {
+      restrict:'A',
+      // replace breaks it.
+      replace :true,
+      scope:{},
+      template:'<tr><td>{{commit.committer.name}}</td><tr>',
+      link : function (scope, element, attrs) {
+        scope.commit = {
+          committer : {
+            name : 'nick'
+          }
+        }
+      }
+    };
+  });
+
+  </script>
+</body>
+</html>
+

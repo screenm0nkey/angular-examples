@@ -1,0 +1,60 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <h3>http://www.benlesh.com/2013/08/angular-compile-how-it-works-how-to-use.html</h3>
+
+  <body ng-controller="MainCtrl">
+     <h2>Display what's in foo and bar:</h2>
+     <pre what-is-in-these="foo bar"></pre>
+  </body>
+
+  <script>
+  var app = angular.module('app', []);
+
+  app.controller('MainCtrl', function($scope) {
+    $scope.foo = {
+      'bar' : 123,
+      'name' : 'foo'
+    };
+
+    $scope.bar = {
+      'foo': 456,
+      'name': 'something else'
+    };
+  });
+
+  app.directive('whatIsInThese', ['$compile', function($compile) {
+    return function(scope, elem, attrs) {
+      //getting a list of space-separated property names
+      //from the attribute.
+      var these = attrs.whatIsInThese.split(' '),
+
+      //start creating an html string.
+      html = '<pre>';
+
+      //append a bunch of bound values from the list.
+      angular.forEach(these, function(item) {
+        html += '{{' + item + '| json}}\n\n';
+      });
+
+      //create an angular element. (this is our "view")
+      var el = angular.element(html),
+
+      //compile the view into a function.
+      compiled = $compile(el);
+
+      //append our view to the element of the directive.
+      elem.append(el);
+
+      //bind our view to the scope!
+      //(try commenting out this line to see what happens!)
+      compiled(scope);
+    };
+  }]);
+
+  </script>
+</body>
+</html>

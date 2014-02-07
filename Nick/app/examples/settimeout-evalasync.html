@@ -1,0 +1,34 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+  <input type="text" ng-model="nick">
+  <input type="text" ng-model="nick">
+  <p>{{nick}}</p>
+
+  <script>
+  var app = angular.module('app', []);
+
+  app.controller('MainCtrl', function($scope, $timeout) {
+    $scope.$watch('nick', function () {
+      console.log('watch');
+
+      $scope.$evalAsync(function () {
+       console.log('evalAsync');
+     });
+
+      $scope.$$postDigest(function () {
+        console.log('postDigest');
+      });
+
+      $timeout(function() {
+        console.log('timeout');
+      });
+    });
+  });
+
+  </script>
+</body>
+</html>

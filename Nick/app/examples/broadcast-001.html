@@ -1,0 +1,136 @@
+<!doctype html>
+<html ng-app="myModule">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/jquery.min.js"></script>
+</head>
+
+<body ng-controller="ControllerParent">
+  CTRLPARENT - SCOPE {{$id}}
+  <input ng-model="message" >
+ <!-- This controller is listening for handleBroadcast on $rootScope -->
+ <div ng-controller="ControllerZero">
+  CTRL0 - SCOPE {{$id}}
+  <input ng-model="message" >
+      <!-- This broadcasts to every controller that is listening on $rootScope -->
+      <button ng-click="handleClick(message);">BROADCAST</button>
+    </div>
+
+    <!-- This controller is listening for handleBroadcast on $rootScope -->
+    <div ng-controller="ControllerOne">
+      CTRL1 - SCOPE {{$id}}
+      <input ng-model="message" >
+    </div>
+
+    <!-- This controller is listening for handleBroadcast on $rootScope -->
+    <div ng-controller="ControllerTwo">
+      CTRL2  - SCOPE {{$id}}
+
+      <input ng-model="message" >
+    </div>
+
+    <!-- This directive is also listening for handleBroadcast on $rootScope -->
+    <my-component ng-model="message"></my-component>
+
+
+    <script>
+    var myModule = angular.module('myModule', []);
+
+    myModule.factory('mySharedService', ['$rootScope', function($rootScope) {
+      return {
+        message : '',
+        prepForBroadcast : function(msg) {
+          this.message = msg;
+          this.broadcastItem();
+        },
+        broadcastItem : function() {
+          $rootScope.$broadcast('handleBroadcast');
+        }
+      }
+    }]);
+
+    myModule.directive('myComponent', function(mySharedService) {
+      return {
+        restrict: 'E',
+        replace: true,
+        templateUrl: 'broadcast-001-tmpl.html',
+
+        controller: function($scope, $attrs, mySharedService) {
+          var count =0;
+          // same scope as ControllerParent
+          $scope.$watch(function() {
+            console.log(++count, 'digest listener fired');
+          });
+
+          $scope.$on('handleBroadcast', function() {
+            $scope.message = 'Directive: ' + mySharedService.message;
+          });
+
+
+          $scope.invokeDigest = function () {
+            // you do not have to call $scope.$apply() where as ng-click does
+            // that for you, so if you do try and call it you will get an 'apply
+            // already in progress'
+            console.log(this.$root.$$phase);
+          };
+
+          $scope.handleClick = function(msg) {
+            mySharedService.prepForBroadcast(msg);
+          };
+        },
+
+        link: function($scope, $element, $attrs) {
+          $('.testButtonWithApply').on('click', function(){
+            $scope.$apply(function (scope) {
+              // the reason this works is because handleclick is called, which
+              // calls broadcast, which causes the listener controllers to
+              // update their scopes. once the runtime has finished, $apply
+              // calls the $digest loop which updates the values. the example
+              // below still updates the scopes but it doesn't call the $digest
+              // loop
+              $scope.handleClick('Scope apply');
+            });
+          });
+
+          $('.testButtonWithoutApply').on('click', function(){
+            $scope.handleClick('This will not work');
+          });
+        },
+      };
+    });
+
+    function ControllerParent($scope) {
+      // this scope is shared with myComponent directive
+      $scope.parent = true;
+    }
+
+    function ControllerZero($scope, sharedService) {
+      $scope.handleClick = function(msg) {
+        sharedService.prepForBroadcast(msg);
+      };
+
+      $scope.$on('handleBroadcast', function() {
+        $scope.message = 'ZERO: ' + sharedService.message;
+      });
+    }
+
+    function ControllerOne($scope, sharedService) {
+      $scope.$on('handleBroadcast', function() {
+        $scope.message = 'ONE: ' + sharedService.message;
+      });
+    }
+
+    function ControllerTwo($scope, sharedService) {
+      $scope.$on('handleBroadcast', function() {
+        $scope.message = 'TWO: ' + sharedService.message;
+      });
+    }
+
+
+    ControllerZero.$inject = ['$scope', 'mySharedService'];
+    ControllerOne.$inject = ['$scope', 'mySharedService'];
+    ControllerTwo.$inject = ['$scope', 'mySharedService'];
+</script>
+
+</body>
+</html>

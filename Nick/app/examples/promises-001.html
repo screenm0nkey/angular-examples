@@ -1,0 +1,42 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <div ng-controller="AppCtrl"></div>
+
+  <script>
+  var app = angular.module("app", []);
+
+  app.controller("AppCtrl", function ($scope, $q) {
+
+    var defer = $q.defer(),
+
+    func1 = function(weapon) {
+      alert('You can have my ' + weapon); //sword
+      return "bow";
+    }
+
+    func2 = function(weapon) {
+      alert('You can have my ' + weapon); // bow
+      var defer = $q.defer();
+
+      setTimeout(function () {
+        defer.resolve('axe');
+      }, 500);
+
+      return defer.promise;
+    }
+
+    func3 = function(weapon) {
+      alert('And my ' + weapon); //axe
+    }
+
+    defer.promise.then(func1).then(func2).then(func3);
+
+    defer.resolve('sword');
+  });
+  </script>
+</body>
+</html>

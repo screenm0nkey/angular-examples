@@ -1,0 +1,44 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <h2>Using the observe method</h2>
+
+  <input type="text" ng-model="compiletext">
+  <nick text="{{compiletext}}">{{compiletext}}</nick>
+  <p>
+    what's interesting to here is even though the nick element is replaced
+    the attribute are added to the replaced element, so text="" will srill work
+  </p>
+  <script>
+  var app = angular.module('app', []);
+
+
+
+  app.directive('nick', function () {
+    return {
+      restrict: 'E',
+      replace : true,
+      template: '<h2>{{compiletext}}</h2>',
+      link : function(scope, element, attributes) {
+        attributes.$observe('text', function(newValue, oldValue) {
+          console.log(newValue, oldValue);
+          if (newValue === 'hello') {
+            element.css('color', 'red');
+          } else {
+            element.removeAttr('style');
+          }
+        });
+      }
+    }
+  })
+
+
+
+
+
+  </script>
+</body>
+</html>

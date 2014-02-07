@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+
+  <div ng-app="drinkApp">
+    <div ng-controller="AppCtrl">
+      Ctrl<br />
+      <input type="text" ng-model="ctrlFlavor">
+      <br />
+      Directive
+      <div drink flavor="ctrlFlavor"></div>
+    </div>
+  </div>
+
+
+  <script>
+  // this example shows how to create two way binding with an object between the
+  // controller and directive
+  var app = angular.module("drinkApp", []);
+
+  app.controller("AppCtrl", function ($scope) {
+    $scope.ctrlFlavor = "blackberry";
+  });
+
+  app.directive("drink", function () {
+    return {
+      scope: {
+        flavor:"="
+      },
+    //template: '<div>{{ flavor }}</div>'
+    template: '<input type="text" ng-model="flavor">'
+  };
+});
+
+  </script>
+</body>
+</html>

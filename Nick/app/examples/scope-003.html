@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-app="myapp">
+  <h1><a href="http://stackoverflow.com/questions/20905459/angular-directives-template-binding-doesnt-update">Look here</a></h1>
+
+  <p>This works</p>
+
+  <doesworktest>
+    <h3>inner {{helper.count}}</h3>
+    <input type="text" ng-model="helper.count">
+  </doesworktest>
+
+  <hr>
+
+  <p>does not work</p>
+  <doesnotworktest>
+    <h3>inner {{count}}</h3>
+    <input type="text" ng-model="count">
+  </doesnotworktest>
+
+  <script>
+  var app = angular.module('myapp',[]);
+
+  app.directive('doesworktest', function() {
+    return {
+      restrict: 'E',
+      replace: true,
+      transclude: true,
+      template: "<h1>Outer {{helper.count}} <div ng-transclude></div></h1>",
+      controller: function ($scope) {
+        $scope.helper = {count : 1};
+      }
+    };
+  });
+
+  app.directive('doesnotworktest', function() {
+    return {
+      restrict: 'E',
+      replace: true,
+      transclude: true,
+      template: "<h1>Outer {{count}} <div ng-transclude></div></h1>",
+      controller: function ($scope) {
+        $scope.count = 1;
+      }
+    };
+  });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+  <style>
+  img {width: 50px; height:50px; float:left;}
+  </style>
+</head>
+
+<body>
+  <div ng-controller="MyController">
+    <div>
+      <img ng-repeat="item in items" ng-src="{{item.media.m}}" alt="{{item.author}}"  />
+    </div>
+  </div>
+
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+
+  var app =  angular.module("app", [])
+  app.controller("MyController", function($scope, $http, $log) {
+
+    var url1 = "http://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json&per_page=10&jsoncallback=JSON_CALLBACK"
+
+    var xhr = $http.jsonp(url1);
+
+    xhr.success(function(data, status, headers, config) {
+      $log.log(headers())
+      // $scope.items = data.items;
+    });
+
+    // then gets the same data as success but in one object
+    xhr.then(function (obj) {
+      $log.log(obj)
+      $scope.items = obj.data.items;
+    })
+
+    xhr.error(function(data, status, headers, config) {
+      alert("AJAX failed!");
+    });
+  });
+  </script>
+
+</body>
+
+</html>

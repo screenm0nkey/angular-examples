@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-app="myapp">
+
+  <p transclude-directive>Hello World!</p>
+
+ <script>
+ var app = angular.module('myapp', []);
+
+ app.controller('MainCtrl', function($scope) {
+   $scope.name = 'World';
+ });
+
+ app.directive('transcludeDirective', function() {
+   return {
+     transclude: 'element',
+     scope: {},
+     restrict: 'AE',
+     replace: true,
+     link: function(scope, elem, attrs, ctrl, transclude) {
+       transclude(scope, function(clone) {
+         clone.css('background-color', 'yellow');
+         clone.text('shot');
+         elem.after(clone);
+       });
+     },
+     template: '<div ng-transclude></div>'
+   }
+ });
+ </script>
+
+</body>
+</html>

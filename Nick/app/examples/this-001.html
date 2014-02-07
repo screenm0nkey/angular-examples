@@ -1,0 +1,26 @@
+<!doctype html>
+<html ng-app="invoice1">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <div ng-controller="InvoiceController as nick"></div>
+
+  <script>
+  window.app = angular.module('invoice1', [])
+
+  app.controller('InvoiceController', ['$scope', '$timeout',
+    function InvoiceController ($scope, $timeout) {
+      var self = this;
+      // this === controller Constructor = $scope.nick
+      this.qty = 1;
+      this.cost = 2;
+
+      $timeout(function () {
+        console.log(self, $scope);
+        console.log($scope.nick === self); // true
+      });
+  }]);
+  </script>
+</body>
+</html>

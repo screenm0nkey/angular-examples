@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+
+  <title>How to hide bindings</title>
+</head>
+
+<body>
+<h5>https://oinksoft.com/blog/view/2/</h5>
+
+  <div ng-controller="FooCntl">
+    <div>1 {{name}}</div>
+    <div ng-cloak>2 {{name}}</div>
+    <div>3 <span ng-bind="name"></span></div>
+  </div>
+
+    <script src="/lib/angular/angular.js"></script>
+
+    <script type="text/javascript">
+    function FooCntl($scope) {
+        $scope.name = 'Example';
+      }
+      setTimeout(function() {
+        angular.bootstrap(document);
+      }, 1000);
+  </script>
+</body>
+</html>
