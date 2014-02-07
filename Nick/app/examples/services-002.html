@@ -1,48 +1,49 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular/angular.js"></script>
   <title>http://angular-tips.com/blog/2013/08/understanding-service-types/</title>
 </head>
-<body ng-controller="MainCtrl">
-  public variable: {{foo.variable}}
-  <br />
-  private variable (through getter): {{foo.getPrivate()}}
-  <br />
-  greet: {{foo.greet()}}
+<body>
 
+  <div ng-controller="MainCtrl"></div>
+
+  <script src="/lib/angular/angular.js"></script>
   <script>
-  app = angular.module("app", []);
+  var app = angular.module("app", []);
 
-  app.controller('MainCtrl', function($scope, foo) {
-    $scope.foo = foo;
-  });
-
-  app.factory('foo', function() {
-    var thisIsPrivate = "Private";
-
-    function getPrivate() {
-      return thisIsPrivate;
-    }
-
-    return {
-      variable: "This is public",
-      getPrivate: getPrivate
-    };
-  });
 
   app.config(function($provide) {
-    // $delegate is the object returned from the foo factory call. this is a good
-    // way of decorating 3rd party services
-    $provide.decorator('foo', function($delegate) {
-      debugger
-      $delegate.greet = function() {
-        return "Hello, I am a new function of 'foo'";
-      };
-
-      return $delegate;
+    $provide.factory('woo1', function() {
+      return { first : 'nick' };
     });
+    $provide.service('woo2', function() {
+      this.first = 'nick';
+    });
+    $provide.constant('woo3', { first : 'nick' });
+  })
+
+
+  app.factory('fac', function() {
+    return { first : 'nick' };
   });
+
+  app.service('ser', function() {
+    this.first = 'nick',
+    this.last = 'Lowman'
+  });
+
+  app.constant('PATH', {
+    first : 'nick'
+  });
+
+  app.value('paz', {
+    first : 'nick'
+  });
+
+  app.controller('MainCtrl', function($scope, PATH, fac, ser, woo1, woo2, woo3, paz) {
+    debugger
+  });
+
   </script>
 </body>
 </html>

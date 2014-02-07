@@ -1,0 +1,53 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <div ng-controller="AppCtrl">
+
+    <input type="text" ng-model="data.name">{{data.name}}
+    <nick someattr="{{data.name}}"></nick>
+
+    <stick someattr="{{data.name}}"></stick>
+
+  </div>
+
+  <script>
+  var app = angular.module('app',[])
+
+  app.controller('AppCtrl', function ($scope) {});
+
+  // so this wont work as you can't watch values which are to be interpolated
+  // .i.e. {{}}
+  app.directive('nick', function() {
+    return function(scope, element, attrs) {
+      scope.$watch(attrs.someattr, function (newValue, oldValue) {
+        console.log(newValue, oldValue);
+      },true);
+    };
+  });
+
+  // but this will work becuase your watching a value on the scope. the
+  // interpolation was already done when assigning the value to the islote scope
+  // we can also observe the attribute
+  app.directive('stick', function() {
+    return {
+      restrict : 'EA',
+      scope : {someattr : '@', },
+      link : function (scope, element, attrs) {
+
+        scope.$watch('someattr', function (newValue, oldValue) {
+          console.log(1, newValue, oldValue);
+        },true);
+
+        attrs.$observe('someattr', function(newValue) {
+          console.log(2, newValue);
+        });
+      }
+    }
+  });
+
+  </script>
+</body>
+</html>
