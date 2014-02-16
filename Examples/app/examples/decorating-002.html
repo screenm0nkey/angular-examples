@@ -1,0 +1,66 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+  <title></title>
+</head>
+<body ng-controller="MainCtrl">
+  <foo name="Angular Tips" fn="updateCounter()"></foo>
+  Times clicked: {{counter}}
+
+  <script>
+  // http://angular-tips.com/blog/2013/09/experiment-decorating-directives
+  var app = angular.module('app',[]);
+
+  app.controller("MainCtrl", function($scope) {
+    $scope.counter = 0;
+
+    $scope.updateCounter = function() {
+      $scope.counter++;
+    };
+  });
+
+
+  app.directive("foo", function() {
+    return {
+      restrict: 'E',
+      scope: {
+        name: "@"
+      },
+      replace: true,
+      template: '<div>Hello, {{name}} </div>',
+      link: function(scope, element, attrs) {
+        if (angular.isDefined(attrs.name)) {
+          attrs.name = attrs.name + "!";
+        }
+      }
+    };
+  });
+
+  app.config(function($provide) {
+    $provide.decorator('fooDirective', function($delegate) {
+      var directive = $delegate[0];
+
+      directive.scope.fnx = "&fn";
+      var link = directive.link;
+
+      directive.compile = function() {
+        // the returned function is a link function
+        return function(scope, element, attrs) {
+          // call the original link function as we still want that logic
+          link.apply(this, arguments);
+          // now add our additional logic
+          element.bind('click', function() {
+            scope.$apply(function() {
+              scope.fnx();
+            });
+          });
+        };
+      };
+
+      return $delegate;
+    });
+  });
+  </script>
+</body>
+</html>

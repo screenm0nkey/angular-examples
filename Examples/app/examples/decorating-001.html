@@ -1,0 +1,33 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+  <title></title>
+</head>
+<body ng-controller="MainCtrl">
+  <div foo></div>
+
+  <script>
+  var app = angular.module('app',[]);
+  app.controller('MainCtrl', function ($scope) {});
+
+  app.directive("foo", function() {
+    return {
+      replace: true,
+      template: '<div>This is foo directive</div>'
+    };
+  });
+
+  // A service decorator intercepts the creation of a service, allowing it to
+  // override or modify the behaviour of the service.
+  app.config(function($provide) {
+    $provide.decorator('fooDirective', function($delegate) {
+      var directive = $delegate[0];
+
+      directive.restrict = "AM";
+      return $delegate;
+    });
+  });
+  </script>
+</body>
+</html>
