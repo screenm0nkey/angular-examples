@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-app="app">
+
+
+<input type="text" ng-model="city" placeholder="Enter a city" />
+<div ng-sparkline ng-model="city"></div>
+
+
+<script>
+  // this example shows two way binding
+  var app = angular.module("app", []);
+
+  app.directive('ngSparkline', function() {
+    return {
+      restrict: 'A',
+      // we can do this as ng-model is a directive (even though this is useless)
+      require: '^ngModel',
+      replace : true,
+      scope : {
+        ngModel : '='
+      },
+      template: '<div class="sparkline"><h4>Weather for {{ngModel}}</h4></div>',
+
+    }
+  });
+
+  </script>
+</body>
+</html>

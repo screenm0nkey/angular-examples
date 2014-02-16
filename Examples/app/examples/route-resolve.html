@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/angular/angular-resource.js"></script>
+  <script src="/lib/angular/angular-route.js"></script>
+</head>
+<body>
+  <div ng-app="app" ng-controller="AppCtrl">
+    <error></error>
+    <ng-view></ng-view>
+  </div>
+
+
+  <script>
+    // see the Routing folder for better examples of how to route shit.
+    window.app = angular.module('app', ['ngRoute', 'ngResource'])
+
+
+    app.config(function ($routeProvider) {
+      $routeProvider
+      .when('/',
+      {
+        template: "<h3>{{model.message}}</h3>",
+        controller: "AppCtrl",
+        resolve: {
+          // it will wait until both promises are resolved before continuing
+          loadData: appCtrl.loadData,
+          prepData: appCtrl.prepData
+        }
+      });
+    });
+
+    var appCtrl = app.controller("AppCtrl", function ($scope) {
+      $scope.model = {
+        message: 'This is my app'
+      };
+    });
+
+    appCtrl.loadData = function($q, $timeout) {
+      var defer = $q.defer();
+      $timeout(function() {
+        defer.resolve("loadData");
+      }, 50);
+      return defer.promise;
+    };
+
+    appCtrl.prepData = function($q, $timeout) {
+      var defer = $q.defer();
+      $timeout(function() {
+        defer.resolve("prepData");
+      }, 500);
+      return defer.promise;
+    };
+
+    </script>
+  </body>
+  </html>

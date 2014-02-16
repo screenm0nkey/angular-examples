@@ -1,0 +1,44 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-app="app">
+
+
+  <script>
+  var app = angular.module("app", []);
+
+  // the log service is a good example of a provider which we can configure the
+  // app first before using elsewhere.
+  // below I've also copied the layout to make it easier to see whats going on
+
+  app.provider("$logi", function () {
+    var debug;
+    return {
+      debugEnabled: function(value) {
+        debug = value;
+      },
+      $get: function () {
+        return {
+          debug : function(){},
+          error : function(){},
+          info : function(){}
+        };
+      }
+    };
+  });
+
+  app.config(function ($logProvider, $logiProvider) {
+    $logProvider.debugEnabled(true);
+    $logiProvider.debugEnabled(true);
+  });
+
+  app.run(function ($rootScope, $log, $logi) {
+    $rootScope.$log = $log;
+    $rootScope.$logi = $logi;
+  });
+
+  </script>
+</body>
+</html>

@@ -8,11 +8,12 @@ var FlightDashboard = function( $scope, user, travelService, weatherService ) {
     return travelService.getDeparture(user.email) // Request #1
       .then( function( departure ) {
         $scope.departure = departure; // Response Handler #1
+        // the value returned from will be passed into loadFlight
         return departure.flightID;
       });
   };
 
-  loadFlight = function( flightID) {
+  loadFlight = function(flightID) {
     return travelService.getFlight( flightID )// Request #2
       .then( function( flight ) {
         $scope.flight = flight; // Response Handler #2

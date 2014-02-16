@@ -1,0 +1,94 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <title>http://angular-tips.com/blog/2013/08/understanding-service-types/</title>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+
+
+  <script>
+  var app = angular.module("app", []);
+  // these are all doing the same thing, which is decalring services.
+
+  /*
+  this is taken from the angular lib. these are the providers
+  $provide.provider({
+    $anchorScroll: $AnchorScrollProvider,
+    $animate: $AnimateProvider,
+    $browser: $BrowserProvider,
+    $cacheFactory: $CacheFactoryProvider,
+    $controller: $ControllerProvider,
+    $document: $DocumentProvider,
+    $exceptionHandler: $ExceptionHandlerProvider,
+    $filter: $FilterProvider,
+    $interpolate: $InterpolateProvider,
+    $interval: $IntervalProvider,
+    $http: $HttpProvider,
+    $httpBackend: $HttpBackendProvider,
+    $location: $LocationProvider,
+    $log: $LogProvider,
+    $parse: $ParseProvider,
+    $rootScope: $RootScopeProvider,
+    $q: $QProvider,
+    $sce: $SceProvider,
+    $sceDelegate: $SceDelegateProvider,
+    $sniffer: $SnifferProvider,
+    $templateCache: $TemplateCacheProvider,
+    $timeout: $TimeoutProvider,
+    $window: $WindowProvider
+  });
+*/
+
+
+  app.factory("game", function () {
+    return {
+      title: "StarCraft"
+    };
+  });
+
+  app.config(function ($provide) {
+    $provide.factory("game", function () {
+      return {
+        title: "StarCraft"
+      };
+    });
+  });
+
+  app.config(function ($provide) {
+    // this one is important and
+    $provide.provider("game", function () {
+      return {
+        $get: function () {
+          return {
+            title: "StarCraft"
+          };
+        }
+      };
+    });
+  });
+
+  app.provider("game", function () {
+    var type;
+    return {
+      setType: function(value) {
+        type = value;
+      },
+      $get: function () {
+        return {
+          title: type + "Craft"
+        };
+      }
+    };
+  });
+  // see its referred to as gameProvider here
+  app.config(function (gameProvider) {
+    gameProvider.setType("War");
+  });
+  // its called game here
+  app.controller("AppCtrl", function ($scope, game) {
+    $scope.title = game.title;
+  });
+  </script>
+</body>
+</html>

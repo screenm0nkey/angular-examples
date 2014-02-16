@@ -1,0 +1,1 @@
+see FlightDash for better example and also the angular-test-runner has a good exmple

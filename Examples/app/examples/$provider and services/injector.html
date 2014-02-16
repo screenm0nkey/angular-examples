@@ -1,0 +1,26 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-app="app" ng-controller="AppCtrl">
+
+
+  <script>
+  var app = angular.module("app", []);
+
+  app.factory("game", function () {
+    return { title: "StarCraft" };
+  });
+
+  app.controller("AppCtrl", function ($scope, $injector) {
+    // here we're using the injector to inject the service
+    $injector.invoke(function (game) {
+      $scope.title = game.title;
+      alert(game.title);
+    });
+  });
+
+  </script>
+</body>
+</html>

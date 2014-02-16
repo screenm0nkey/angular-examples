@@ -1,0 +1,56 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <title>http://angular-tips.com/blog/2013/08/understanding-service-types/</title>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+  public variable: {{foo.variable}}
+  <br />
+  private variable (through getter): {{foo.getPrivate()}}
+
+
+  <script>
+  // the provider seems to be set up so that the app.config object can
+  // pre-configure the sigleton before when the app is bootstrapped
+
+  app = angular.module("app", []);
+
+  // you can't inject 'fooProvider' here. only foo
+  app.controller('MainCtrl', function($scope, foo) {
+    $scope.foo = foo;
+  });
+
+  app.provider('foo', function() {
+    var thisIsPrivate = "Private";
+    // 'fooProvider' gets this return object below
+    return {
+      // this is available in the config becuase we can inject 'fooProvider'
+      setPrivate: function(newVal) {
+        thisIsPrivate = newVal;
+      },
+
+      // this is available in the config becuase we can inject 'fooProvider'
+      $get: function() {
+        function getPrivate() {
+          return thisIsPrivate;
+        }
+        // this return object is available in the controller as 'foo' but and
+        // in 'fooProvider' as fooProvider.$get().getPrivate()
+        return {
+          variable: "This is public",
+          getPrivate: getPrivate
+        };
+      }
+    };
+
+  });
+  // so you can only inject fooProvider in the config object and not foo but you
+  // can do this fooProvider.$get().getPrivate()
+  app.config(function(fooProvider) {
+    debugger
+    fooProvider.setPrivate('New value from config');
+  });
+  </script>
+</body>
+</html>

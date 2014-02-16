@@ -1,0 +1,10 @@
+<div>
+  <div ng-show="showme" class="loading"><h1>LOADING</h1></div>
+  <div class="flickr-directive">
+    <input type="text" ng-model="terry" ng-keyup="logevent($event)" autofocus>
+    <div class="clear">
+    <img ng-repeat="item in items" ng-src="{{item.media.m}}" alt="{{item.author}}"  />
+    </div>
+  </div>
+</div>
+

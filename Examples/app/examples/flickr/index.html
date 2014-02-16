@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+  <style>
+  img {width: 100px; height:100px; float:left;}
+  .clear {clear:both;}
+  .loading {
+    position: absolute;
+    background-color: #000;
+    opacity: 0.8;
+    width : 300px;
+    height:300px;
+    top:29px;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    border: 20px #fff solid;
+  }
+  h1 { color : #fff; line-height: 300px; text-align: center;}
+  </style>
+</head>
+
+<body>
+  <div ng-controller="MyController">
+    <flickr></flickr>
+  </div>
+
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/underscore.js"></script>
+  <script>
+
+  var app =  angular.module("app", [])
+  app.controller("MyController", function($scope, $rootScope) {
+
+  });
+
+  app.directive('flickr', function ($http, $log, $q, $timeout) {
+    return {
+      restrict : 'E',
+      replace  : true,
+      scope : {},
+      templateUrl : 'template.html',
+      link : function (scope, element, attrs, controller) {
+        // stop user typing if search is in progress
+        element.on('keydown', function (evt) {
+          if (scope.showme) {
+            evt.preventDefault();
+            evt.stopPropagation();
+          }
+        })
+
+        scope.logevent = function (event) {
+          console.log(event);
+        }
+
+        scope.getJSON = _.debounce(function (search) {
+          scope.showme = true;
+
+          var url1 = "http://www.flickr.com/services/feeds/photos_public.gne?tags="+search+"&format=json&per_page=10&jsoncallback=JSON_CALLBACK"
+
+          var xhr = $http({method: 'JSONP', url: url1});
+          // xhr = $http.jsonp(url1);
+          // then gets the same data as success but in one object
+          xhr.then(function (obj) {
+            $log.log(obj)
+            scope.items = obj.data.items;
+            scope.showme = false;
+          })
+        }, 500)
+
+        scope.terry = '';
+        scope.$watch('terry', function(newV, oldV) {
+          if (newV && newV !== oldV && newV.length >=3) {
+            scope.getJSON(newV);
+          }
+        });
+      }
+    }
+  });
+  </script>
+
+</body>
+
+</html>

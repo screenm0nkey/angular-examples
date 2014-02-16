@@ -1,0 +1,55 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <div ng-controller="AppCtrl">
+    Controller
+    <p>note that angular will create the nesting for data.some.thing binding</p>
+    <input type="text" ng-model="data.some.thing">
+
+    <hr>
+
+    Directive
+    <input type="checkbox" ng-model="isChecked2">
+    <button xng-focus='isChecked2' bill="{{isChecked2}}">{{isChecked2}}</button>
+
+    <hr>
+    look at the scope object to see the nested data {{$log.warn(this)}}
+
+  </div>
+
+  <script>
+  var app = angular.module('app',[])
+  .config(function ($logProvider) {
+     $logProvider.debugEnabled(true);
+   })
+  .run(function ($rootScope, $log) {
+    // assign a logger to the rootScope
+    $rootScope.$log = $log;
+  });
+
+  app.controller('AppCtrl', function ($scope) {
+    $scope.isChecked2 = false;
+    /*
+    watch can observe/watch an "expression", where the expression can be either a function or a string. If the expression is a string, it is $parse'd (i.e., evaluated as an Angular expression) into a function. (It is this function that is called every digest cycle.) The string expression can not contain {{}}'s.
+    */
+    $scope.$watch('data.some.thing', function (newValue, oldValue) {
+      console.log(newValue, oldValue);
+    },true);
+  });
+
+
+  app.directive('xngFocus', function() {
+    return function(scope, element, attrs) {
+      // we can watch the attribute value as it's does not contain {{}}
+      scope.$watch(attrs.xngFocus, function (newValue, oldValue) {
+        console.log(newValue, oldValue);
+      },true);
+    };
+  });
+
+  </script>
+</body>
+</html>

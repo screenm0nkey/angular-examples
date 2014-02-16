@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <title>http://angular-tips.com/blog/2013/08/understanding-service-types/</title>
+</head>
+<body>
+
+  <div ng-controller="MainCtrl"></div>
+
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+  var app = angular.module("app", []);
+
+  // $provide does the same thing here as the shortcuts below
+  app.config(function($provide) {
+    $provide.factory('fac2', function() {
+      return { first : 'nick' };
+    });
+    $provide.service('ser2', function() {
+      this.first = 'nick';
+    });
+    $provide.constant('con2', { first : 'nick' });
+  })
+
+  // these are all shortcuts
+  app.factory('fac1', function() {
+    return { first : 'nick' };
+  });
+  app.service('ser1', function() {
+    this.first = 'nick';
+  });
+  // constants can't be changed
+  app.constant('con1', {
+    first : 'nick'
+  });
+  // values can be changed
+  app.value('val1', {
+    first : 'nick'
+  });
+
+  app.controller('MainCtrl', function($scope, fac1, fac2, ser1, ser2, con1, con2) {
+    debugger
+  });
+
+  </script>
+</body>
+</html>
