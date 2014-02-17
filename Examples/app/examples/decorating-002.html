@@ -31,7 +31,8 @@
       template: '<div>Hello, {{name}} </div>',
       link: function(scope, element, attrs) {
         if (angular.isDefined(attrs.name)) {
-          attrs.name = attrs.name + "!";
+          debugger
+          attrs.name = attrs.name + "!!!";
         }
       }
     };

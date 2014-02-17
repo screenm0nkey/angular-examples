@@ -1,0 +1,58 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+  <title></title>
+</head>
+<body ng-controller="MainCtrl">
+   <foo name="Angular Tips"/>
+
+  <script>
+  // http://angular-tips.com/blog/2013/09/experiment-decorating-directives
+  app = angular.module('app', []);
+
+app.controller("MainCtrl", function($scope) {
+});
+
+app.directive("foo", function() {
+  return {
+    restrict: 'E',
+    scope: {
+      name: "@"
+    },
+    replace: true,
+    template: '<div>Hello, {{name}}</div>',
+    compile: function(tElement, tAttrs) {
+      tElement.append('<div>Added in compile</div>');
+
+      return function(scope, element, attrs) {
+        if (angular.isDefined(attrs.name)) {
+          attrs.name = attrs.name + "!";
+        }
+      };
+    }
+  };
+});
+
+app.config(function($provide) {
+  $provide.decorator('fooDirective', function($delegate) {
+    var directive = $delegate[0];
+    var compile = directive.compile;
+
+    directive.compile = function(tElement, tAttrs) {
+      var link = compile.apply(this, arguments);
+      tElement.append('<div>Added in the decorator</div>');
+      // return link function
+      return function(scope, elem, attrs) {
+        // call the original link function
+        link.apply(this, arguments);
+        // We can extend the link function here
+      };
+    };
+
+    return $delegate;
+  });
+});
+  </script>
+</body>
+</html>
