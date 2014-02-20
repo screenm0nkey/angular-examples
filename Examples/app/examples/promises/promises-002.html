@@ -37,6 +37,7 @@
     // you shouldnt use rootscope for this but it's here for the example
     controller: function($scope, $rootScope) {
       $rootScope.show = true;
+      // add the promise directly to the $scope
       $scope.objects = dataService.getData();
       $scope.objects.then(function (aParam) {
         $rootScope.show = false;

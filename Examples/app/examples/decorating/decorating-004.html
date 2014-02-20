@@ -25,6 +25,7 @@
     };
   });
 
+  // decorating the controller
   app.config(function($provide) {
     $provide.decorator('fooDirective', function($delegate, $controller) {
       var directive = $delegate[0];

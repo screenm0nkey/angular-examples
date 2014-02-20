@@ -1,0 +1,34 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+
+  <div enter="loadMoreTweets()">Click and see console</div>
+
+  <script>
+  var app = angular.module("app", []);
+
+  app.controller("MainCtrl", function ($scope) {
+    $scope.loadMoreTweets = function () {
+      console.log("Loading tweets!");
+    };
+  });
+
+  app.directive("enter", function ($parse) {
+    return function (scope, element, attrs) {
+      var fn = $parse(attrs.enter);
+
+      element.bind("click", function () {
+        // these all do the same thing
+        scope.loadMoreTweets();
+        scope.$apply('loadMoreTweets()');
+        scope.$apply(attrs.enter);
+        fn(scope);
+      });
+    };
+  });
+  </script>
+</body>
+</html>

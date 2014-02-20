@@ -20,14 +20,17 @@
           <p>From: {{ message.from }}</p>
           <p>Subject: {{ message.subject }}</p>
           <p>{{ message.sent | date:'MMM d, y h:mm:ss a' }}</p>
-          <a ng-click="deleteEmail($index)">Delete email</a>
+          <a ng-click="deleteEmail($index, $event)">Delete email</a>
         </li>
       </ul>
     </div>
   </div>
 
 
+
   <script>
+  // ng-click="$event.stopPropagation()"
+
   var myApp = angular.module('myApp', []);
 
   myApp.controller('EmailsCtrl', ['$scope', function ($scope) {
@@ -52,7 +55,7 @@
       "sent": "2013-09-03T13:15:11Z"
     }];
 
-    $scope.deleteEmail = function (index) {
+    $scope.deleteEmail = function (index, event) {
       $scope.emails.messages.splice(index, 1)
     };
 

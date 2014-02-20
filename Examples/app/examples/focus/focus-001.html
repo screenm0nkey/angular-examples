@@ -40,15 +40,17 @@
   <script>
   var app = angular.module('ngApp', []);
 
+  // using a directive to give focus
   app.directive('xngFocus', function() {
    return function(scope, element, attrs) {
     scope.$watch(attrs.xngFocus,
       function (newValue) {
         newValue && element.focus();
       },true);
-  };
-});
+    };
+  });
 
+  // using a controller to give focus
   app.controller('MainCtrl', ['$scope', function ($scope) {
    'use strict';
    $scope.count = 0;

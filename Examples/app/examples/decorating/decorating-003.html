@@ -43,7 +43,7 @@ app.config(function($provide) {
       var link = compile.apply(this, arguments);
       tElement.append('<div>Added in the decorator</div>');
       // return link function
-      return function(scope, elem, attrs) {
+      return function newlink(scope, elem, attrs) {
         // call the original link function
         link.apply(this, arguments);
         // We can extend the link function here

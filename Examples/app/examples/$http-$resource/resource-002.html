@@ -16,6 +16,7 @@
   var app = angular.module('app', ['ngResource']);
 
   app.factory('eventData', function ($resource, $q) {
+    // this will produce a url of /data/event/12
     var resource = $resource('/data/event/:id', {id: '@id'});
 
     return {
@@ -34,10 +35,8 @@
   });
 
   app.controller('MainCtrl', function ($scope, eventData) {
-
     eventData.getEvent(1).then(function (aData) {
       $scope.data = aData;
-
     })
   });
 

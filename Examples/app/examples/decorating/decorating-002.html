@@ -53,6 +53,7 @@
           // now add our additional logic
           element.bind('click', function() {
             scope.$apply(function() {
+              // this calls updateCounter() on the controller
               scope.fnx();
             });
           });

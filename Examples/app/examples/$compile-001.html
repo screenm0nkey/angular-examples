@@ -39,11 +39,10 @@
       angular.forEach(these, function(item) {
         html += '{{' + item + '| json}}\n\n';
       });
-
       //create an angular element. (this is our "view")
       var el = angular.element(html),
 
-      //compile the view into a function.
+      //compile the view into a function. returns linking function
       compiled = $compile(el);
 
       //append our view to the element of the directive.

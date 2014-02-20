@@ -17,9 +17,9 @@
   <script src="/lib/angular/angular.js"></script>
   <script>
 
-  var app =  angular.module("app", [])
-  app.controller("MyController", function($scope, $http, $log) {
+  var app =  angular.module("app", []);
 
+  app.controller("MyController", function($scope, $http, $log) {
     var url1 = "http://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json&per_page=10&jsoncallback=JSON_CALLBACK"
 
     var xhr = $http.jsonp(url1);
@@ -29,7 +29,7 @@
       // $scope.items = data.items;
     });
 
-    // then gets the same data as success but in one object
+    // 'then' gets the same data as 'success' above but in one object
     xhr.then(function (obj) {
       $log.log(obj)
       $scope.items = obj.data.items;

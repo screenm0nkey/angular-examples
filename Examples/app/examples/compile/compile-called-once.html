@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript" src="/lib/angular/angular.js"></script>
+</head>
+
+<body ng-app="myApp">
+
+  <div class="container">
+    <div class="row">
+      <p>This page contains two my-click directives; 1 in a ng-repeat and 1 all alone.
+       If you open the console you'll see that the <em>compile</em> method is called twice and the <em>link</em>method 5 times (4 times for the ng-repeat and 1 time for the single usage).
+     </p>
+   </div>
+   <div class="row" ng-init="data.lastClicked = 0">
+
+    <p>Last clicked value: {{ data.lastClicked }}</p>
+
+    <ul>
+      <li ng-repeat="i in [1,2,3,4]">
+        <a href="" my-click="data.lastClicked = i">{{ i }}</a>
+      </li>
+    </ul>
+
+    <a href="" my-click="data.lastClicked = 0">Reset</a>
+  </div>
+</div>
+<script>
+  // Code goes here
+
+  var myApp = angular.module('myApp', []);
+
+  myApp.directive('myClick', function() {
+    return {
+      compile: function(element, attr) {
+        console.log('in compile: ' + attr.myClick);
+
+        return function link(scope, element, attr) {
+          console.log('in link: ' + attr.myClick);
+
+          element.on('click', function(event) {
+            scope.$apply(function() {
+              scope.$eval(attr.myClick, {
+                $event: event
+              });
+            });
+          });
+        };
+      }
+    };
+  });
+  </script>
+</body>
+
+</html>

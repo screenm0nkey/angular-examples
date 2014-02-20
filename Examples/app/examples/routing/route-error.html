@@ -28,7 +28,7 @@
           loadData: viewCtrl.loadData,
         }
       });
-    });
+    })
 
     // this is directive handling the errors
     app.directive("error", function($rootScope) {
@@ -36,8 +36,13 @@
         restrict: "E",
         template: '<div class="alert-box alert" ng-show="isError">{{message}}</div>',
         link: function(scope) {
+          $rootScope.$watch(function () {
+            console.log('running digest loop');
+          });
+
           $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
             // set the scope property which will show the error box
+            console.log()
             scope.isError = true;
             scope.message = rejection;
           });
@@ -46,7 +51,7 @@
     });
 
     // and this is a controller handing the errors, even though the dirctive
-    // above is a better way
+    // above is a better way to do the same thing
     app.controller('AppCtrl', function ($rootScope) {
       $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
         console.log('event',event);
@@ -67,7 +72,7 @@
       var defer = $q.defer();
       $timeout(function() {
         defer.reject("Your network is down!");
-      }, 500);
+      }, 1000);
       return defer.promise;
     };
 
