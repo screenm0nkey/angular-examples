@@ -3,15 +3,17 @@
 <head lang="en">
   <meta charset="utf-8">
   <title>Egghead Videos</title>
-  <link rel="stylesheet" href="vendor/foundation/foundation.min.css">
 </head>
 <body>
 
   <div ng-app="myApp">
     <div ng-controller="AvengersCtrl">
+      limit
+      <input type="text" ng-model="limitx">
+      name
       <input type="text" ng-model="search.name">
       <table>
-        <tr ng-repeat="actor in avengers.cast | orderBy:'name' | limitTo:5 | filter:search">
+        <tr ng-repeat="actor in avengers.cast | orderBy:'name' | limitTo:limitx | filter:search">
           <td>{{actor.name | lowercase}}</td>
           <td>{{actor.character | uppercase}}</td>
         </tr>
@@ -92,6 +94,7 @@
 
 function AvengersCtrl($scope, Avengers) {
   $scope.avengers = Avengers;
+  $scope.limitx = 5;
 }
 </script>
 </body>

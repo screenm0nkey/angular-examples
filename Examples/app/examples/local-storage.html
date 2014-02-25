@@ -1,0 +1,25 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/angular-local-storage.js"></script>
+</head>
+<body ng-controller="YourCtrl">
+  {{val}}
+
+  <script>
+  // http://gregpike.net/demos/angular-local-storage/demo/demo.html
+  var app = angular.module('app',['LocalStorageModule']);
+
+  var YourCtrl = function($scope, localStorageService) {
+    debugger
+    // To add to local storage
+    localStorageService.add('localStorageKey','Add this!');
+    // Read that value back
+    $scope.val = localStorageService.get('localStorageKey');
+    // You can also play with cookies the same way
+    localStorageService.cookie.add('localStorageKey','I am a cookie value now');
+  }
+</script>
+</body>
+</html>

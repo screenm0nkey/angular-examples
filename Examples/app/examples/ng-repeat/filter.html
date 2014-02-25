@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head >
+		<meta charset="utf-8"/>
+		<title>ng repeat</title>
+	</head>
+
+	<body ng-app="app" ng-controller="MainCtrl">
+
+		<div>
+		I have {{friends.length}} friends. They are:
+		 	<input type="search" ng-model="q" placeholder="filter friends..." />
+	    <ul class="example-animate-container">
+	      <li ng-repeat="friend in friends | orderBy:predicate | filter:q">
+	        [{{$index + 1}}] {{friend.name}} who is {{friend.age}} years old.
+	      </li>
+	    </ul>
+	  </div>
+
+		<script src="/lib/angular/angular.js"></script>
+		<script>
+			 var getList = function () {
+			   return [{name:'John', age:25, gender:'boy'},
+		    {name:'Xinna', age:30, gender:'girl'},
+		    {name:'Johanna', age:28, gender:'girl'},
+		    {name:'Joy', age:15, gender:'girl'},
+		    {name:'Mary', age:29, gender:'girl'},
+		    {name:'Peter', age:95, gender:'boy'},
+		    {name:'Sebastian', age:50, gender:'boy'},
+		    {name:'Erika', age:27, gender:'girl'},
+		    {name:'Patrick', age:40, gender:'boy'},
+		    {name:'Ama', age:41, gender:'boy'},
+		    {name:'Samantha', age:60, gender:'girl'}];
+			 }
+
+			var app = angular.module( "app", [] );
+
+  		app.controller("MainCtrl", function( $scope ) {
+  			$scope.friends = getList();
+  			$scope.predicate = 'name';
+  		});
+
+
+		</script>
+	</body>
+</html>

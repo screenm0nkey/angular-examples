@@ -11,6 +11,10 @@
 
   <script>
   var app = angular.module("app", ['ngResource']);
+   // angualr version 1.2 needs this for deferreds to work with ng repeat
+  app.config(function ($parseProvider) {
+    $parseProvider.unwrapPromises(true);
+  });
 
   app.factory('instagram', function($resource){
     return {

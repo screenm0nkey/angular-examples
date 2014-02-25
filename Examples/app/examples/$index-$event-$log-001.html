@@ -8,7 +8,7 @@
     <div ng-controller="FooCtrl">
       <button class="button"
       ng-repeat="item in 'somewords'.split('') track by $id($index)"
-      ng-click="myFunc($event)">
+      ng-click="ev = $event">
       {{ $index + 1 }}. {{ item }}
       {{ ev.pageX }}
     </button>

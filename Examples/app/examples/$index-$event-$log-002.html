@@ -15,7 +15,7 @@
   <hr>
 
   <button ng-repeat="item in 'lowman'.split('') track by $id($index)"
-          ng-click="myFunc($event)">
+          ng-click="myFunc($event, this)">
     {{$index + 1}}. {{item}}
     {{ ev.pageX }}
   </button>
@@ -26,8 +26,6 @@
           ng-click="$log.warn($event)">
     {{$index + 1}}. {{item}}
   </button>
-
-
 
   <script>
   var app = angular.module("app", []);
@@ -41,8 +39,9 @@
  });
 
   app.controller("FooCtrl", function($scope) {
-   $scope.myFunc = function (ev) {
-     console.warn(ev);
+   $scope.myFunc = function (e, scope) {
+     console.warn(e);
+     scope.ev = e
    };
  });
 
@@ -50,13 +49,3 @@
   </script>
 </body>
 </html>
-
-
-<!-- <button
-            ng-repeat="item in 'somewords'.split('')"
-            ng-click="ev = $event">-->
-
-<!--       <div  class="button"
-            ng-repeat="item in 'somewords'.split('')"
-            ng -click="$log.warn($event)"> -->
-            <!-- log, warn, info, error, debug are all available console logging methods -->

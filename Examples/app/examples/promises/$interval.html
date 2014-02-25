@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href=""/>
+</head>
+<body>
+
+  <div ng-app="app" ng-controller="AppCtrl as app">
+    <button ng-click="app.cancel()">Cancel</button>
+    {{app.timerCount}}
+  </div>
+
+
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+  var app = angular.module("app", []);
+
+  app.controller("AppCtrl", function ($q, $interval) {
+    var timer = $interval(function () {
+    }, 100, 10);
+
+    function success() {
+      console.log("done");
+    }
+
+    function error() {
+      console.log("cancelled or error");
+    }
+
+    function notify() {
+      console.log("updating");
+    }
+
+    timer.then(success, error, notify)
+
+    this.cancel = function () {
+      $interval.cancel(timer);
+    }
+  })
+  </script>
+</body>
+</html>

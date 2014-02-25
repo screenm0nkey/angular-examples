@@ -1,0 +1,11 @@
+{
+  "name": "angular-example-git-app",
+  "description": "An example project for AngularJS",
+  "repository": "https://github.com/screenm0nkey/angular-example-git-app",
+  "author": "Nick Lowman",
+  "engine": "node >= 0.8.12",
+  "devDependencies": {
+    "express": "~3.4.8",
+    "underscore": "~1.5.2"
+  }
+}

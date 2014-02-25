@@ -1,0 +1,108 @@
+<!doctype html>
+<html ng-app="Demo">
+<head>
+  <meta charset="utf-8" />
+  <title> Using Track-By With ngRepeat In AngularJS </title>
+
+  <style type="text/css">
+  a[ ng-click ] {
+    cursor: pointer ;
+    text-decoration: underline ;
+  }
+  </style>
+</head>
+<body ng-controller="AppController">
+
+  <h1>
+    Using Track-By With ngRepeat In AngularJS
+  </h1>
+
+  <h2> Without Track-By </h2>
+  <ul>
+    <li ng-repeat="friend in friendsOne"
+        bn-log-dom-creation="Without-{{friend.name}}-{{friend.id}}">
+      {{ friend.id }} &mdash; {{ friend.name }}
+    </li>
+  </ul>
+
+
+  <h2>With Track-By</h2>
+  <!--
+    This time, we're going to use the same data structure;
+    however, we're going to use the "track by" syntax to tell
+    AngularJS how to map the objects to the DOM node.
+    --
+    NOTE: You can also use a $scope-based function like:
+    ... track by identifier( item )
+  -->
+
+  <ul>
+    <li ng-repeat="friend in friendsTwo track by friend.id"
+        bn-log-dom-creation="With-{{friend.name}}-{{friend.id}}">
+      {{ friend.id }} &mdash; {{ friend.name }}
+    </li>
+  </ul>
+
+  <p>
+    <a ng-click="rebuildFriends()">Rebuild Friends</a>
+  </p>
+
+  <script src="/lib/angular/angular.js"></script>
+  <script type="text/javascript">
+  var app = angular.module( "Demo", [] );
+
+  app.controller("AppController", function( $scope ) {
+    $scope.friendsOne = getFriends();
+    $scope.friendsTwo = getFriends();
+
+    $scope.rebuildFriends = function() {
+      console.log( "Rebuilding..." );
+
+      $scope.friendsOne = getFriends();
+      $scope.friendsTwo = getFriends();
+
+      setTimeout(function() {
+        // with
+        console.dir($scope.friendsOne);
+        //without
+        console.dir($scope.friendsTwo );
+      },50);
+    };
+
+    function getId () {
+      return Math.round(Math.random()*10000)
+    }
+
+    function getFriends() {
+      return [{
+        id: getId(),
+        name: "Sarah"
+      },{
+        // so in the track-by list, the dom node linked to nick by nick.id will
+        // not be redrawn during a digest, which is triggerd by the ng-click, as
+        // the id never changes. it's tracking by the id, so if the id changes
+        // the dom node will be redrawn.
+        id: 11,
+        name: "Nick"
+      },{
+        id: getId(),
+        name: "Joanna"
+      }];
+    }
+  });
+
+  app.directive("bnLogDomCreation", function() {
+    function link( $scope, element, attributes ) {
+      console.log(attributes.bnLogDomCreation, $scope.$index);
+    }
+    // Return the directive configuration.
+    return({
+      link: link
+    });
+  });
+
+
+    </script>
+
+  </body>
+  </html>

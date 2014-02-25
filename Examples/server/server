@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+"use strict";
+
+var express     = require('express'),
+    fs          = require('fs'),
+    staticDir   = express['static'],
+    path        = require('path'),
+    _          = require('underscore');
+
+var staticDirs = ['css','lib', 'data'],
+    PATH = path.join(__dirname, '../app/examples'),
+    app = express();
+
+  app.use(express.directory(PATH));
+  app.use(express.static(PATH));
+
+  app.configure(function () {
+    staticDirs.forEach(function (item) {
+      app.use('/'+item, express.static(path.join(__dirname, '../app/'+item)));
+    });
+    app.use(express.bodyParser());
+  });
+
+  app.get("/data/cache", function (req, res) {
+    var pathx = path.join(__dirname, '../app/data/cache.json');
+    var arr = JSON.parse(fs.readFileSync(pathx, 'utf8'));
+    res.json(arr);
+    res.end();
+  });
+
+
+
+
+console.log('Listening on Port 1970');
+console.log(PATH);
+app.listen(1970);

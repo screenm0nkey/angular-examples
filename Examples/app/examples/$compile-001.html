@@ -28,8 +28,7 @@
 
   app.directive('whatIsInThese', ['$compile', function($compile) {
     return function(scope, elem, attrs) {
-      //getting a list of space-separated property names
-      //from the attribute.
+      //getting a list of space-separated property names from the attribute.
       var these = attrs.whatIsInThese.split(' '),
 
       //start creating an html string.
@@ -42,7 +41,7 @@
       //create an angular element. (this is our "view")
       var el = angular.element(html),
 
-      //compile the view into a function. returns linking function
+      //compile the view into a function. returns linking function.
       compiled = $compile(el);
 
       //append our view to the element of the directive.

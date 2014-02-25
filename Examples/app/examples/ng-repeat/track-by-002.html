@@ -1,0 +1,35 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <div ng-app="app">
+    <div ng-controller="FooCtrl">
+      <button class="button"
+        ng-repeat="item in 'somewords'.split('') track by $id($index)"
+        ng-click="myFunc($event, this)">
+        {{ $index + 1 }}. {{ item }}
+        {{ ev.pageX }}
+      </button>
+    </div>
+  </div>
+
+<script>
+var app = angular.module("app", []);
+
+app.controller("FooCtrl", function($scope) {
+  // a new scope is created for each item in ng-repeat. we add the event to the
+  // scope. this could be done in the expression
+  $scope.myFunc = function (e, scope) {
+    console.log(scope);
+    scope.ev = e;
+  }
+});
+
+
+</script>
+</body>
+</html>
+
+

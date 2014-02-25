@@ -10,18 +10,16 @@
   </div>
 
   <script>
-  var app = angular.module('app',[])
-  .config(function ($logProvider) {
+  var app = angular.module('app',[]);
+
+  app.config(function ($logProvider) {
    $logProvider.debugEnabled(true);
-  })
-  .run(function ($rootScope, $log) {
+  });
+
+  app.run(function ($rootScope, $log) {
   // assign a logger to the rootScope
    $rootScope.$log = $log;
   });
-
-
-
-
 
   </script>
 </body>

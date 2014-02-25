@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/angular/angular-resource.js"></script>
+  <script src="/lib/angular/angular-mocks.js"></script>
+  <style>
+  h3 {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+</style>
+</head>
+<body ng-app="myApp" ng-controller="MainCtrl">
+
+  <h3>Simple example of using $httpBackend mock on jsfiddle</h3>
+
+  <a href="#" ng:click="switchTpl()">switch tpl</a> (current tpl: {{template[current]}})<br />
+  <ng:include src="template[current]"></ng:include>
+  <hr />
+
+  <button ng:click="loadPassword()">load from angularjs.org (JSONP)</button><br />
+  Password: {{promise.data.password}}
+
+  <script>
+  var app = angular.module('myApp', ['ngResource', 'ngMockE2E']);
+
+   // angualr version 1.2 needs this for deferreds to work with ng repeat
+  app.config(function ($parseProvider) {
+    $parseProvider.unwrapPromises(true);
+  });
+
+// define our fake backend
+app.run(function($httpBackend) {
+  // do not bother server, respond with given content
+  $httpBackend.whenGET('template1.html').respond(200, 'just some content', {header: 'one'});
+  // you can specify only content, it will respond with 200 status code
+  $httpBackend.whenGET('template2.html').respond('Another content');
+  // do real request
+  $httpBackend.whenJSONP().passThrough();
+});
+
+app.controller('MainCtrl', function ($scope, $http) {
+  $scope.current = 0;
+  $scope.template = ['template1.html', 'template2.html'];
+
+  $scope.switchTpl = function() {
+    $scope.current = ($scope.current + 1) % $scope.template.length;
+  };
+
+  $scope.loadPassword = function() {
+    $scope.promise = $http.jsonp('http://angularjs.org/generatePassword.php?callback=JSON_CALLBACK');
+  };
+})
+
+
+
+</script>
+</body>
+</html>

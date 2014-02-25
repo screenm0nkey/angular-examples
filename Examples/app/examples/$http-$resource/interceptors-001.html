@@ -65,20 +65,16 @@
 
   // Add the interceptor to the $httpProvider.
   $httpProvider.interceptors.push('MyHttpInterceptor');
-
 });
 
 
 app.controller("MyController", function($scope, $http, $log) {
-
   var xhr = $http.jsonp("http://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json&per_page=10&jsoncallback=JSON_CALLBACK");
 
   xhr.then(function (obj) {
     $log.log(obj)
     $scope.items = obj.data.items;
   })
-
-
 });
 </script>
 
