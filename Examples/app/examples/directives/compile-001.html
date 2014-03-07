@@ -1,0 +1,60 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+
+  <double>
+   <h4 style="color:red;">{{hello}} - 2</h4>
+  </double>
+
+  <ntimes repeat="5">
+      <p>{{hello}} - {{count}}</p>
+  </ntimes>
+
+  <script>
+  var app = angular.module('app', []);
+
+  // the red ones
+  app.directive('double', function() {
+   return {
+     restrict: 'E',
+     // notice that even though this has an isolate scope the text isside the
+     // h4 tag is sharing the parent scope with the directive below
+     scope : {},
+     compile: function(tElement, attrs) {
+       var content = tElement.children();
+       tElement.append(content.clone());
+       tElement.replaceWith(tElement.children());
+       // link function
+       return function link (scope, element, attributes, controller) {
+          scope.hello = "Scope test";
+       }
+     }
+   }
+ });
+
+  app.directive('ntimes', function() {
+   return {
+     restrict: 'E',
+     compile: function(tElement, attrs) {
+       var content = tElement.children();
+       for (var i = 0; i < attrs.repeat - 1; i++) {
+         tElement.append(content.clone());
+       }
+       tElement.replaceWith(tElement.children());
+       // link function
+       return function link (scope, element, attributes, controller) {
+          // debugger at this point you will see all the dom elements before
+          // interpolation
+          scope.count = attributes.repeat;
+          scope.hello = "More text";
+       }
+     }
+   }
+ });
+
+  </script>
+</body>
+</html>

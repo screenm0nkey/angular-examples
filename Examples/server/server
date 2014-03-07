@@ -12,25 +12,36 @@ var staticDirs = ['css','lib', 'data'],
     PATH = path.join(__dirname, '../app/examples'),
     app = express();
 
-  app.use(express.directory(PATH));
-  app.use(express.static(PATH));
+app.use(express.directory(PATH));
+app.use(express.static(PATH));
 
-  app.configure(function () {
-    staticDirs.forEach(function (item) {
-      app.use('/'+item, express.static(path.join(__dirname, '../app/'+item)));
-    });
-    app.use(express.bodyParser());
+app.configure(function () {
+  staticDirs.forEach(function (item) {
+    app.use('/'+item, express.static(path.join(__dirname, '../app/'+item)));
   });
+  app.use(express.bodyParser());
+});
 
-  app.get("/data/cache", function (req, res) {
-    var pathx = path.join(__dirname, '../app/data/cache.json');
-    var arr = JSON.parse(fs.readFileSync(pathx, 'utf8'));
-    res.json(arr);
-    res.end();
-  });
+app.get("/data/cache", function (req, res) {
+  var pathx = path.join(__dirname, '../app/data/cache.json');
+  var arr = JSON.parse(fs.readFileSync(pathx, 'utf8'));
+  res.json(arr);
+  res.end();
+});
 
 
+app.post("/twitter", function (req, res) {
+  res.json(req.body);
+  res.end();
+});
 
+app.post("/forms", function (req, res) {
+  var b = req.body;
+  b.messsage = 'hello';
+  b.success = true;
+  res.json(b);
+  res.end();
+});
 
 console.log('Listening on Port 1970');
 console.log(PATH);

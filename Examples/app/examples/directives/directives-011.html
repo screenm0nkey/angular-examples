@@ -17,7 +17,8 @@
   app.directive('ngSparkline', function() {
     return {
       restrict: 'A',
-      // we can do this as ng-model is a directive (even though this is useless)
+      // we can do this as ng-model is a directive (even though this is a bit
+      // useless)
       require: '^ngModel',
       replace : true,
       scope : {

@@ -1,0 +1,38 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+
+  <div enter="loadMoreTweets()">Click and see console</div>
+
+  <script>
+  var app = angular.module("app", []);
+
+  app.controller("MainCtrl", function ($scope, $parse) {
+    console.log($parse('name')({name:'sick'})) // sick
+    console.log($parse('name')({name:'nick'}, {name:'liz'})) // liz
+    console.log($parse('name')({name:'mick'}, {fame:'liz'})) // mick
+    console.log($parse('name')({name:'pick'}, {})) // pick
+    console.log($parse('event.name')({
+      event : {
+        name:'nick'
+      }
+    })) // nick
+
+    var fn = $parse('name')({name:function(){console.log(10)}})
+    fn() //10
+
+    $parse('clickme()')({
+      clickme : function(){
+        console.log(12);
+      }
+    }); //12
+
+  });
+
+
+  </script>
+</body>
+</html>

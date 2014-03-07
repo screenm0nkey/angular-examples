@@ -6,23 +6,25 @@
 <body>
 
   <div ng-controller="CacheSampleController" style="padding:20px;">
+
     key: <input type="text" ng-model="key"/><br/>
     value: <input type="text" ng-model="value"/><br/>
     <button type="button" class="btn" ng-click="addToCache(key, value)">Add To Cache</button><br/>
+
     <br/>
     <br/>
     <input type="text" ng-model="keyToRead"/><br/>
     <h3>Value from cache: {{readFromCache(keyToRead)}}</h3>
-    <h3>Cache Stats: {{getCacheStats()}}</h3>
+    <pre>Cache Stats: {{getCacheStats()}}</pre>
   </div>
 
 
   <script>
   var app = angular.module('app',[]);
 
+  // cacheFactory stores in local memory, not session storage. it's used by
+  // $http to cache requests. see the $http examples.
   app.factory('myCache', function($cacheFactory) {
-    // cacheFactory stores in local memory, not session storage
-    // cacheFactory stores in local memory, not session storage
     return $cacheFactory('myCache', {capacity:3});
   });
 

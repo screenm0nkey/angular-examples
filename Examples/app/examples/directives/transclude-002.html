@@ -11,23 +11,19 @@
 <body>
   <div ng-controller="NavigationController">
     <navigation over="items">
-      <navigation-item ng-repeat="item in items">Item: {{item.title}}</navigation-item>
+      <navigation-item ng-repeat="item in items">Itemx: {{item.title}}</navigation-item>
     </navigation>
   </div>
 
   <script>
   var app = angular.module('app', []);
 
-  // Fill with data.
   app.controller('NavigationController', function($scope){
     $scope.uid = "NAVIGATIONCONTROLLER";
-    $scope.items = [{
-      id: 'item1', title: 'Item 1'
-    }, {
-      id: 'item2', title: 'Item 2'
-    }, {
-      id: 'item3', title: 'Item 3'
-    }];
+    $scope.items = [
+      {id: 'item1', title: 'Item 1'},
+      {id: 'item2', title: 'Item 2'},
+      {id: 'item3', title: 'Item 3'}];
   });
 
   app.directive('navigation', function() {

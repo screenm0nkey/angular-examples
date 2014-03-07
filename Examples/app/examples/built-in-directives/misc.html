@@ -1,0 +1,21 @@
+<!--
+  You can set alternating colors, but remember that the 'odd'
+  and 'even' values include quotes since if they didn't then angular would
+  think that they are variables and would evaulate their values and then apply
+  them as class values.
+-->
+<div class="list">
+  <div class="list-item" data-ng-class-odd="'odd'" data-ng-class="'even'" data-ng-repeat="item in items">...</div>
+</div>
+
+
+<!-- $scope.someClassName = 'something' -->
+<div class="something" data-ng-class="someClassName"></div>
+
+
+<!-- use this if your images are casuing errors -->
+<img data-ng-src="{{ imagePath }}" />
+
+
+<!-- use this if your links are casuing errors -->
+<a data-ng-href="{{ linkPath }}">Link</a>

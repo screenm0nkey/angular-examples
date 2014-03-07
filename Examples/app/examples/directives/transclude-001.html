@@ -5,10 +5,23 @@
 </head>
 <body>
 
+  1. Here the text in the directive is lost but the transclusion has worked properly
   <greeting1 ng-transclude>
     <a href="#">Greeting1</a>
   </greeting1>
 
+  <hr>
+
+ 2. Here the same directive, the text in the markup is lost becuase you are
+ trying to transclude into element you want to transclude, so you are not using
+ transclude properly as the 'a' tag is the content to be transcluded
+  <greeting1>
+    <a href="#" ng-transclude>Greeting1</a>
+  </greeting1>
+
+  <hr>
+
+  3. Here both texts are kept
   <greeting2>
     <a href="#">Greeting2</a>
   </greeting2>
@@ -21,7 +34,8 @@
       restrict: 'E',
       replace: true,
       transclude : true,
-      template: "<button class='btn'>Say Hello Greeting 1</button>"
+      // the say hello text here is lost
+      template: "<button class='btn'>WHAM!</button>"
     };
   });
 
@@ -30,7 +44,7 @@
       restrict: 'E',
       replace: true,
       transclude : true,
-      template: "<button class='btn'>Bum <span ng-transclude/></button>"
+      template: "<button class='btn'>BAM!<span ng-transclude/></button>"
     };
   });
   </script>

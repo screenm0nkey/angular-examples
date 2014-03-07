@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body ng-app='plunker'>
+   <h1>Angular issue with controller not found</h1>
+
+   <br><br>
+   <container>
+      <item>This one works as expeted</item>
+      <item>This one works as expeted</item>
+      <item>This one works as expeted</item>
+    </container>
+
+  <script type="text/ng-template" id="panel.html">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+
+      <h3 class="panel-title"><button ng-click="addItem()">Add an item!</button> There are {{childs}} Items in this panel </h3>
+    </div>
+    <div class="panel-body">
+       <ul ng-transclude class="list-group">
+       </ul>
+    </div>
+  </div>
+  </script>
+
+
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+  var app = angular.module('plunker', []);
+
+  app.run(function ($rootScope) {
+    var i = 0;
+    $rootScope.$watch(function () {
+      console.log('Digest called ' + (++i) );
+    });
+  });
+
+  app.directive('container', function($compile) {
+    return {
+       restrict: 'E',
+       transclude: true,
+       templateUrl: 'panel.html',
+       scope: {},
+       controller: function($scope) {
+          $scope.childs = 0;
+          this.subscribe = function(item) {
+           $scope.childs++;
+         };
+         this.unsubscribe = function(item) {
+           $scope.childs--;
+         };
+       },
+      //controllerAs: 'containerController',
+     link: function(scope, iElement) {
+        scope.addItem = function() {
+         var tpl = angular.element('<item></item>'); //first create the new element
+         iElement.find('ul').append(tpl); // second, put it in its place
+         $compile(tpl)(scope); // lastly compile it, it is in place so it can find what it needs.
+       };
+       }
+     };
+   });
+
+  app.directive('item', function() {
+    var nb = 0;
+
+    return {
+      restrict: 'E',
+      require: '^?container',
+      scope: true,
+      transclude: true,
+      replace: true,
+      template: '<li class="list-group-item">ITEM {{ num }} {{$id}}<span ng-transclude></span></li>',
+     link: function(scope, iElement, iAttributes, containerCtrl) {
+        if (!containerCtrl) {
+         return;
+        }
+        scope.num = ++nb;
+        // subscribe to parent controller on creation
+        containerCtrl.subscribe(scope);
+
+        scope.$on('$destroy', function() {
+         containerCtrl.unsubscribe(scope);
+       });
+      }
+    };
+  });
+
+
+  app.run(['seDigestwatcher', '$rootScope', function (seDigestwatcher, rS) {
+      // Set up the digestwatcher in the run, so it's available during
+      // the whole lifetime of the app.
+      seDigestwatcher.setScope(rS); //Make it watch the rootscope.
+      seDigestwatcher.registerDigests(); //start watching.
+    }]);
+
+
+  app.factory('seDigestwatcher', [
+    function() {
+     var timeOutId,
+     rs = null;
+     me = this,
+     digestCounter = 0;
+     unWatch = null;
+
+     this.registerDigests = function() {
+      console.log('start watching');
+      unWatch = rs.$watch(function() {
+       digestCounter += 1;
+         me.cancel(); //cancel pening timeout
+         // set up a timeout to signal after no new digest is starterd within
+         // 500Ms. If you have really long running functions, or ajax stuff you
+         // might need to set a bigger timeout
+         timeOutId = setTimeout(me.signal,500) ;
+       });
+    };
+
+    this.deRegisterDigests= function () {
+      if (unWatch) {
+       me.cancel();
+       unWatch();
+     }
+   };
+
+   this.cancel = function () {
+    if (timeOutId) {
+     clearTimeout(timeOutId);
+     timeOutId = null;
+   }
+ };
+
+ this.setScope = function (scope) {
+  rs=scope;
+};
+
+this.signal = function () {
+  me.cancel();
+  console.log(digestCounter);
+};
+
+return {
+  registerDigests: me.registerDigests,
+  deRegisterDigests: me.deRegisterDigests,
+  setScope : me.setScope
+};
+}
+]);
+
+
+
+</script>
+</body>
+</html>

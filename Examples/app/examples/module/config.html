@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+<a href="http://docs.angularjs.org/guide/module">Look here</a>
+
+  <script>
+  // There are some convenience methods on the module which are equivalent to
+  // the config block. They are both doing the same thing.
+  // configuration blocks
+   angular.module('app', [])
+     .value('a', 123)
+     .factory('a', function() { return 123; })
+     .directive('directiveName', function () {})
+     .filter('filterName', function () {});
+
+
+   angular.module('app', []).
+     config(function($provide, $compileProvider, $filterProvider, $rootScopeProvider) {
+       $provide.value('a', 123);
+       $provide.factory('a', function() { return 123; });
+       $compileProvider.directive('directiveName', function () {});
+       $filterProvider.register('filterName', function () {});
+     });
+  </script>
+</body>
+</html>

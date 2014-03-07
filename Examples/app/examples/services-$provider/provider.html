@@ -4,49 +4,26 @@
   <title>http://angular-tips.com/blog/2013/08/understanding-service-types/</title>
   <script src="/lib/angular/angular.js"></script>
 </head>
-<body>
-
+<body ng-controller="AppCtrl">
+<h1>{{title}}</h1>
+<h1>{{type}}</h1>
 
   <script>
   var app = angular.module("app", []);
-  // these are all doing the same thing, which is declaring services.
-
-  app.factory("game", function () {
-    return {
-      title: "StarCraft"
-    };
-  });
-
-  app.config(function ($provide) {
-    $provide.factory("game", function () {
-      return {
-        title: "StarCraft"
-      };
-    });
-  });
-
-  app.config(function ($provide) {
-    // this one is important as it can be used in the module config to setup
-    // or the service before the app uses it.
-    $provide.provider("game", function () {
-      return {
-        $get: function () {
-          return {
-            title: "StarCraft"
-          };
-        }
-      };
-    });
-  });
 
   app.provider("game", function () {
     var type;
+    // this return object is only available in the app.config
     return {
       setType: function(value) {
         type = value;
       },
       $get: function () {
+        // this object is available to the app
         return {
+          getType : function () {
+            return type;
+          },
           title: type + "Craft"
         };
       }
@@ -56,6 +33,7 @@
   // see the 'game' service is referred to as gameProvider here in the config.
   // we can configure it here if the serive was generated using 'provider'
   app.config(function (gameProvider) {
+    debugger
     gameProvider.setType("War");
   });
 
@@ -63,6 +41,7 @@
   app.controller("AppCtrl", function ($scope, game) {
     debugger
     $scope.title = game.title;
+    $scope.type = game.getType();
   });
   </script>
 </body>

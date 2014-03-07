@@ -1,0 +1,24 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+  <input type="text" ng-model="name">
+  <input type="text" ng-model="markup">
+  <button ng-click="addit(markup)">Add</button>
+
+  <script>
+  var app = angular.module('app', []);
+
+  app.controller('MainCtrl', function($scope, $compile) {
+    $scope.addit = function (markup) {
+      $compile(markup)($scope).appendTo(angular.element('body'))
+    }
+  });
+
+
+  </script>
+</body>
+</html>

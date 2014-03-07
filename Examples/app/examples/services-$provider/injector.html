@@ -4,7 +4,7 @@
   <script src="/lib/angular/angular.js"></script>
 </head>
 <body ng-app="app" ng-controller="AppCtrl">
-
+  {{gtitle}}
 
   <script>
   var app = angular.module("app", []);
@@ -16,8 +16,8 @@
   app.controller("AppCtrl", function ($scope, $injector) {
     // here we're using the injector to inject the service
     $injector.invoke(function (game) {
-      $scope.title = game.title;
-      alert(game.title);
+      $scope.gtitle = game.title;
+      console.log(game.title);
     });
   });
 

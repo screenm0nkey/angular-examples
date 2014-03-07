@@ -26,3 +26,11 @@ eventsApp.directive('collapsible', function() {
     }
   };
 });
+
+
+
+
+
+
+
+

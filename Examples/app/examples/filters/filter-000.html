@@ -29,11 +29,11 @@
   });
 
   // this shows how to invoke a filter programatically
-  app.factory('someService', ['$filter', function($filter) {
+  app.factory('someService', '$filter', function($filter) {
     return function() {
       return $filter('range').apply(this, arguments);
     };
-  }]);
+  });
 
   </script>
 </body>

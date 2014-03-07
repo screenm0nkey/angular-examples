@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+
+  <div ng-app='App'>
+    <div  custom-directive></div>
+</div>
+
+  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+  var app = angular.module('App', []);
+
+  app.directive('hi', function() {
+   return {
+     template: '<h2>Hi There</h2>',
+     replace: true
+   };
+ });
+
+  app.directive('hello', function() {
+   return {
+     template: '<h2>Hello There</h2>',
+     replace: true
+   };
+ });
+
+  app.directive('customDirective', function($compile) {
+   return {
+     template: '<a ng-click="addType(\'hi\')">Add Hi</a><br/>' +
+               '<a ng-click="addType(\'hello\')">Add Hello</a><div class="holder">',
+     link: function(scope, element, attr) {
+       scope.addType = function(type) {
+         var el = $compile('<div ' + type + '></div>')(scope);
+         $('.holder', element).append(el);
+       }
+     }
+   };
+ });
+
+
+  </script>
+</body>
+</html>

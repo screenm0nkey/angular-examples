@@ -1,0 +1,30 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+
+  <div ng-controller="MainCtrl as main">
+    {{main.nick}} <br>
+    {{random}}
+  </div>
+
+  <script>
+  var app = angular.module("app", []);
+
+  app.controller('MainCtrl', function($scope) {
+    this.nick = 10;
+    $scope.random = Math.random(100);
+  });
+
+  app.run(function ($controller, $rootScope) {
+    var scope = $rootScope.$new();
+    // t is an instance of the controller. that's how controllers work with
+    var t = $controller('MainCtrl', {$scope: scope});
+  })
+
+
+  </script>
+</body>
+</html>

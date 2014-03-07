@@ -1,0 +1,44 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <style>div {margin-bottom: 20px;}</style>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <p>
+  This shows is mutiple instances of the same controller which work on the same
+  page as the controller's fucntion is invoked each time ng-controller is used.
+  So we can see below that each has a differnt scope instance and each generates
+  a random number
+  </p>
+
+  <div ng-controller="MainCtrl as main">
+    {{main.name}} <br>
+    scope id {{$id}} <br>
+    {{random}}
+  </div>
+
+  <div ng-controller="MainCtrl as main">
+    {{main.name}} <br>
+    scope id {{$id}} <br>
+    {{random}}
+  </div>
+
+  <div ng-controller="MainCtrl as main">
+    {{main.name}} <br>
+    scope id {{$id}} <br>
+    {{random}}
+  </div>
+
+  <script>
+  var app = angular.module("app", []);
+
+  app.controller('MainCtrl', function($scope) {
+    this.name = 'Name';
+    $scope.random = Math.random(100);
+  });
+
+
+  </script>
+</body>
+</html>
