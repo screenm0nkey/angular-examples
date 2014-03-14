@@ -5,8 +5,8 @@
 <body>
 
   <div ng-app='App'>
-    <div  custom-directive></div>
-</div>
+    <div custom-directive></div>
+  </div>
 
   <script src="/lib/jquery.min.js"></script>
   <script src="/lib/angular/angular.js"></script>
@@ -16,7 +16,10 @@
   app.directive('hi', function() {
    return {
      template: '<h2>Hi There</h2>',
-     replace: true
+     replace: true,
+     link : function () {
+       console.log('Hi There')
+     }
    };
  });
 
@@ -29,12 +32,14 @@
 
   app.directive('customDirective', function($compile) {
    return {
-     template: '<a ng-click="addType(\'hi\')">Add Hi</a><br/>' +
-               '<a ng-click="addType(\'hello\')">Add Hello</a><div class="holder">',
+     template: '<a ng-click="addType(\'hi\')">Click me Hi</a><br/>' +
+               '<a ng-click="addType(\'hello\')">Click me Add Hello</a>',
      link: function(scope, element, attr) {
        scope.addType = function(type) {
+         // you can't $compile without a scope
          var el = $compile('<div ' + type + '></div>')(scope);
-         $('.holder', element).append(el);
+         $('body').append(el);
+
        }
      }
    };

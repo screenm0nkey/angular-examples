@@ -1,0 +1,67 @@
+<!doctype html>
+<html ng-app="myapp">
+<head>
+  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+
+
+    <my-transclude-true>
+      <span>{{ something }}</span>
+      <p>{{ otherThing }}</p>
+    </my-transclude-true>
+
+
+
+    <my-transclude-element>
+      <span>{{ something }}</span>
+      <p>{{ otherThing }}</p>
+    </my-transclude-true>
+
+
+<script>
+var app = angular.module('myapp', []);
+
+app.controller('MainCtrl', function($scope) {
+  $scope.something = "somehing";
+  $scope.otherThing = "other thing";
+});
+
+// look at the console.log and you can see only the content is moved
+app.directive('myTranscludeTrue', function() {
+ return {
+   transclude: true,
+   scope: {},
+   restrict: 'AE',
+   replace: true,
+   template: '<h3 ng-transclude></h3>',
+   link: function(scope, elem, attrs, ctrl, transclude) {
+      transclude(scope, function(clone) {
+        console.log(clone)
+     });
+   }
+ }
+});
+
+// the difference here the directive, including the content is
+// transcluded. look at the console.log and there is only one root element,
+// which is the <my-transclude-element> element
+app.directive('myTranscludeElement', function() {
+ return {
+   transclude: 'element',
+   scope: {},
+   restrict: 'AE',
+   replace: true,
+   template: '<h3 ng-transclude></h3>',
+   link: function(scope, elem, attrs, ctrl, transclude) {
+      transclude(scope, function(clone) {
+        console.log(clone);
+     });
+   }
+ }
+});
+</script>
+
+</body>
+</html>

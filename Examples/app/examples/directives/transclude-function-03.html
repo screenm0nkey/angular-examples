@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+
+  </style>
+</head>
+<body ng-app="myapp">
+
+
+  <h2 type="text" drop-panel-a><p>transclude</p></h2>
+
+  <h2 type="text" drop-panel-b><p>transclude</p></h2>
+
+
+  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+  var app = angular.module('myapp', []);
+
+  app.directive('dropPanelA', function() {
+    return {
+      replace : true,
+      transclude : 'element',
+      template : '<i>nick</i>',
+      link: function(scope, elem, attrs, ctrl, transclude) {
+        // the transclude function returns a clone of the transcluded html. you
+        // would really only use this function if you are not using ng-
+        // transclude in your directives template and wanted more control
+        transclude(scope, function(clone) {
+          console.log('A', clone[0], elem[0]);
+        });
+      }
+    }
+  });
+
+  app.directive('dropPanelB', function() {
+    return {
+      replace : true,
+      transclude : true,
+      template : '<i>nick</i>',
+      link: function(scope, elem, attrs, ctrl, transclude) {
+        transclude(scope, function(clone) {
+          console.log('B', clone[0], elem[0]);
+        });
+      }
+    }
+  });
+  </script>
+
+</body>
+</html>

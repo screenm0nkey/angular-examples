@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+  .drop-panel {
+    position: relative;
+  }
+  .drop-panel input[drop-panel] {
+    margin-bottom: 0;
+  }
+  .drop-panel-panel {
+    position: absolute;
+    z-index: 100;
+    background-color: white;
+    border: 1px solid black;
+    left: 0;
+    right: 0;
+    padding: 10px 20px;
+    display: none;
+  }
+  .drop-panel.is-active .drop-panel-panel {
+    display: block;
+  }
+  </style>
+</head>
+<body ng-app="myapp">
+
+
+  <input type="text" drop-panel />
+  This is some text under the panel
+
+
+  <script type="text/ng-template" id="drop-panel.html">
+  <div class='drop-panel'>
+    <span ng-transclude></span>
+    <div class='drop-panel-panel'>
+      This is some panel content
+    </div>
+  </div>
+  </script>
+
+
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/angular/angular.js"></script>
+<script>
+  var app = angular.module('myapp', []);
+
+  app.directive('dropPanel', function(){
+    return {
+      transclude: 'element',
+      replace: true,
+      templateUrl: 'drop-panel.html',
+      link: function(scope, el){
+        console.log(el[0])
+        var input = $('input');
+
+        input.focus(function(){
+          el.addClass('is-active');
+        });
+
+        input.blur(function(){
+          el.removeClass('is-active');
+        });
+      }
+    }
+  });
+ </script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+  <title>http://engineering.nulogy.com/posts/transclusion-in-angular/?utm_source=ng-newsletter&utm_campaign=0c45a6f239-AngularJS_Newsletter_3_4_143_3_2014&utm_medium=email&utm_term=0_fa61364f13-0c45a6f239-96538301</title>
+</head>
+<body ng-app="app" ng-controller='duplicateCtrl as ctrl'>
+
+  <label>ctrl.someModel: {{ctrl.someModel}}</label>
+  <input type='text' placeholder="input {{$index + 1}}" ng-model='ctrl.someModel' duplicate="5" />
+
+
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+  var app = angular.module('app', []);
+
+  app.controller('duplicateCtrl', function(){
+   this.someModel = '';
+ })
+
+  app.directive('duplicate', function(){
+   return {
+     transclude: 'element',
+     priority: 1000,
+     link: function(scope, el, attrs, ctrl, transclude){
+       var times = parseInt(attrs.duplicate, 10);
+       var previous = el;
+       var childScope;
+
+       for(var i = 0; i < times; i += 1){
+         childScope = scope.$new();
+         childScope.$index = i;
+
+         transclude(childScope, function(clone){
+           previous.after(clone);
+           previous = clone;
+         });
+       }
+     }
+   }
+ });
+  </script>
+
+</body>
+</html>

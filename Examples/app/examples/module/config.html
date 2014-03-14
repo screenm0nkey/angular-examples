@@ -8,8 +8,10 @@
 
   <script>
   // There are some convenience methods on the module which are equivalent to
-  // the config block. They are both doing the same thing.
+  // the config block. These all doing the same thing.
+
   // configuration blocks
+
    angular.module('app', [])
      .value('a', 123)
      .factory('a', function() { return 123; })
@@ -24,6 +26,8 @@
        $compileProvider.directive('directiveName', function () {});
        $filterProvider.register('filterName', function () {});
      });
+
+     angular.module('compile', [], function($provide, $compileProvider, $filterProvider, $rootScopeProvider) {
   </script>
 </body>
 </html>
