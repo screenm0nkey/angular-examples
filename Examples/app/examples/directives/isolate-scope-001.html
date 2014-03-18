@@ -15,7 +15,7 @@
 </div>
 
 <script>
-  // this example shows how to map method from the controller to a directive
+
 
   var app = angular.module("phoneApp", []);
 
@@ -28,6 +28,8 @@
   app.directive("phone", function() {
     return {
       scope:{
+        // '&' example shows how to map method from the controller to a
+        // '&' directive
         dial:"&"
       },
       template: '<input type="text" ng-model="value">' +
