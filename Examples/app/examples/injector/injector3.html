@@ -1,0 +1,31 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+
+
+  <script>
+  var $injector = angular.injector(['ng']);
+  // use the injector to kick off your application
+  // use the type inference to auto inject arguments, or use implicit injection
+  $injector.invoke(function($rootScope, $compile, $document){
+    $compile($document)($rootScope);
+    $rootScope.$digest();
+  });
+
+  // In the following example a new block of HTML containing a ng-controller
+  // directive is added to the end of the document body by JQuery. We then
+  // compile and link it into the current AngularJS scope.
+  var $div = $('<div ng-controller="MyCtrl">{{content.label}}</div>');
+  $(document.body).append($div);
+
+  angular.element(document).injector().invoke(function($compile) {
+    var scope = angular.element($div).scope();
+    $compile($div)(scope);
+  });
+
+  angular.element(document).injector().invoke(function($rootScope) {});
+  </script>
+</body>
+</html>
