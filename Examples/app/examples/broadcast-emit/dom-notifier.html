@@ -1,0 +1,86 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+  <style>
+  * {
+    font-family: 'Droid Sans', sans-serif;
+  }
+  #log {
+    margin-top:10px;
+    font-size:10px
+  }
+  </style>
+</head>
+<body>
+
+  <h3>Custom transclude demo</h3>
+
+  <div ng-controller="DemoCtrl as demo">
+    <ul notifier>
+      <li announcer ng-repeat="item in items">
+        {{ item }}<button ng-click="demo.removeItem($index)">x</button>
+      </li>
+    </ul>
+    <button ng-click="demo.addItem()">add item</button>
+    <div id="log"></div>
+  </div>
+
+  <script>
+  var app = angular.module('app',[]);
+
+  app.controller('DemoCtrl', function($scope) {
+    $scope.items = [];
+    this.addItem = function() {
+      $scope.items.push(Math.random());
+    }
+    this.removeItem = function(index){
+      $scope.items.splice(index,1);
+    }
+    // add three for a start
+    for (var i=0; i<3; i++) this.addItem();
+  });
+
+  app.directive('notifier', function() {
+    // this directive receive arbitrarous announcer calls
+    return {
+      restrict: 'A',
+      controller : function($scope,$element){
+        this.addElement = function(elmScope){
+          console.log('item added', elmScope);
+          document.getElementById('log').innerHTML += 'item added: ' + elmScope.item + '<br>';
+        }
+        this.removeElement = function(elmScope){
+          console.log('item removed', elmScope);
+          document.getElementById('log').innerHTML += 'item removed: ' + elmScope.item + '<br>';
+        }
+      }
+    }
+  });
+
+  app.directive('announcer', function() {
+    // this directive announces creation/destruction to the parent notifier if any
+    return {
+      restrict: 'A',
+      require : '?^notifier',
+      compile : function () {
+        console.log('compile');
+        return function(scope,element,attrs,notifierCtrl) {
+          console.log('link');
+        if(!notifierCtrl){
+          return;
+        }
+        notifierCtrl.addElement(scope);
+
+        scope.$on("$destroy",function(){
+         notifierCtrl.removeElement(scope);
+       });
+      }
+      }
+    }
+  })
+
+
+  </script>
+</body>
+</html>

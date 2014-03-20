@@ -1,0 +1,38 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-app="app">
+  {{gtitle}}
+
+  <script>
+  var app = angular.module("app", []);
+
+  var someFunction = function($rootScope, $http) {
+    return "called1!";
+  };
+
+  app.factory("game", function ($rootScope, $http) {
+    return "called2!";
+  });
+
+  var divide = function(numerator, denominator) {
+    return numerator / denominator;
+  }
+
+  console.log(angular.injector().annotate(divide)) // ["numerator", "denominator"]
+
+
+  app.run(function($rootScope, $injector) {
+    console.log($injector.annotate(someFunction)); //["$rootScope", "$http"]
+    console.log($injector.invoke(someFunction)); //called1!
+
+    $injector.invoke(function(game){
+      console.log(game) //called2!
+    });
+  });
+
+  </script>
+</body>
+</html>

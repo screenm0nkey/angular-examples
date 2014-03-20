@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+
+  <div ng-controller="DemoCtrl">
+    scope.name = {{ name }}
+    <div data-my-directive2 >this is original content ({{ name }})</div>
+  </div>
+
+  <script>
+  var app = angular.module('app', []);
+
+  app.controller('DemoCtrl', function($scope) {
+    console.log(1, $scope)
+    $scope.name = 'world';
+  });
+
+  app.directive('myDirective2', function($parse) {
+    return {
+      restrict: 'A',
+      transclude: true,
+      template: '<div>transcluded: </div>',
+      controller: function($element, $attrs, $transclude) {
+            $transclude(function(clone, scope) {
+              console.log(2, scope)
+              scope.name = 'AngularJS';
+              console.log(clone[0])
+              var transcluded = angular.element('<span style="color:red"></span>').append(clone);
+              $element.children().append(transcluded);
+            });
+          }
+        };
+      });
+  </script>
+</body>
+</html>

@@ -12,7 +12,7 @@ var staticDirs = ['css','lib', 'data'],
     PATH = path.join(__dirname, '../app/examples'),
     app = express();
 
-app.use(express.directory(PATH));
+app.use(express.directory(PATH, {icons:true}));
 app.use(express.static(PATH));
 
 app.configure(function () {

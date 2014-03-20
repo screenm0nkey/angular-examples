@@ -13,13 +13,23 @@
     return { title: "StarCraft" };
   });
 
+  // here we're using the injector to inject the service. it needs a module
+  // note. this will not work if service has dependencies as we're injecting app
+  angular.injector(["app"]).invoke(function (game) {
+    console.log(1, game.title);
+  });
+
   app.controller("AppCtrl", function ($scope, $injector) {
-    // here we're using the injector to inject the service
+    // here we're injecting the $injector. does the same as above but we dont
+    // need to supply a module
     $injector.invoke(function (game) {
-      $scope.gtitle = game.title;
-      console.log(game.title);
+      $scope.title = game.title;
+      console.log(2, $scope.title);
     });
   });
+
+
+
 
   </script>
 </body>

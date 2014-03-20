@@ -1,0 +1,73 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <style>
+  * {
+    font-family: 'Droid Sans', sans-serif;
+  }
+  #log {
+    margin-top:10px;
+    font-size:10px
+  }
+  </style>
+</head>
+<body>
+
+  <h3>Directive callback demo</h3>
+  <div>
+    <div ng-controller="MainCtrl as mainCtrl">
+      <div on-color-changed="mainCtrl.logChange(r, g, b)"></div>
+    </div>
+    <div id="log"></div>
+  </div>
+
+  <script type="text/ng-template" id="my-template.html">
+  <div style="padding:10px; background:rgb({{ r }}, {{ g }}, {{ b }})">
+     R: <input type="range" min="0" max="255" ng-model="r"><br>
+     G: <input type="range" min="0" max="255" ng-model="g"><br>
+     B: <input type="range" min="0" max="255" ng-model="b"><br>
+  </div>
+  </script>
+
+
+
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+  var app = angular.module('app', []);
+
+  app.controller('MainCtrl', function($scope) {
+    var el = document.getElementById('log');
+
+    this.logChange = function(r, g, b) {
+       console.log('MyColorChanged', arguments);
+       el.innerHTML += ('new color: rgb(' + r + ',' + g + ',' + b + ')<br>');
+     };
+ });
+
+  app.directive('onColorChanged', function() {
+   return {
+     restrict: 'A',
+     scope: {
+       onColorChanged: '&'
+     },
+     templateUrl: 'my-template.html',
+     link: function(scope, iElement, iAttrs) {
+       scope.r = 100;
+       scope.g = 150;
+       scope.b = 200;
+
+       scope.$watch('r+g+b', function(newValue, oldValue) {
+          console.log(newValue, oldValue)
+         scope.onColorChanged({
+           r: scope.r,
+           g: scope.g,
+           b: scope.b
+         });
+       });
+     }
+   };
+ });
+
+  </script>
+</body>
+</html>
