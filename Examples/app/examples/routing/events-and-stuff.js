@@ -1,12 +1,12 @@
 
-$location.absUrl());
-$location.protocol());
-$location.port());
-$location.host());
-$location.path());
-$location.search());
-$location.hash());
-$location.url());
+$location.absUrl();
+$location.protocol();
+$location.port();
+$location.host();
+$location.path();
+$location.search();
+$location.hash();
+$location.url();
 
 // To keep track of the URL when it changes, you will need to setup a polling event.
 scope.$watch('$location.path', function() { closeMenu(); });
