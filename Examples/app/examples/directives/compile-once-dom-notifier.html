@@ -58,24 +58,30 @@
     }
   });
 
+  // becuase this directive is on an ng-repeat, comile is only called once and
+  // the link and and controller fucntions are called for each
   app.directive('announcer', function() {
     // this directive announces creation/destruction to the parent notifier if any
     return {
       restrict: 'A',
       require : '?^notifier',
+      controller : function () {
+        console.log('CONTROLLER')
+      },
       compile : function () {
-        console.log('compile');
-        return function(scope,element,attrs,notifierCtrl) {
-          console.log('link');
-        if(!notifierCtrl){
-          return;
-        }
-        notifierCtrl.addElement(scope);
+        console.log('COMPILE');
 
-        scope.$on("$destroy",function(){
-         notifierCtrl.removeElement(scope);
-       });
-      }
+        return function link (scope,element,attrs,notifierCtrl) {
+          console.log('LINK');
+          if(!notifierCtrl){
+            return;
+          }
+          notifierCtrl.addElement(scope);
+
+          scope.$on("$destroy",function(){
+           notifierCtrl.removeElement(scope);
+         });
+        }
       }
     }
   })

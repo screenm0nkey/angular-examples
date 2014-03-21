@@ -9,16 +9,21 @@
   <script>
   var app = angular.module("app", []);
 
-  var someFunction = function($rootScope, $http) {
+  var someFunction = function($rootScope) {
+    console.log($rootScope)
     return "called1!";
   };
 
   app.factory("game", function ($rootScope, $http) {
-    return "called2!";
+    return "called game!";
   });
 
   var divide = function(numerator, denominator) {
     return numerator / denominator;
+  }
+
+  var gamefunc = function(game){
+    console.log(game)
   }
 
   console.log(angular.injector().annotate(divide)) // ["numerator", "denominator"]
@@ -27,9 +32,12 @@
     console.log($injector.annotate(someFunction)); //["$rootScope", "$http"]
     console.log($injector.invoke(someFunction)); //called1!
 
+    // this is the same...
     $injector.invoke(function(game){
-      console.log(game) //called2!
+      console.log(game) //called game!
     });
+    //...as this. invoke will inject dependancies into the method
+    $injector.invoke(gamefunc);
   });
 
   </script>
