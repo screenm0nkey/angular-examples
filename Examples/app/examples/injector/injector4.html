@@ -7,10 +7,17 @@
 
 
   <script>
-  angular.module('simpleExample', ['ng']);
 
-  angular.injector(['simpleExample'])
-  .invoke(['$rootScope','$compile',
+// The ng module
+// **************
+// angular.bootstrap automatically adds the ng module to the dependencies when
+// used (manually or with ngApp). $rootScope / $compile services are part of the
+// ng module. You need to use injector.invoke if you want these services. You
+// should probably use angular in more traditional ways.
+
+  var app = angular.module('simpleExample', ['ng']);
+
+  angular.injector(['simpleExample']).invoke(['$rootScope','$compile',
     function($rootScope, $compile){
 
       $rootScope.$watch(function () {
@@ -18,11 +25,13 @@
       })
 
       var elm = $compile('<a href="" ng-click="someFunctionOnRootScope()">Click me</a>')($rootScope);
+
       $rootScope.someFunctionOnRootScope = function(){
         alert("Hello there!");
       }
       angular.element(document.body).append(elm);
     }]);
+
 
   </script>
 </body>

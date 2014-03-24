@@ -18,13 +18,13 @@
     window.jsonFlickrFeed = function(data) {
       debugger
     }
-    var responsePromise = $http.jsonp("http://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json&callback=JSON_CALLBACK");
+    var xhr = $http.jsonp("http://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json&callback=JSON_CALLBACK");
 
-    responsePromise.success(function(data, status, headers, config) {
+    xhr.success(function(data, status, headers, config) {
       debugger
     });
 
-    responsePromise.error(function(data, status, headers, config) {
+    xhr.error(function(data, status, headers, config) {
       debugger
       alert("AJAX failed!");
     });

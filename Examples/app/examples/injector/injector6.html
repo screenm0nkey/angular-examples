@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+
+
+  <script>
+
+  var app = angular.module('myDI', []);
+
+   app.factory('cake', function () {
+    return 'chocolate';
+  });
+
+  app.config(function($provide){
+    $provide.provider('greeting', function(){
+      this.$get = function(){
+       return function(name) {
+         console.log("Hello, " + name);
+       };
+     };
+   });
+  });
+
+// You need to create the injector from the module to get a service
+var injector = angular.injector(['myDI']); //Add this line
+var greeting = injector.get('greeting');
+greeting('Ford Prefect'); //Hello, Ford Prefect
+
+console.log(injector.get('cake'));// chocolate
+
+
+
+
+
+</script>
+</body>
+</html>

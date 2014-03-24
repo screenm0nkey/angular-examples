@@ -20,6 +20,7 @@
     function success(data) {
       console.log(data);
     }
+
     one.promise.then(success)
     two.promise.then(success)
     three.promise.then(success)
@@ -35,8 +36,13 @@
     $timeout(function () {
       three.resolve("three done");
     }, Math.random() * 1000)
-  })
-});
+  });
+
+
+
+
+
+
 </script>
 </body>
 </html>

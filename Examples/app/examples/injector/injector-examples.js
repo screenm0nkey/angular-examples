@@ -2,12 +2,7 @@ angular.element(document).injector().invoke(function(FormDataStoreService) {
   FormDataStoreService.clear()
 });
 
-angular.injector().annotate(MyController)
-
-
-angular.element(document).injector().invoke(function($filter) {
-  debugger
-});
+angular.injector().annotate(function($http){})
 
 
 // inject a Service

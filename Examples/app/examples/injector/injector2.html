@@ -7,6 +7,9 @@
   {{gtitle}}
 
   <script>
+
+console.log(12, angular.injector().annotate(['$compile', '$rootScope', function(obfus_$compile, obfus_$rootScope) {}]))//["$compile", "$rootScope"]
+
   var app = angular.module("app", []);
 
   var someFunction = function($rootScope) {
@@ -22,22 +25,19 @@
     return numerator / denominator;
   }
 
-  var gamefunc = function(game){
-    console.log(game)
-  }
-
-  console.log(angular.injector().annotate(divide)) // ["numerator", "denominator"]
+  // you dont need to pass the injector a module to annotate a function
+  console.log(1, angular.injector().annotate(divide)) // ["numerator", "denominator"]
 
   app.run(function($rootScope, $injector) {
-    console.log($injector.annotate(someFunction)); //["$rootScope", "$http"]
-    console.log($injector.invoke(someFunction)); //called1!
+    console.log(2, $injector.annotate(someFunction)); //["$rootScope"]
+    console.log(3, $injector.invoke(someFunction)); //called1!
 
+    // invoke will inject the fucntions dependencies and then call the function
     // this is the same...
     $injector.invoke(function(game){
       console.log(game) //called game!
     });
-    //...as this. invoke will inject dependancies into the method
-    $injector.invoke(gamefunc);
+
   });
 
   </script>

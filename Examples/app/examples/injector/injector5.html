@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="app">
+<html>
 <head>
   <script src="/lib/jquery.min.js"></script>
   <script src="/lib/angular/angular.js"></script>
@@ -8,18 +8,30 @@
 
 
   <script>
-  var app = angular.module("app", []);
+  MyCtrl = function($scope){
+    // this scope is the child of the scope below
+    $scope.content.label = "stink";
+  }
 
-//   var $div = $('<div>{{content.label}}</div>');
-//   $(document.body).append($div);
 
-// angular.element(document).injector().invoke(function($compile) {
-//   var scope = angular.element($div).scope();
-//   scope.content = {
-//     label:'some'
-//   }
-//   $compile($div)(scope);
-// })
+  angular.injector(['ng']).invoke(function($rootScope, $compile) {
+    // this scope is the parent scope to the one in the controller
+    var scope = $rootScope.$new()
+
+    scope.content = {
+      label:'it worked!'
+    }
+    // this will interpolate 'stink'
+    var el = $compile('<h1 ng-controller="MyCtrl">{{content.label}}</h1>')(scope);
+
+    $(document.body).append(el);
+
+    setTimeout(function () {
+      scope.$digest()
+    }, 1000);
+  })
+
+
 
   </script>
 </body>
