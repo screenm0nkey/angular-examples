@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app="app">
+<head></head>
+<body>
+   <div ng-controller="MyCntrl">
+    <select required size="10" ng-model="color" ng-options="c.name for c in colors">
+      <option value="">-- choose color --</option>
+    </select>
+  </div>
+
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+  var app = angular.module('app',[]);
+
+  function MyCntrl($scope) {
+    $scope.colors = [
+      {name:'black', shade:'dark'},
+      {name:'white', shade:'light'},
+      {name:'red', shade:'dark'},
+      {name:'blue', shade:'dark'},
+      {name:'yellow', shade:'light'}
+    ];
+    // $scope.color = $scope.colors[2]; // red
+  }
+
+ </script>
+</body>
+</html>
