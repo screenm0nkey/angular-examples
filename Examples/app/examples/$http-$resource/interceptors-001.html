@@ -7,20 +7,25 @@
   </style>
 </head>
 
-<body>
+<body ng-cloak>
   <h3>http://djds4rce.wordpress.com/2013/08/13/understanding-angular-http-interceptors/</h3>
   <div ng-controller="MyController">
+    <input type="text" ng-model="tagsrch">
+
+
+    <h3>{{title}}</h3>
     <div>
       <img ng-repeat="item in items" ng-src="{{item.media.m}}" alt="{{item.author}}"  />
     </div>
   </div>
 
   <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/angular/angular-resource.js"></script>
   <script src="/lib/angular/angular-cookies.js"></script>
 
   <script>
 
-  var app =  angular.module("app", ['ngCookies']);
+  var app =  angular.module("app", ['ngCookies', 'ngResource']);
 
   // Intercepting HTTP calls with AngularJS.
   app.config(function ($provide, $httpProvider) {
@@ -68,12 +73,37 @@
 });
 
 
-app.controller("MyController", function($scope, $http, $log) {
-  var xhr = $http.jsonp("http://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json&per_page=10&jsoncallback=JSON_CALLBACK");
+// var xhr = $http.jsonp("http://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json&per_page=10&jsoncallback=JSON_CALLBACK");
 
-  xhr.then(function (obj) {
-    $log.log(obj)
-    $scope.items = obj.data.items;
+app.controller("MyController", function($scope, $resource, $q, $log) {
+  var fetchPopular = function(tag){
+    var deferred = $q.defer();
+    var api = $resource('http://www.flickr.com/services/feeds/photos_public.gne', {
+      tags         : tag,
+      format       : 'json',
+      per_page     : 10,
+      jsoncallback : 'JSON_CALLBACK'
+    },{
+      fetch:{method:'JSONP'}
+    });
+
+    api.fetch(function(res){
+      deferred.resolve(res);
+    });
+
+    return deferred.promise;
+  }
+
+  $scope.$watch('tagsrch', function (newVal) {
+    fetchPopular(newVal).then(function (res) {
+      angular.extend($scope, res)
+      $log.log($scope)
+    })
+  })
+
+  fetchPopular('dogs').then(function (res) {
+    angular.extend($scope, res)
+    $log.log($scope)
   })
 });
 </script>

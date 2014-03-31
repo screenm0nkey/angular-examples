@@ -3,7 +3,7 @@
 
 <head>
   <style>
-  img {width: 50px; height:50px; float:left;}
+  img { width: 50px; height:50px; float:left; }
   </style>
 </head>
 
@@ -16,13 +16,11 @@
 
   <script src="/lib/angular/angular.js"></script>
   <script>
-
   var app =  angular.module("app", []);
 
   app.controller("MyController", function($scope, $http, $log) {
-    var url1 = "http://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json&per_page=10&jsoncallback=JSON_CALLBACK"
-
-    var xhr = $http.jsonp(url1);
+    var url1 = "http://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json&per_page=10&jsoncallback=JSON_CALLBACK",
+        xhr = $http.jsonp(url1);
 
     xhr.success(function(data, status, headers, config) {
       $log.log(headers())

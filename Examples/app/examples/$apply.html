@@ -16,11 +16,10 @@
     };
   });
 
-  // the safe way to to call methods on the scope is to use $apply.
+  // the safe way to to call methods on the scope is to use $apply or $eval.
   // $apply uses $eval(expr) when called. See $eval
   app.directive("enter", function ($parse) {
     return function (scope, element, attrs) {
-
 
       element.bind("click", function () {
         // these all do the same thing

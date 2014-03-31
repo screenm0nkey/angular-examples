@@ -9,7 +9,11 @@
 <body>
 
   <div ng-app="solrapp">Search Results:
-    <search-results solr-url="http://ec2-75-101-214-153.compute-1.amazonaws.com:8983/solr/statedecoded/search" query="car tax" display-field="catch_line"></search-results>
+    <search-results
+      solr-url="http://ec2-75-101-214-153.compute-1.amazonaws.com:8983/solr/statedecoded/search"
+      query="car tax"
+      display-field="catch_line">
+    </search-results>
   </div>
 
   <script type="text/ng-template" id="my-template.html">

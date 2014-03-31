@@ -12,3 +12,11 @@ angular.element(document).injector().get('BasketService')
 angular.element(document).injector().invoke(function($filter){
   return $filter('stripPostcodeFilter')('fsdfsdf, de220hu')
 })
+
+var myInjector = angular.injector(["ng"]);
+var $http = myInjector.get("$http");
+
+
+
+var myInjector = angular.injector(["ng"]);
+myInjector.invoke(function($http){debugger});

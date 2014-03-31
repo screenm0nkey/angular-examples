@@ -21,8 +21,8 @@
       }
     })) // nick
 
-    var fn = $parse('name')({name:function(){console.log(10)}})
-    fn() //10
+    var fn = $parse('name')
+    fn({ name:function(){console.log(10)}})() //10
 
     $parse('clickme()')({
       clickme : function(){

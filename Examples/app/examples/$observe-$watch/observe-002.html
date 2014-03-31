@@ -8,10 +8,12 @@
 
   <input type="text" ng-model="compiletext">
   <nick mtext="{{compiletext}}"></nick>
+
   <p>
     what's interesting to here is even though the nick element is replaced
     the 'mtext' attribute is added to the replaced element, so mtext="" will still work
   </p>
+
   <script>
   var app = angular.module('app', []);
 
@@ -34,10 +36,6 @@
       }
     }
   })
-
-
-
-
 
   </script>
 </body>

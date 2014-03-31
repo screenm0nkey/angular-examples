@@ -1,0 +1,45 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+  {{$log.log(1, this)}}
+  <script type="text/ng-template" id="/tpl1.html">
+    Adds myPrimitive value to the local scope. see console log 2 <br>
+    <input ng-model="myPrimitive">
+
+    Adds myPrimitive value to the parent scope. see console log 1 <br>
+    <input ng-model="$parent.myPrimitive">
+  </script>
+  <div ng-include src="'/tpl1.html'">
+    {{$log.log(2, this)}}
+  </div>
+
+  <script type="text/ng-template" id="/tpl2.html">
+    Adds value to parent scope. see console log 1 myObject.aNumber<br>
+    <input ng-model="myObject.aNumber"><br>
+
+    Adds value to local scope as it doesnt already exist. see console log 3 anObject.aNumber<br>
+    <input ng-model="anObject.aNumber">
+  </script>
+  <div ng-include src="'/tpl2.html'">
+    {{$log.log(3, this)}}
+  </div>
+
+  <script>
+  var app = angular.module('app', []).run(function ($rootScope, $log) {
+    $rootScope.$log = $log;
+  })
+
+  app.controller('MainCtrl', function($scope) {
+    $scope.myPrimitive = 50;
+    $scope.myObject = {aNumber: ''};
+  });
+
+
+
+
+  </script>
+</body>
+</html>

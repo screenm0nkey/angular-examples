@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+
+</head>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<body>
+
+  <div ng-app="customDirectives">
+    <div ng-controller="CustomDirectivesController">
+      <button ng-click="loadTabs('')">Toggle Tabs 1</button>
+      <button ng-click="loadTabs('1')">Toggle Tabs 2</button>
+      <div custom-tabs tabs-base-id="content-tab" ng-model="tabsData"></div>
+    </div>
+  </div>
+
+
+  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/bootstrap.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
+

@@ -28,14 +28,14 @@
   });
 
   // but this will work because your watching a value on the scope. the
-  // interpolation was already done when assigning the value to the islote scope
-  // we can also observe the attribute
+  // interpolation was already done when assigning the value to the isolate scope
+  // we can also observe the attribute.
   app.directive('stick', function() {
     return {
       restrict : 'EA',
       scope : {someattr : '@', },
       link : function (scope, element, attrs) {
-        // this is watching the value on the scope
+        // this is watching the value on this directive's scope
         scope.$watch('someattr', function (newValue, oldValue) {
           console.log(2, newValue, oldValue);
         },true);

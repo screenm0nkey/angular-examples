@@ -42,17 +42,23 @@
 		return {
 			fetchPopular: function(callback){
 				var deferred = $q.defer();
-				var api = $resource('https://api.instagram.com/v1/media/popular?client_id=:client_id&callback=JSON_CALLBACK', {
-				// this will be the query string
-				client_id: '642176ece1e7445e99244cec26f4de1f'
-			},{
-				// This creates an action which we've chosen to name "fetch". It issues
-				// an JSONP request to the URL of the resource. JSONP requires that the
-				// callback=JSON_CALLBACK part is added to the URL.
-				fetch:{method:'JSONP'}
-			});
+				var api = $resource('https://api.instagram.com/v1/media/popular', {
+					// this will be the query string
+					callback:'JSON_CALLBACK',
+					client_id: '642176ece1e7445e99244cec26f4de1f'
+				},{
+					// This creates an action which we've chosen to name "fetch". It issues
+					// an JSONP request to the URL of the resource. JSONP requires that the
+					// callback=JSON_CALLBACK part is added to the URL.
+					'jsonp': { method:'JSONP' },
+					'get':    {method:'GET'},
+			    'save':   {method:'POST'},
+			    'query':  {method:'GET', isArray:true},
+			    'remove': {method:'DELETE'},
+			    'delete': {method:'DELETE'}
+				});
 
-				api.fetch(function (response) {
+				api.jsonp(function (response) {
           deferred.resolve(response.data);
         },
         function (response) {
@@ -67,6 +73,7 @@
 	function SwitchableGridController($scope, instagram){
 		$scope.layout = 'grid';
 		$scope.pics = [];
+		$scope.pics = instagram.fetchPopular();
 
 		$scope.$watch(function () {
 		  console.log('digest');
@@ -74,7 +81,7 @@
 
 		setInterval(function () {
 			$scope.pics = instagram.fetchPopular();
-		}, 10000);
+		}, 20000);
 	}
 	</script>
 </body>

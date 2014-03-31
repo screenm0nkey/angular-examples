@@ -1,0 +1,35 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <div ng-controller="AppCtrl">
+    <input watchy type="text" ng-model="person.name">{{person.name}}
+  </div>
+
+  <script>
+  var app = angular.module('app',[])
+
+  app.controller('AppCtrl', function ($scope) {
+    $scope.person = {}
+  });
+
+  app.directive('watchy', function() {
+    return {
+      restrict : 'A',
+      scope : {
+        ngModel : '='
+      },
+      link : function (scope, element, attrs) {
+        scope.$watch('ngModel', function (newValue, oldValue) {
+          console.log(2, newValue, oldValue);
+        },true);
+
+      }
+    }
+  });
+
+  </script>
+</body>
+</html>

@@ -6,18 +6,23 @@
 </head>
 
 <body ng-controller="SwitchableGridController">
-  <!-- A compact view smaller photos and titles -->
   <img ng-repeat="p in pics" ng-src="{{p.images.thumbnail.url}}" />
 
   <script>
   var app = angular.module("app", ['ngResource']);
 
+  // angualr version 1.2 needs this for deferreds to work with ng repeat
+  app.config(function ($parseProvider) {
+    $parseProvider.unwrapPromises(true);
+  });
+
   app.factory('instagram', function($resource, $q){
     return {
-      fetchPopular: function(callback){
+      fetchPopular: function(){
         var deferred = $q.defer();
-        var api = $resource('https://api.instagram.com/v1/media/popular?client_id=:client_id&callback=JSON_CALLBACK', {
+        var api = $resource('https://api.instagram.com/v1/media/popular', {
           // this will be the query string
+          callback:'JSON_CALLBACK',
           client_id: '642176ece1e7445e99244cec26f4de1f'
         },{
           fetch:{method:'JSONP'}
@@ -38,10 +43,8 @@
   function SwitchableGridController($scope, instagram){
     $scope.layout = 'grid';
     $scope.pics = [];
-
-    instagram.fetchPopular().then(function(data){
-      $scope.pics = data;
-    });
+    // here we're attaching the promise onto the $scope
+    $scope.pics = instagram.fetchPopular();
   }
   </script>
 </body>

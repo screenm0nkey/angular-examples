@@ -1,0 +1,71 @@
+<!doctype html>
+<html ng-app="Demo">
+<head>
+  <meta charset="utf-8" />
+  <title> Using Track-By With ngRepeat In AngularJS </title>
+
+  <style type="text/css">
+  a[ ng-click ] {
+    cursor: pointer ;
+    text-decoration: underline ;
+  }
+  </style>
+</head>
+<body ng-controller="AppController">
+
+  <ul>
+    <li ng-repeat="friend in friendsOne track by friend.id"
+        bn-log-dom-creation="With-{{friend.name}}-{{friend.id}}">
+      {{ friend.id }} &mdash; {{ friend.name }}
+    </li>
+  </ul>
+
+  <a ng-click="rebuildFriends()">Rebuild Friends</a>
+
+
+  <script src="/lib/angular/angular.js"></script>
+  <script type="text/javascript">
+  var app = angular.module( "Demo", [] );
+
+  app.controller("AppController", function( $scope ) {
+    $scope.friendsOne = getFriends();
+
+    $scope.rebuildFriends = function() {
+      console.log( "Rebuilding..." );
+      $scope.friendsOne = getFriends();
+    };
+
+    function getId () {
+      return Math.round(Math.random()*10000)
+    }
+
+    function getFriends() {
+      return [{
+        id: getId(),
+        name: "Sarah"
+      },{
+        id: 11,
+        name: "Nick"
+      },{
+        id: getId(),
+        name: "Joanna"
+      }];
+    }
+  });
+
+  app.directive("bnLogDomCreation", function() {
+    return {
+      compile : function () {
+        return function link( $scope, element, attributes ) {
+          console.log(attributes.bnLogDomCreation, $scope.$index);
+        }
+      }
+    }
+
+  });
+
+
+    </script>
+
+  </body>
+  </html>
