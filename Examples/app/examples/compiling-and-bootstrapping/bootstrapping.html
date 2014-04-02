@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+
+  <title>How to hide bindings</title>
+</head>
+
+<body>
+  <div id="container"></div>
+
+  <script src="/lib/angular/angular.js"></script>
+
+  <script type="text/javascript">
+  var app = angular.module('app', []);
+
+  app.run(function($rootScope){
+    $rootScope.random =Math.random()
+  })
+
+  setTimeout(function() {
+    angular.bootstrap(document);
+  }, 1000);
+  </script>
+</body>
+</html>

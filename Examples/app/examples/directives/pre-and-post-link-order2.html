@@ -38,7 +38,7 @@
   </div>
 
   <!-- LOG -->
-  <pre>{{log}}</pre>
+  <pre>{{logStr}}</pre>
 
   <script src="/lib/angular/angular.js"></script>
   <script>
@@ -46,21 +46,21 @@
   angular.module('compilation', [])
 
   .directive('logCompile', function($rootScope) {
-    $rootScope.log = "";
+    $rootScope.logStr = "";
 
     return {
       controller: function($scope, $attrs) {
-        $rootScope.log = $rootScope.log + ($attrs.logCompile + ' (controller)\n');
+        $rootScope.logStr = $rootScope.logStr + ($attrs.logCompile + ' (controller)\n');
       },
       compile: function compile(element, attributes) {
-        $rootScope.log = $rootScope.log + (attributes.logCompile + ' (compile)\n');
+        $rootScope.logStr = $rootScope.logStr + (attributes.logCompile + ' (compile)\n');
         return {
           pre: function preLink(scope, element, attributes) {
-            $rootScope.log = $rootScope.log + (attributes.logCompile + ' (pre-link)\n');
+            $rootScope.logStr = $rootScope.logStr + (attributes.logCompile + ' (pre-link)\n');
           },
           post: function postLink(scope, element, attributes) {
             element.prepend(attributes.logCompile);
-            $rootScope.log = $rootScope.log + (attributes.logCompile + ' (post-link)\n');
+            $rootScope.logStr = $rootScope.logStr + (attributes.logCompile + ' (post-link)\n');
           }
         };
       }

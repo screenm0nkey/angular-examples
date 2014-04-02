@@ -24,23 +24,15 @@ var app = angular.module('app', []).run(function ($rootScope, $log) {
   $rootScope.$log = $log;
 })
 
-app.controller('Ctrl1', function($scope) {
-});
-
-
-app.controller('Ctrl2', function($scope) {
-
-});
-
-app.controller('Ctrl3', function($scope) {
-
-});
+app.controller('Ctrl1', function($scope) {});
+app.controller('Ctrl2', function($scope) {});
+app.controller('Ctrl3', function($scope) {});
 
 app.directive('nick', function () {
   return {
     restrict : 'A',
-    controller : function () {
-      console.log('controller');
+    controller : function ($attrs) {
+      console.log('controller', $attrs.nick);
     },
     compile : function (el, attr) {
       name = attr.nick;

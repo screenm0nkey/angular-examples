@@ -29,6 +29,7 @@ console.log(12, angular.injector().annotate(['$compile', '$rootScope', function(
   console.log(1, angular.injector().annotate(divide)) // ["numerator", "denominator"]
 
   app.run(function($rootScope, $injector) {
+    // the $injector will work in the context of the "[app]" module
     console.log(2, $injector.annotate(someFunction)); //["$rootScope"]
     console.log(3, $injector.invoke(someFunction)); //called1!
 

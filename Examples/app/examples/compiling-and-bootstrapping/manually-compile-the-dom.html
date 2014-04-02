@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <div ng-controller="MainCtrl">
+    <div ng-controller="SubCtrl"></div>
+  </div>
+
+  <script>
+  window.MainCtrl = function ($scope) {
+    console.log('Main', $scope)
+  }
+  window.SubCtrl = function ($scope) {
+    console.log('Sub', $scope)
+  }
+  // use the injector to kick off your application
+  // use the type inference to auto inject arguments, or use implicit injection
+  angular.injector(['ng']).invoke(function($rootScope, $compile, $document){
+    $rootScope.name = "click me"
+
+    $rootScope.someFunctionOnRootScope = function(){
+      alert("Hello there!");
+    }
+
+    var elm = $compile('<a href="#" ng-click="someFunctionOnRootScope()">{{name}}</a>')($rootScope);
+    angular.element(document.body).append(elm);
+    // compile the entire DOM
+    $compile($document)($rootScope);
+    // then run the digest. comment this out to see what happends
+    $rootScope.$digest();
+  });
+
+
+
+
+  </script>
+</body>
+</html>
