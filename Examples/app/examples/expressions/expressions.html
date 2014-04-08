@@ -1,0 +1,58 @@
+
+<!--
+ng-click="todoCtrl.addTodo(newTodo)"
+ng-click="somearray.push({item:obj, done: false})"
+ng-click="TodoService.somearray.push({item:obj, done: false})"
+ng-click="$event.preventDefault()">
+ng-click="colors.splice($index, 1)"
+ng-click="colors.push({})"
+ng-click="deleteEmail($index, $event)"
+ng-click="onTweet($event, form.$valid)"
+
+ng-repeat="i in [1,2,3,4]"
+ng-repeat="item in 'somewords'.split('') track by $id($index)"
+ng-repeat="n in [] | range:100"
+
+
+ng-show="layout === 'grid'"
+ng-show="!user.agree || !user.agreeSign"
+ng-show="form.uEmail.$dirty && form.uEmail.$invalid"
+
+ng-class="{active: layout == 'list'}" ng-click="layout = 'list'"
+ng-model="outputs[input.name]"
+ng-checked="outputs[input.name]"
+ng-repeat="actor in avengers.cast | orderBy:'name' | limitTo:limitx | filter:search"
+ng-disabled="form.$invalid || isUnchanged(user)"
+
+data-ng-class-odd="'odd'" data-ng-class="'even'"
+
+{{ main.test1.length > 0 && 'My data' || 'No data' }}
+ -->
+
+
+ <input
+  ng-model="user.username"
+  name="username"
+  tooltip="Some text"
+  tooltip-trigger="{{{true: 'mouseenter', false: 'never'}[myForm.username.$invalid]}}"
+/>
+
+
+<button type="button" class="btn btn-default" ng-disabled="rooms.length >= 5" popover="{{room.tooltip}}" popover-trigger="mouseenter" popover-placement="bottom" ng-click="createRoom(); rooms_form.submitted = false" ng-if="$last" bb-focus-on-remove="{{$index}}">
+
+
+<button type="button" class="btn btn-default" tooltip="{{room.tooltip}}" ng-click="removeRoom($index)" ng-if="!$first">
+
+<div class="form-group" ng-class="{'has-error': room_form.extras.$invalid && (!room_form.extras.$pristine || rooms_form.submitted)}">
+  <label class="bb-label" for="extras">Total number of accessories such as pelmets, valances &amp; throws</label>
+  <div class="field">
+    <input type="text" ng-pattern="validator.getNumberOnlyPattern()" class="form-control" name="extras" id="extras" ng-model="room.extras" ng-max="20"/>
+  </div>
+  <div class="messages">
+    <div class="error-message" ng-show="room_form.extras.$invalid && (!room_form.extras.$pristine || rooms_form.submitted)">
+      <span ng-show="room_form.extras.$error.pattern">Please enter a number</span>
+      <span ng-show="room_form.extras.$error.ngMax">Sorry, you can only book measuring for a maximum of 20 items online</span>
+    </div>
+  </div>
+</div>
+
