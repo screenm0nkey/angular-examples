@@ -3,19 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <title> Using Track-By With ngRepeat In AngularJS </title>
-
-  <style type="text/css">
-  a[ ng-click ] {
-    cursor: pointer ;
-    text-decoration: underline ;
-  }
-  </style>
 </head>
 <body ng-controller="AppController">
-
-  <h1>
-    Using Track-By With ngRepeat In AngularJS
-  </h1>
 
   <h2> Without Track-By </h2>
   <ul>
@@ -27,15 +16,11 @@
 
 
   <h2>With Track-By</h2>
-  <!--
-    This time, we're going to use the same data structure;
+    <!-- This time, we're going to use the same data structure;
     however, we're going to use the "track by" syntax to tell
     AngularJS how to map the objects to the DOM node.
-    --
     NOTE: You can also use a $scope-based function like:
-    ... track by identifier( item )
-  -->
-
+    ... track by identifier( item ) -->
   <ul>
     <li ng-repeat="friend in friendsTwo track by friend.id"
         bn-log-dom-creation="With-{{friend.name}}-{{friend.id}}">
@@ -44,7 +29,7 @@
   </ul>
 
   <p>
-    <a ng-click="rebuildFriends()">Rebuild Friends</a>
+    <a href="#" ng-click="rebuildFriends()">Rebuild Friends</a>
   </p>
 
   <script src="/lib/angular/angular.js"></script>
@@ -56,13 +41,14 @@
     $scope.friendsTwo = getFriends();
 
     $scope.rebuildFriends = function() {
-      console.log( "Rebuilding..." );
-
+      console.log( "\nRebuilding..." );
       $scope.friendsOne = getFriends();
       $scope.friendsTwo = getFriends();
 
       setTimeout(function() {
-        // with
+        // because the objects in the first array are not using track by, angular
+        // gives them an $$hashKey property, but only after the repeat has
+        // finsihed. the $$hashKey is not available in the the directive
         console.dir($scope.friendsOne);
         //without
         console.dir($scope.friendsTwo );
@@ -93,11 +79,13 @@
 
   app.directive("bnLogDomCreation", function() {
     function link( $scope, element, attributes ) {
-      console.log(attributes.bnLogDomCreation, $scope.$index);
+      console.log('link->', attributes.bnLogDomCreation, $scope.$index);
     }
-    // Return the directive configuration.
     return({
-      link: link
+      compile : function () {
+        console.log('compile');
+        return link;
+      }
     });
   });
 

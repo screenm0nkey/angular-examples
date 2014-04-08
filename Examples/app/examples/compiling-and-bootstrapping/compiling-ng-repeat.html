@@ -1,4 +1,4 @@
-<!doctype html>
+v<!doctype html>
 <html ng-app="Demo">
 <head>
   <meta charset="utf-8" />
@@ -12,14 +12,12 @@
   </style>
 </head>
 <body ng-controller="AppController">
-
   <ul>
     <li ng-repeat="friend in friendsOne track by friend.id"
-        bn-log-dom-creation="With-{{friend.name}}-{{friend.id}}">
+        nl-log="With-{{friend.name}}-{{friend.id}}">
       {{ friend.id }} &mdash; {{ friend.name }}
     </li>
   </ul>
-
   <a ng-click="rebuildFriends()">Rebuild Friends</a>
 
 
@@ -28,40 +26,42 @@
   var app = angular.module( "Demo", [] );
 
   app.controller("AppController", function( $scope ) {
-    $scope.friendsOne = getFriends();
-
     $scope.rebuildFriends = function() {
-      console.log( "Rebuilding..." );
+      console.log( "\nRebuilding..." );
       $scope.friendsOne = getFriends();
     };
 
-    function getId () {
+    $scope.rebuildFriends()
+
+    function getRandomId () {
       return Math.round(Math.random()*10000)
     }
 
     function getFriends() {
       return [{
-        id: getId(),
+        id: getRandomId(),
         name: "Sarah"
       },{
-        id: 11,
+        id: 11, // nick keeps the same id
         name: "Nick"
       },{
-        id: getId(),
+        id: getRandomId(),
         name: "Joanna"
       }];
     }
   });
 
-  app.directive("bnLogDomCreation", function() {
+  app.directive("nlLog", function() {
     return {
       compile : function () {
+        // compile will only ever be called once
+        console.log('compile');
         return function link( $scope, element, attributes ) {
-          console.log(attributes.bnLogDomCreation, $scope.$index);
+          // but the linking function is called every time.
+          console.log(attributes.nlLog, $scope.$index);
         }
       }
     }
-
   });
 
 

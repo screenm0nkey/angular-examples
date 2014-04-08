@@ -1,0 +1,37 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+</head>
+<body ng-controller="MainCtrl as app">
+
+  <button ng-click="app.things.push({})">Add</button>
+
+  <div ng-repeat="thing in app.things" nick-dir="{{$index}}">
+    <a href="#">{{$index}}</a>
+  </div>
+
+
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+   var app = angular.module('app',[]);
+
+  app.directive('nickDir', function () {
+    return {
+      compile :function (element, attrs) {
+        // this will be called once
+        console.log('compile', attrs.nickDir)
+        return function link (scope, element, attrs) {
+          // and this will be called each time the add button is clicked
+          console.log('link', attrs.nickDir)
+        }
+      }
+    }
+  })
+
+   app.controller('MainCtrl', function () {
+    this.things = [];
+   });
+
+  </script>
+</body>
+</html>

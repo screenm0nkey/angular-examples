@@ -13,7 +13,7 @@ angular.element(document).injector().invoke(function($filter){
   return $filter('stripPostcodeFilter')('fsdfsdf, de220hu')
 })
 
-// get one of angulars default services
+// get one of angulars default services from the ng module
 var myInjector = angular.injector(["ng"]);
 var $http = myInjector.get("$http");
 

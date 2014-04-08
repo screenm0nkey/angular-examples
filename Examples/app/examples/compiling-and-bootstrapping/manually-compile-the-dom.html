@@ -10,9 +10,11 @@
 
   <script>
   window.MainCtrl = function ($scope) {
+    // inherits from root scope
     console.log('Main', $scope)
   }
   window.SubCtrl = function ($scope) {
+    // inherits from rootscope
     console.log('Sub', $scope)
   }
   // use the injector to kick off your application

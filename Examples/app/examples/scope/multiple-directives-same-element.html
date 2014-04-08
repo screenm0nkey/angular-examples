@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+</head>
+<body ng-controller="MainCtrl">
+
+  <div dirone dirtwo>Some element</div>
+
+
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/jquery.min.js"></script>
+  <script>
+  var app = angular.module('app', []);
+
+  function MainCtrl($scope) {
+    console.log('MainCtrl', $scope.$id); //MainCtrl 003
+  }
+
+  // even though both directives below have 'scope:true' they both share a
+  // scope. a new scope is created but they dont get a new scope each which
+  // inherits from the controller.
+  app.directive('dirone', function() {
+    return {
+      restrict: 'A',
+      // this scope is the same as the scope for 'dirtwo'
+      scope : true,
+      controller: function($scope) {
+        console.log('dirone', $scope.$id); //dirone 004
+      }
+    };
+  });
+
+  app.directive('dirtwo', function() {
+    return {
+      restrict: 'A',
+      // this scope is the same as the scope for 'dirone'
+      scope : true,
+      controller: function($scope) {
+        console.log('dirtwo', $scope.$id); //dirone 004
+      }
+    };
+  });
+
+
+  </script>
+</body>
+</html>

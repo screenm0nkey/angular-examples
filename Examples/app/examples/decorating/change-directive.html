@@ -24,7 +24,7 @@
   app.config(function($provide) {
     $provide.decorator('fooDirective', function($delegate) {
       var directive = $delegate[0];
-
+      console.log(directive);
       directive.restrict = "AM";
       return $delegate;
     });

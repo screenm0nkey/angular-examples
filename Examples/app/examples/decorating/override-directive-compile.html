@@ -31,7 +31,6 @@
       template: '<div>Hello, {{name}} </div>',
       link: function(scope, element, attrs) {
         if (angular.isDefined(attrs.name)) {
-          debugger
           attrs.name = attrs.name + "!!!";
         }
       }
@@ -41,15 +40,15 @@
   app.config(function($provide) {
     $provide.decorator('fooDirective', function($delegate) {
       var directive = $delegate[0];
-
+      console.log(directive);
       directive.scope.fnx = "&fn";
-      var link = directive.link;
+      var origLink = directive.link;
 
       directive.compile = function() {
         // the returned function is a link function
-        return function(scope, element, attrs) {
+        return function link (scope, element, attrs) {
           // call the original link function as we still want that logic
-          link.apply(this, arguments);
+          origLink.apply(this, arguments);
           // now add our additional logic
           element.bind('click', function() {
             scope.$apply(function() {

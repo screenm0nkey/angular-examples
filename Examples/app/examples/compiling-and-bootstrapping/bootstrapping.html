@@ -1,24 +1,37 @@
 <html lang="en">
 <head>
 
-  <title>How to hide bindings</title>
+  <title></title>
 </head>
 
 <body>
-  <div id="container"></div>
+  <div id="container1">
+    {{random}}
+    <div ng-controller="MainCtrl">{{random * 100}}</div>
+  </div>
+
+  <div id="container2">
+    {{random}}
+    <div ng-controller="MainCtrl">{{random * 100}}</div>
+  </div>
+
 
   <script src="/lib/angular/angular.js"></script>
-
   <script type="text/javascript">
+  window.MainCtrl = function ($scope) {
+    console.log('Main', $scope)
+  }
+
+
   var app = angular.module('app', []);
 
   app.run(function($rootScope){
     $rootScope.random =Math.random()
   })
 
-  setTimeout(function() {
-    angular.bootstrap(document);
-  }, 1000);
+  angular.bootstrap(document.getElementById('container1'), ['app']);
+  angular.bootstrap(document.getElementById('container2'), ['app']);
+
   </script>
 </body>
 </html>
