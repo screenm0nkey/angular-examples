@@ -47,7 +47,7 @@
      '<a ng-click="addType(\'hello\')">Click me Add Hello</a>',
      link: function(scope, element, attr) {
        scope.addType = function(type) {
-         // you can't $compile without a scope
+         // you can't $compile without a scope as it contains a directive
          var el = $compile('<div ' + type + '></div>')(scope);
          $('body').append(el);
 
@@ -56,7 +56,7 @@
          el = angular.element('<div>{{nick}}</div>'),
          compiled = $compile(el);
          $('body').append(el);
-         // but you can compile this without scope
+         // but you can compile this without scope because it's just an expression
          compiled(scope);
        }
      }

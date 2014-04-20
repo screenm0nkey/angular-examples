@@ -6,8 +6,9 @@ var FlightDashboard = function( $scope, user, travelService, weatherService, $q,
 
   var loadFlight = function( user ) {
     return travelService.getDeparture( user.email ); // Request #1
-  },
-  loadFlightWeather = function ( departure ) {
+  };
+
+  var loadFlightWeather = function ( departure ) {
   // Execute #2 & #3 in parallel...
   return $q.all([
     travelService.getFlight( departure.flightID ), // Request #2

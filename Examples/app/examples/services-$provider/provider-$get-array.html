@@ -1,15 +1,32 @@
-app.provider('settings', function () {
+<!doctype html>
+<html ng-app="app">
+<head>
+</head>
+<body>
+
+  <script>
+  var app = angular.module("app", []);
+
+  app.provider('settings', function () {
     this._settings = {};
 
     this.$get = ['cache', function (cache) {
-        var settings = new Settings(cache);
+      var settings = new Settings(cache);
 
-        settings.setSettings(this._settings);
+      settings.setSettings(this._settings);
 
-        return settings;
+      return settings;
     }];
 
     this.setSettings = function (settings) {
-        this._settings = settings;
+      this._settings = settings;
     };
-});
+  });
+
+  app.config(function (settingsProvider) {
+    debugger
+  });
+
+  </script>
+</body>
+</html>

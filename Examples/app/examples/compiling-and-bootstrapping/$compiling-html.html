@@ -26,6 +26,8 @@
     };
   });
 
+  // this simple example just compiles html containing an expression into the DOM
+
   app.directive('whatIsInThese', ['$compile', function($compile) {
     return function(scope, elem, attrs) {
       //getting a list of space-separated property names from the attribute.

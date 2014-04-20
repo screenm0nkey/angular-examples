@@ -7,12 +7,13 @@
 <body>
   <div id="container1">
     {{random}}
-    <div ng-controller="MainCtrl">{{random * 100}}</div>
+
+    <div ng-controller="MainCtrl" hello>{{random * 100}}</div>
   </div>
 
   <div id="container2">
     {{random}}
-    <div ng-controller="MainCtrl">{{random * 100}}</div>
+    <div ng-controller="MainCtrl" hello>{{random * 100}}</div>
   </div>
 
 
@@ -22,12 +23,22 @@
     console.log('Main', $scope)
   }
 
-
   var app = angular.module('app', []);
 
   app.run(function($rootScope){
     $rootScope.random =Math.random()
   })
+
+  app.directive('hello', function() {
+    return {
+      compile : function () {
+        console.log('compile');
+        return function link () {
+          console.log('link');
+        }
+      }
+    };
+  });
 
   angular.bootstrap(document.getElementById('container1'), ['app']);
   angular.bootstrap(document.getElementById('container2'), ['app']);

@@ -9,7 +9,7 @@ var express     = require('express'),
     _          = require('underscore');
 
 var staticDirs = ['css','lib', 'data'],
-    PATH = path.join(__dirname, '../app/examples'),
+    PATH = path.join(__dirname, 'app/examples'),
     app = express();
 
 app.use(express.directory(PATH, {icons:true}));
@@ -17,18 +17,22 @@ app.use(express.static(PATH));
 
 app.configure(function () {
   staticDirs.forEach(function (item) {
-    app.use('/'+item, express.static(path.join(__dirname, '../app/'+item)));
+    app.use('/'+item, express.static(path.join(__dirname, 'app/'+item)));
   });
   app.use(express.bodyParser());
 });
 
 app.get("/data/cache", function (req, res) {
-  var pathx = path.join(__dirname, '../app/data/cache.json');
+  var pathx = path.join(__dirname, 'app/data/cache.json');
   var arr = JSON.parse(fs.readFileSync(pathx, 'utf8'));
   res.json(arr);
   res.end();
 });
 
+app.get("/someurl", function (req, res) {
+  res.json({"link" : "http://nicklowman.co.uk"});
+  res.end();
+});
 
 app.post("/twitter", function (req, res) {
   res.json(req.body);
