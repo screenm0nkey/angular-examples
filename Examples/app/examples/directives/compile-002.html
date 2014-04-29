@@ -19,6 +19,7 @@
      restrict: 'E',
      compile: function(tElement, attrs) {
        var content = tElement.children();
+
        for (var i = 0; i < attrs.repeat - 1; i++) {
          tElement.append(content.clone());
        }

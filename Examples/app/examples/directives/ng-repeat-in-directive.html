@@ -20,19 +20,19 @@
        var deferred = $q.defer();
        setTimeout(function () {
          deferred.resolve([{id:1},{id:2},{id:3},{id:4}]);
-       },1000);
+       },2000);
        return deferred.promise;
      }
    };
  });
 
 
-  app.directive('testlist', ['dataService', function(dataService) {
+  app.directive('testlist', function(dataService) {
    return {
     restrict: 'E',
     replace: true,
     scope : {},
-    template: '<div ng-repeat="data in objects">{{inspect(data)}}{{data.id}}</div>',
+    template: '<div ng-repeat="data in objects">{{ inspect(data) }}{{ data.$$hashKey }}</div>',
     controller: function($scope) {
       $scope.objects = dataService.getData();
       $scope.inspect = function (obj) {
@@ -40,7 +40,7 @@
       }
     }
   }
-}]);
+});
 
   </script>
 </body>

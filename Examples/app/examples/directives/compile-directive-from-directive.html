@@ -14,9 +14,9 @@
   var app = angular.module('App', []);
 
   app.directive('hi', function() {
-   return {
-     template: '<h2>Hi There</h2>',
-     replace: true,
+    return {
+      template: '<h2>Hi There</h2>',
+      replace: true,
      compile : function () {
        console.log(1, 'hi compile');
        return function link () {
@@ -47,7 +47,7 @@
      '<a ng-click="addType(\'hello\')">Click me Add Hello</a>',
      link: function(scope, element, attr) {
        scope.addType = function(type) {
-         // you can't $compile without a scope
+         // you can't $compile an element which contains a directive, without a scope
          var el = $compile('<div ' + type + '></div>')(scope);
          $('body').append(el);
 
@@ -56,7 +56,7 @@
          el = angular.element('<div>{{nick}}</div>'),
          compiled = $compile(el);
          $('body').append(el);
-         // but you can compile this without scope
+         // but you can compile this without scope and it only cotains text which needs interpolation
          compiled(scope);
        }
      }

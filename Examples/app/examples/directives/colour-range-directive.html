@@ -48,6 +48,7 @@
    return {
      restrict: 'A',
      scope: {
+      // hook up the method with the one in the controller
        onColorChanged: '&'
      },
      templateUrl: 'my-template.html',
@@ -55,9 +56,9 @@
        scope.r = 100;
        scope.g = 150;
        scope.b = 200;
-
-       scope.$watch('r+g+b', function(newValue, oldValue) {
-          console.log(newValue, oldValue)
+       // watch the three differnt values on the scope (using + to watch more than one property)
+        scope.$watch('r+g+b', function(newValue, oldValue) {
+        console.log(newValue, oldValue)
          scope.onColorChanged({
            r: scope.r,
            g: scope.g,
