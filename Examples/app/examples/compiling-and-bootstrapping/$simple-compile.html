@@ -1,0 +1,25 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+
+  <button ng-click="addit(markup)">Add</button>
+
+  <script>
+  var app = angular.module('app', []);
+
+  app.controller('MainCtrl', function($scope, $compile) {
+    $scope.addit = function (markup) {
+      $compile("<h1>NICK</h1>")($scope, function(cloned, scope) {
+        debugger;
+      });
+    }
+  });
+
+
+  </script>
+</body>
+</html>
