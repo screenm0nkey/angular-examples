@@ -26,35 +26,35 @@
 
 
   function FetchCtrl($scope, $http, $cacheFactory) {
-  //we're chaning the default cache to our new cache, so that all requests will
-  //use this new cache
-  var httpDefaultCache = $cacheFactory('myNewDefaultCache', { capacity: 10 });
-  // notice that we can set these properties here or in the config call
-  $http.defaults.cache = httpDefaultCache;
+    //we're chaning the default cache to our new cache, so that all requests will
+    //use this new cache
+    var httpDefaultCache = $cacheFactory('myNewDefaultCache', { capacity: 10 });
+    // notice that we can set these properties here or in the config call
+    $http.defaults.cache = httpDefaultCache;
 
-  $scope.showCache = function () {
-    console.log(httpDefaultCache.get('/data/cache'));
-  };
+    $scope.showCache = function () {
+      console.log(httpDefaultCache.get('/data/cache'));
+    };
 
-  $scope.fetch = function() {
-    // Https does not return a deferred.
-    xhr = $http({ cache: true, url: '/data/cache', method: 'GET'});
+    $scope.fetch = function() {
+      // Https does not return a deferred.
+      xhr = $http({ cache: true, url: '/data/cache', method: 'GET'});
 
-    xhr.then(function (res) {
-      console.log(11, res.data[0])
-    });
+      xhr.then(function (res) {
+        console.log(11, res.data[0])
+      });
 
-    xhr.success(function(data, status) {
-      $scope.status = status;
-      $scope.data = data;
-    })
+      xhr.success(function(data, status) {
+        $scope.status = status;
+        $scope.data = data;
+      })
 
-    xhr.error(function(data, status) {
-      $scope.data = data || "Request failed";
-      $scope.status = status;
-    });
-  };
-}
+      xhr.error(function(data, status) {
+        $scope.data = data || "Request failed";
+        $scope.status = status;
+      });
+    };
+  }
 
 </script>
 

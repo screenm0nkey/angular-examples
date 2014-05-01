@@ -27,6 +27,9 @@
 
 <script>
 
+// All directives must be compiled before they are added to the dom as they will
+// not work otherwise
+
 var app = angular.module('app', []).run(function ($rootScope, $log) {
   $rootScope.$log = $log;
 })

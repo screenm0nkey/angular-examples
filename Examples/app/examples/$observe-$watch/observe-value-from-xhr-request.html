@@ -1,0 +1,46 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+</head>
+<body ng-controller="MainCtrl as main">
+
+  <a nl-href="{{main.method().link}}" target="_blank">Link</a>
+
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+  var app = angular.module('app', []);
+
+  app.controller('MainCtrl', function ($scope, $http, $q) {
+    var val, active;
+
+    this.method = function () {
+      if (!active) {
+        if (val) {
+          return val
+        } else {
+          active = true
+          $http.get('/someurl').success(function (data) {
+            active = false
+            val = data
+          })
+        }
+      }
+    }
+  });
+
+  app.directive('nlHref', function () {
+    return {
+      restrict: 'A',
+      link: function (scope, element, attr) {
+        attr.$observe('nlHref', function(newValue) {
+          if(newValue) {
+            attr.$set('href', newValue)
+          }
+        })
+      }
+    }
+  })
+
+  </script>
+</body>
+</html>

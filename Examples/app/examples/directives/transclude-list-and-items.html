@@ -10,7 +10,7 @@
 </head>
 <body>
   <div ng-controller="NavigationController">
-    <navigation over="items">
+    <navigation>
       <navigation-item ng-repeat="item in items">Itemx: {{item.title}}</navigation-item>
     </navigation>
   </div>
@@ -47,7 +47,7 @@
     return {
       // this transclude is saying move anying in the <navigation-item>, which
       // is 'Item: {{item.title}}', to the position of the transclude
-      template: '<li class="item" ng-class="{active: item.id == states.activeItem}" ng-click="states.activeItem=item.id" ng-transclude></li>',
+      template: '<li class="item" ng-class="{active: item.id === states.activeItem}" ng-click="states.activeItem=item.id" ng-transclude></li>',
       restrict: 'E',
       replace: true,
       transclude: true

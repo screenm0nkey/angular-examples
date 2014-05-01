@@ -59,7 +59,7 @@
       },
 
       link: function(scope, iElement, iAttrs, ctrl) {
-        // limit the a,ount of times it makes a request otherwise it will happen
+        // limit the amount of times it makes a request otherwise it will happen
         // on every keypress
         var func = _.debounce(scope.getTemp, 300);
 

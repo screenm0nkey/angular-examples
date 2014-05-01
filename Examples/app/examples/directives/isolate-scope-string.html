@@ -26,8 +26,10 @@
 
   app.directive("drink", function () {
     return {
-      scope: {flavor:"@"},
-      template: '<div>{{ flavor }}</div>'
+      scope: {
+        flavor:"@"
+      },
+      template: '<div>directive {{ flavor }}</div>'
     };
   });
 

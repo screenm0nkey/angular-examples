@@ -5,7 +5,7 @@
 </head>
 <body ng-app="myapp">
 
-  <p transclude-directive>
+  <p badger>
     <a href="#">This text has been transcluded!</a>
   </p>
 
@@ -16,7 +16,7 @@
    $scope.name = 'World';
  });
 
- app.directive('transcludeDirective', function() {
+ app.directive('badger', function() {
    return {
      template: '<h3><span ng-transclude></span>This Test</h3>',
      transclude: 'element',
