@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Angular Forms</title>
-
   <!-- LOAD BOOTSTRAP CSS -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 
@@ -18,7 +17,8 @@
       </div>
 
       <!-- SHOW ERROR/SUCCESS MESSAGES -->
-      <div id="messages" class="well" ng-show="message">{{ message }}</div>
+      <div id="messages" class="alert" ng-show="message"
+           ng-class="{ 'alert-danger' : !merror, 'alert-success' : merror }">{{ message }}</div>
 
       <!-- FORM -->
       <form ng-submit="processForm()">
@@ -71,13 +71,15 @@
         })
         .success(function(data) {
           if (!data.success) {
-              // if not successful, bind errors to error variables
-              $scope.errorName = data.errors.name;
-              $scope.errorSuperhero = data.errors.superheroAlias;
-            } else {
-              // if successful, bind success message to message
-              $scope.message = data.message;
-            }
+            // if not successful, bind errors to error variables
+            $scope.errorName = data.errors.name;
+            $scope.errorSuperhero = data.errors.superheroAlias;
+          } else {
+            $scope.errorName = null;
+            $scope.errorSuperhero = null;
+          }
+          $scope.merror = data.success;
+          $scope.message = data.message;
           });
       };
 

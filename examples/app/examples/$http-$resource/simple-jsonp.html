@@ -19,8 +19,17 @@
   var app =  angular.module("app", []);
 
   app.controller("MyController", function($scope, $http, $log) {
-    var url1 = "http://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json&per_page=10&jsoncallback=JSON_CALLBACK",
-        xhr = $http.jsonp(url1);
+    var url = "http://www.flickr.com/services/feeds/photos_public.gne",
+        xhr = $http({
+          method : 'JSONP',
+          url : url,
+          params : {
+            tags:'cats',
+            format:'json',
+            per_page:10,
+            jsoncallback:'JSON_CALLBACK'
+          }
+        });
 
     xhr.success(function(data, status, headers, config) {
       $log.log(headers())

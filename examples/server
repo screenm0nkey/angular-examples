@@ -39,13 +39,30 @@ app.post("/twitter", function (req, res) {
   res.end();
 });
 
+
 app.post("/forms", function (req, res) {
   var b = req.body;
-  b.messsage = 'hello';
-  b.success = true;
+
+  if (!b.name || !b.superheroAlias) {
+    b.message = 'The request is bad';
+    b.success = false;
+    b.errors = {};
+
+    if (!b.name)
+      b.errors.name = 'Missing name';
+
+    if (!b.superheroAlias)
+      b.errors.superheroAlias = 'Fill out superher sucker!';
+
+  } else {
+    b.message = 'The request is good';
+    b.success = true;
+  }
+
   res.json(b);
   res.end();
 });
+
 
 console.log('Listening on Port 1970');
 console.log(PATH);

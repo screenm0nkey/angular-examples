@@ -26,8 +26,8 @@
 
 
   function FetchCtrl($scope, $http, $cacheFactory) {
-    //we're chaning the default cache to our new cache, so that all requests will
-    //use this new cache
+    // we're changing the default cache to our new cache, so that all requests
+    // will use this new cache
     var httpDefaultCache = $cacheFactory('myNewDefaultCache', { capacity: 10 });
     // notice that we can set these properties here or in the config call
     $http.defaults.cache = httpDefaultCache;
@@ -36,8 +36,9 @@
       console.log(httpDefaultCache.get('/data/cache'));
     };
 
+
     $scope.fetch = function() {
-      // Https does not return a deferred.
+      // $http does not return a deferred.
       xhr = $http({ cache: true, url: '/data/cache', method: 'GET'});
 
       xhr.then(function (res) {
