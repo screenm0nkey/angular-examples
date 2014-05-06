@@ -13,20 +13,15 @@
   <!--<script src="src/Dashboard_4.js"></script>-->
 
   <script>
-
-// Start the AngularJS engine for MyFlightApp
-angular.module("FlightDemo",[ "FlightServices" ])
-.controller(
-  "flightDashboard",
-  FlightDashboard
-  );
-</script>
+    // Start the AngularJS engine for MyFlightApp
+    angular.module("FlightDemo", ["FlightServices"])
+      .controller("flightDashboard", FlightDashboard);
+  </script>
 
 </head>
 <body ng-app="FlightDemo" ng-controller="flightDashboard" >
 
   <h1>Hello<span class="user">{{ user.email }}</span></h1>
-
 
   <div class="itinerary">
     <p>Here is your itinerary:</p>

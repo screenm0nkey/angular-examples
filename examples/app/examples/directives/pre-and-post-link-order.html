@@ -22,9 +22,10 @@
    return {
      restrict: 'E',
      controller: function(){
-      console.log("testParent Controller");
+      console.log("testParent controller");
       },
       compile: function(tElement, tAttrs){
+        console.log('testChild compile')
         return {
           pre: function (scope, element, attrs){
             console.log("testParent preLink");
@@ -42,9 +43,10 @@
    return {
      restrict: 'E',
      controller: function(){
-      console.log("testChild Controller");
+      console.log("testChild controller");
       },
       compile: function(tElement, tAttrs){
+        console.log('testChild compile')
         return {
           pre: function (scope, element, attrs){
             console.log("testChild preLink");

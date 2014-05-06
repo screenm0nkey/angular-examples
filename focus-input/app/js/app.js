@@ -14,16 +14,29 @@
   });
 
 
-  app.directive('focusIf', ['$timeout', function ($timeout) {
-    return function focusIf(scope, element, attr) {
+  app.directive('focusWatch', ['$timeout', function ($timeout) {
+    return function link (scope, element, attrs) {
+      scope.$watch(attrs.focusWatch, function (newVal, oldVal) {
+        var action = newVal ? 'focus' : 'blur';
+
+        $timeout(function() {
+          element[0][action]();
+        });
+      });
+    };
+  }]);
+
+  //  this is the same as above but uses a watcher
+  app.directive('focusObserve', ['$timeout', function ($timeout) {
+    return function link (scope, element, attrs) {
         // you can also observe attributes inside the 'link' function of a directive
         // attrs.$observe('someattr', function(newValue, oldValue) {});
-        scope.$watch(attr.focusIf, function (newVal) {
-          if (newVal) {
-            $timeout(function() {
-              element[0].focus();
-            });
-          }
+        attrs.$observe('show', function (value) {
+          var action = value === 'true' ? 'focus' : 'blur';
+
+          $timeout(function() {
+            element[0][action]();
+          });
         });
       };
     }]);
@@ -42,6 +55,7 @@
       $scope.showMenu = !aShow;
       $scope.text = aShow ? 'show' : 'hide';
     };
+    // this is when the controller first loads set text to 'Show Menu'
     $scope.show(true);
   });
 

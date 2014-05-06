@@ -29,7 +29,8 @@ var FlightDashboard = function( $scope, user, travelService, weatherService ) {
       });
   };
 
-  // 3-easy steps to load all of our information...
+  // 3-easy steps to load all of our information... the only thing is loadFlight
+  // and loadForecast can be run at the same time, so see next example
   loadDeparture( user ).then( loadFlight ).then( loadForecast );
 
   $scope.user = user;
