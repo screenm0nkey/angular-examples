@@ -9,13 +9,27 @@
     body { margin: 0px; font-family: Arial, Helvetica, sans-serif; }
     .pane-container{padding: 10px; }
     .close-pane {
-      /*color: #ccc;*/
+      font-size : 10px;
       cursor:pointer;
       position: absolute;
-      top : 0;
+      top : 10px;
       right : 12px;
     }
-    .close-pane[disabled] {
+    .close-pane span {
+      display : inline-block;
+      line-height : 14px;
+      text-align: center;
+      width : 14px;
+      height : 14px;
+      background: pink;
+      margin-right: 5px;
+    }
+    .close-pane span:hover {
+      background: red;
+      color : white;
+    }
+    .close-pane[disabled],
+    .close-pane[disabled] span:hover  {
       cursor:default;
       color: #ccc;
     }
@@ -23,16 +37,16 @@
 </head>
 <body ng-app="app">
 
-  <bg-splitter orientation="horizontal">
+  <bg-splitter orientation="horizontal" id="pane-splitter">
 
     <bg-pane min-size="0" class="panes-container">
-      <div class="pane-container" bg-close>Pane 1</div>
+      <div class="pane-container" bg-close-h>Pane 1</div>
     </bg-pane>
 
     <bg-pane min-size="0" class="panes-container">
       <bg-splitter orientation="vertical">
-        <bg-pane min-size="0" class="pane-container" bg-close>Pane 2</bg-pane>
-        <bg-pane min-size="0" class="pane-container" bg-close>Pane 3</bg-pane>
+        <bg-pane min-size="0" class="pane-container" bg-close-v>Pane 2</bg-pane>
+        <bg-pane min-size="0" class="pane-container" bg-close-v>Pane 3</bg-pane>
       </bg-splitter>
     </bg-pane>
 
@@ -43,6 +57,21 @@
   <script src="/lib/bootstrap.js"></script>
   <script src="splitter.js"></script>
   <script src="main.js"></script>
+  <script>
+    var app = angular.module('app', ['bgDirectives']);
+
+    app.run(function ($rootScope, $log) {
+     $rootScope.$log = $log;
+    });
+
+    // configure the defaults for the close button provider, which is used for the
+    // directive
+    app.config(function (bgCloseVerticleProvider) {
+      bgCloseVerticleProvider.setDefaults({
+        top : 40
+      });
+    });
+  </script>
 </body>
 </html>
 
