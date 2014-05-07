@@ -8,11 +8,16 @@
   <style>
     body { margin: 0px; font-family: Arial, Helvetica, sans-serif; }
     .pane-container{padding: 10px; }
-    .close-me {
+    .close-pane {
+      /*color: #ccc;*/
       cursor:pointer;
       position: absolute;
       top : 0;
       right : 12px;
+    }
+    .close-pane[disabled] {
+      cursor:default;
+      color: #ccc;
     }
   </style>
 </head>
@@ -20,11 +25,11 @@
 
   <bg-splitter orientation="horizontal">
 
-    <bg-pane min-size="0">
+    <bg-pane min-size="0" class="panes-container">
       <div class="pane-container" bg-close>Pane 1</div>
     </bg-pane>
 
-    <bg-pane min-size="0">
+    <bg-pane min-size="0" class="panes-container">
       <bg-splitter orientation="vertical">
         <bg-pane min-size="0" class="pane-container" bg-close>Pane 2</bg-pane>
         <bg-pane min-size="0" class="pane-container" bg-close>Pane 3</bg-pane>

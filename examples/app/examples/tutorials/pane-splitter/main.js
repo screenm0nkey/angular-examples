@@ -9,9 +9,16 @@
 
   app.provider('bgClose', function () {
     var defaults = {
-      top : 40,
-      html : '<h4 ng-click="closePane($event)" class="close-me">{{paneOpen ? "Close" : "Open"}}</h4>'
+      top     : 40,
+      html    : '<h5 ng-click="closePane($event)" class="close-pane">{{paneOpen ? "Close" : "Open"}}</h5>',
+      pane1   : 'split-pane1',
+      pane2   : 'split-pane2',
+      handler : 'split-handler',
+      panes   : 'panes-container',
+      pane    : 'pane-container',
+      close   : 'close-pane'
     };
+
 
     this.setDefaults = function (obj) {
       angular.extend(defaults, obj);
@@ -23,36 +30,52 @@
         require: '^bgSplitter',
         link: function(scope, element, attrs, bgSplitterCtrl) {
           var prevPos, cScope = scope.$new(),
-              linkFn = $compile(defaults.html);
+              $el = $compile(defaults.html)(cScope);
 
           cScope.paneOpen = true;
-          element.append(linkFn(cScope));
+          element.append($el);
 
           cScope.closePane = function (e) {
-            var pos,
+            var pos, len, other,
                 $target = $(e.target),
-                $container = $target.closest('[orientation]'),
-                $paneCont = $target.closest('.pane-container'),
-                $pane1 = $container.find('.split-pane1'),
-                $pane2 = $container.find('.split-pane2'),
-                $handler = $container.find('.split-handler');
+                $panesContainer = $target.closest('.' + defaults.panes),
+                $paneContainer = $target.closest('.' + defaults.pane),
+                $pane1 = $panesContainer.find('.' + defaults.pane1),
+                $pane2 = $panesContainer.find('.' + defaults.pane2),
+                $handler = $panesContainer.find('.' + defaults.handler);
 
-            //  store the pane postion before the pane is closed.
-            if (cScope.paneOpen) {
-              prevPos = $handler.css('top');
+            if ($target.attr('disabled')) {
+              return;
             }
 
-            if (!cScope.paneOpen && !!$paneCont.attr('style')) {
-              pos = prevPos;
-            } else {
-              pos = ($paneCont.hasClass('split-pane1') ? defaults.top :
-                $window.innerHeight - defaults.top) + 'px';
-            }
+            len = $panesContainer.find('.' + defaults.pane).length;
+            other = $paneContainer.hasClass(defaults.pane1) ? ('.'+defaults.pane2) : ('.' + defaults.pane1);
 
-            cScope.paneOpen = !cScope.paneOpen;
-            $pane1.css('height', pos);
-            $pane2.css('top', pos);
-            $handler.css('top', pos);
+            // These are split verticle panes
+            if (len === 2) {
+              var $other = $panesContainer.find(other + ' .' + defaults.close);
+
+              //  store the pane postion before the pane is closed.
+              if (cScope.paneOpen) {
+                prevPos = $handler.css('top');
+                $other.attr('disabled', 'disabled');
+              } else {
+                $other.removeAttr('disabled');
+              }
+
+              // calculate the postion of the window
+              if (!cScope.paneOpen && !!$paneContainer.attr('style')) {
+                pos = prevPos;
+              } else {
+                pos = ($paneContainer.hasClass(defaults.pane1) ? defaults.top :
+                  $window.innerHeight - defaults.top) + 'px';
+              }
+
+              cScope.paneOpen = !cScope.paneOpen;
+              $pane1.css('height', pos);
+              $pane2.css('top', pos);
+              $handler.css('top', pos);
+            }
           };
         }
       };
@@ -63,10 +86,11 @@
     return bgClose;
   });
 
-  // configure the defaults for the directive
+  // configure the defaults for the close button provider, which is used for the
+  // directive
   app.config(function (bgCloseProvider) {
     bgCloseProvider.setDefaults({
-      top : 100
+      top : 50
     });
   });
 
