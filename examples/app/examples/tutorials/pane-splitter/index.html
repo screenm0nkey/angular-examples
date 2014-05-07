@@ -9,13 +9,14 @@
     body { margin: 0px; font-family: Arial, Helvetica, sans-serif; }
     .pane-container{padding: 10px; }
     .close-pane {
-      font-size : 10px;
-      cursor:pointer;
       position: absolute;
-      top : 10px;
-      right : 12px;
+      top : 8px;
+      right : 8px;
+      opacity: 0.9;
     }
     .close-pane span {
+      cursor:pointer;
+      font-size : 10px;
       display : inline-block;
       line-height : 14px;
       text-align: center;
@@ -28,17 +29,20 @@
       background: red;
       color : white;
     }
-    .close-pane[disabled],
-    .close-pane[disabled] span:hover  {
+
+    .close-pane span[disabled]  {
       cursor:default;
+      opacity: 0.5;
       color: #ccc;
+    }
+    .close-pane span[disabled]:hover  {
+      background: pink;
     }
   </style>
 </head>
 <body ng-app="app">
 
   <bg-splitter orientation="horizontal" id="pane-splitter">
-
     <bg-pane min-size="0" class="panes-container">
       <div class="pane-container" bg-close-h>Pane 1</div>
     </bg-pane>
@@ -46,29 +50,26 @@
     <bg-pane min-size="0" class="panes-container">
       <bg-splitter orientation="vertical">
         <bg-pane min-size="0" class="pane-container" bg-close-v>Pane 2</bg-pane>
-        <bg-pane min-size="0" class="pane-container" bg-close-v>Pane 3</bg-pane>
+        <bg-pane min-size="0" class="pane-container">Pane 3</bg-pane>
       </bg-splitter>
     </bg-pane>
-
   </bg-splitter>
 
   <script src="/lib/jquery.min.js"></script>
   <script src="/lib/angular/angular.js"></script>
-  <script src="/lib/bootstrap.js"></script>
   <script src="splitter.js"></script>
   <script src="main.js"></script>
   <script>
     var app = angular.module('app', ['bgDirectives']);
-
-    app.run(function ($rootScope, $log) {
-     $rootScope.$log = $log;
-    });
-
     // configure the defaults for the close button provider, which is used for the
     // directive
-    app.config(function (bgCloseVerticleProvider) {
+    app.config(function (bgCloseVerticleProvider, bgCloseHorizontalProvider) {
       bgCloseVerticleProvider.setDefaults({
         top : 40
+      });
+
+      bgCloseHorizontalProvider.setDefaults({
+        left : 100
       });
     });
   </script>
