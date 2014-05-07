@@ -3,8 +3,10 @@
 <head>
   <meta charset=utf-8 />
   <title>bg-splitter</title>
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" media="screen" type="text/css" />
+
   <style>
     body { margin: 0px; font-family: Arial, Helvetica, sans-serif; }
     .pane-container{padding: 10px; }
@@ -50,7 +52,7 @@
     <bg-pane min-size="0" class="panes-container">
       <bg-splitter orientation="vertical">
         <bg-pane min-size="0" class="pane-container" bg-close-v>Pane 2</bg-pane>
-        <bg-pane min-size="0" class="pane-container">Pane 3</bg-pane>
+        <bg-pane min-size="0" class="pane-container" bg-close-v>Pane 3</bg-pane>
       </bg-splitter>
     </bg-pane>
   </bg-splitter>

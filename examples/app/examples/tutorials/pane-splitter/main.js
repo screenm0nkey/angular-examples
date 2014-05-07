@@ -13,10 +13,10 @@
         panes   : 'panes-container',
         pane    : 'pane-container',
         close   : 'close-pane',
-        closet  : 'close-top',
-        closeb  : 'close-bottom',
-        closel  : 'close-left',
-        closer  : 'close-right',
+        closeto : 'close-top',
+        closebo : 'close-bottom',
+        closele : 'close-left',
+        closeri : 'close-right',
         closere : 'close-reset'
       };
 
@@ -25,9 +25,9 @@
     var defaults = angular.copy(globalDefaults);
 
     defaults.html += '<div class="close-pane">';
-    defaults.html += '<span ng-click="closePane($event)" class="'+defaults.closel+'">&larr;</span>';
-    defaults.html += '<span ng-click="closePane($event)" class="'+defaults.closere+'">R</span>';
-    defaults.html += '<span ng-click="closePane($event)" class="'+defaults.closer+'">&rarr;</span>';
+    defaults.html += '<span ng-click="closePane($event)" class="glyphicon glyphicon-arrow-left '+defaults.closele+'"></span>';
+    defaults.html += '<span ng-click="closePane($event)" class="glyphicon glyphicon-stop '+defaults.closere+'"></span>';
+    defaults.html += '<span ng-click="closePane($event)" class="glyphicon glyphicon-arrow-right '+defaults.closeri+'"></span>';
     defaults.html += '</div>';
 
     this.setDefaults = function (obj) {
@@ -45,10 +45,6 @@
           cScope.paneOpen = true;
           element.append($el);
 
-          function removeDisabled ($target) {
-            $target.closest('.'+defaults.close).find('[class^="close-"]').removeAttr('disabled');
-          }
-
           cScope.closePane = function (e) {
             var $target = $(e.target),
                 $ps = $(defaults.id),
@@ -57,18 +53,19 @@
                 $left = $($panesContainer[0]),
                 $right = $($panesContainer[1]);
 
+            $target.closest('.'+defaults.close).find('[ng-click]').removeAttr('disabled');
+
             if ($target.hasClass(defaults.closere)) {
               $left.removeAttr('style');
               $right.removeAttr('style');
               $handler.removeAttr('style');
-              removeDisabled($target);
               return;
             }
 
-            var pos = ($target.hasClass(defaults.closel) ? defaults.left :
+            var pos = ($target.hasClass(defaults.closele) ? defaults.left :
               $window.innerWidth - defaults.left) + 'px';
 
-            removeDisabled($target);
+
             $target.attr('disabled', 'disabled');
 
             $left.css('width', pos);
@@ -85,9 +82,9 @@
     var defaults = angular.copy(globalDefaults);
 
     defaults.html += '<div class="close-pane">';
-    defaults.html += '<span ng-click="closePane($event)" class="'+defaults.closet+'">&uarr;</span>';
-    defaults.html += '<span ng-click="closePane($event)" class="'+defaults.closere+'">R</span>';
-    defaults.html += '<span ng-click="closePane($event)" class="'+defaults.closeb+'">&darr;</span>';
+    defaults.html += '<span ng-click="closePane($event)" class="glyphicon glyphicon-arrow-up '+defaults.closeto+'"></span>';
+    defaults.html += '<span ng-click="closePane($event)" class="glyphicon glyphicon-stop '+defaults.closere+'"></span>';
+    defaults.html += '<span ng-click="closePane($event)" class="glyphicon glyphicon-arrow-down '+defaults.closebo+'"></span>';
     defaults.html += '<div>';
 
     this.setDefaults = function (obj) {
@@ -101,10 +98,6 @@
         link: function(scope, element, attrs, bgSplitterCtrl) {
           var cScope = scope.$new(),
               $el = $compile(defaults.html)(cScope);
-
-          function removeDisabled ($target) {
-            $target.closest('.'+defaults.close).find('[class^="close-"]').removeAttr('disabled');
-          }
 
           cScope.paneOpen = true;
           element.append($el);
@@ -121,24 +114,28 @@
               return;
             }
 
+            $panesContainer.find('[ng-click]').removeAttr('disabled');
+
             if ($target.hasClass(defaults.closere)) {
               $pane1.removeAttr('style');
               $pane2.removeAttr('style');
               $handler.removeAttr('style');
-              removeDisabled($target);
               return;
             }
 
-            if ($target.hasClass(defaults.closet)) {
+            // removeDisabled($panesContainer);
+
+            if ($target.hasClass(defaults.closeto)) {
+              $panesContainer.find('.'+defaults.closeto).attr('disabled', 'disabled');
               pos = defaults.top + 'px';
             }
 
-            if ($target.hasClass(defaults.closeb)) {
+            if ($target.hasClass(defaults.closebo)) {
+              $panesContainer.find('.'+defaults.closebo).attr('disabled', 'disabled');
               pos = $window.innerHeight - defaults.top + 'px';
             }
 
-            removeDisabled($target);
-            $target.attr('disabled', 'disabled');
+            // $target.attr('disabled', 'disabled');
 
             $pane1.css('height', pos);
             $pane2.css('top', pos);
