@@ -2,46 +2,56 @@
 <html ng-app="app">
 <head>
   <style type="text/css">
-  div[contentEditable] {
-    cursor: pointer;
-    background-color: #D0D0D0;
-  }
+    div[contentEditable] {
+      cursor: pointer;
+      background-color: #D0D0D0;
+    }
   </style>
 </head>
 <body>
-  <div contentEditable="true" ng-model="content" title="Click to edit">Some</div>
+  <p>
+  This is example is taken from here  <br>
+  https://docs.angularjs.org/guide/forms#implementing-custom-form-controls_source
+  </p>
+  <div contentEditable="true" ng-model="content" title="Click to edit"></div>
   <pre>model = {{content}}</pre>
-
-
 
   <script src="/lib/angular/angular.js"></script>
   <script>
-
   // implement $render method, which is responsible for rendering the data after
   // it passed the NgModelController#$formatters, call $setViewValue method,
   // whenever the user interacts with the control and model needs to be updated.
   // This is usually done inside a DOM Event listener.
-  angular.module('app', []).directive('contenteditable', function() {
-   return {
-     require: 'ngModel',
-     link: function(scope, elm, attrs, ctrl) {
-           // view -> model
+    angular.module('app', [])
+    .directive('contenteditable', function($timeout) {
+      return {
+        require: 'ngModel',
+        link: function(scope, elm, attrs, ngModelCtrl) {
+          // view -> model
+          // this is setting the value from the view onto the scope using the ngModel controller
            elm.on('blur', function() {
              scope.$apply(function() {
-               ctrl.$setViewValue(elm.html());
+               ngModelCtrl.$setViewValue(elm.html());
              });
            });
 
            // model -> view
-           ctrl.$render = function() {
-             elm.html(ctrl.$viewValue);
+           ngModelCtrl.$render = function() {
+             elm.html(ngModelCtrl.$viewValue);
            };
 
-           // load init value from DOM
-           ctrl.$setViewValue(elm.html());
-         }
-       };
-     });
+          // after 1sec we update the scope and then called the $render method
+          // which will update the view
+          $timeout(function (aParam) {
+            scope.content = 'NICK';
+            ngModelCtrl.$render()
+          },1000)
+
+             // load init value from DOM
+            ngModelCtrl.$setViewValue(elm.html());
+           }
+         };
+      });
   </script>
 </body>
 </html>

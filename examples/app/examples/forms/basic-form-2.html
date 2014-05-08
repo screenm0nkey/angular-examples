@@ -29,25 +29,29 @@
     vertical-align:-1px;
     width:50px;
   }
+  input.ng-dirty.ng-valid-pattern {
+    background: green;
+  }
   </style>
 </head>
 
 <body ng-controller="stageController">
   {{$log.log('this.myForm.userId.$error', this.myForm.userId.$error)}}
-  {{$log.log(this)}}
+  <!-- {{$log.log(this)}} -->
   <form name="myForm" novalidate ng-submit="submitForm();">
    <h3>The power of the pattern directive</h3>
 
    <div class="form-section">
     <p>User id:</p>
 
-    <input type="text" name="userId" ng-model="userId" required ng-pattern="/^id_[0-9]+$/" />
+    <input type="text" name="userId" ng-model="userId"
+           ng-pattern="/^id_[0-9]+$/" required/>
+
     <input type="submit" ng-disabled="myForm.userId.$pristine || myForm.userId.$dirty && myForm.userId.$invalid">
 
     <div class="custom-error" ng-show="myForm.userId.$dirty && myForm.userId.$invalid">
-      Invalid:
       <span ng-show="myForm.userId.$error.required">User id is required.</span>
-      <span ng-show="myForm.userId.$error.pattern">User id doesn't respect the pattern.</span>
+      <span ng-show="myForm.userId.$error.pattern">User id doesn't respect the pattern..id_11</span>
     </div>
   </div>
 </form>

@@ -29,15 +29,15 @@
      scope : {},
      compile: function(tElement, attrs) {
        var content = tElement.children();
+       console.log(1, content[0])
        tElement.append(content.clone());
-       tElement.replaceWith(tElement.children());
        // link function
-       return function link (scope, element, attributes, controller) {
+        return function link (scope, element, attributes, controller) {
           scope.hello = "Scope test";
-       }
-     }
-   }
- });
+        }
+      }
+    }
+  });
 
   app.directive('ntimes', function() {
    return {
@@ -47,15 +47,13 @@
        for (var i = 0; i < attrs.repeat - 1; i++) {
          tElement.append(content.clone());
        }
-       tElement.replaceWith(tElement.children());
-       // link function
-       return function link (scope, element, attributes, controller) {
-        console.log(scope);
-          // debugger at this point you will see all the dom elements before
-          // interpolation
+        // link function
+        return function link (scope, element, attributes, controller) {
+          console.log(scope);
+          // debugger at this point you will see all the dom elements before interpolation
           scope.count = attributes.repeat;
           scope.hello = "More text";
-       }
+        }
      }
    }
  });

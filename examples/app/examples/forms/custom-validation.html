@@ -5,22 +5,17 @@
 <body>
   <div>
     <form name="form" class="css-form" novalidate>
-    <div>
-      Size (integer 0 - 10):
-      <input type="number" ng-model="size" name="size" min="0" max="10" integer />{{size}}<br />
-
-      <span ng-show="form.size.$error.integer">This is not valid integer!</span>
-
-      <span ng-show="form.size.$error.min || form.size.$error.max">
-        The value must be in range 0 to 10!</span>
-    </div>
+      <div>
+        Size (integer 0 - 10):
+        <input type="number" ng-model="size" name="size" min="0" max="10" integer />{{size}}<br />
+        <span ng-show="form.size.$error.integer">This is not valid integer!</span>
+        <span ng-show="form.size.$error.min || form.size.$error.max">The value must be in range 0 to 10!</span>
+      </div>
 
       <div>
         Length (float):
         <input type="text" ng-model="length" name="length" smart-float />{{length}}<br />
-
-        <span ng-show="form.length.$error.float">
-          This is not a valid float number!</span>
+        <span ng-show="form.length.$error.float">This is not a valid float number!</span>
         </div>
       </form>
     </div>
@@ -34,16 +29,16 @@
     app.directive('integer', function() {
       return {
         require: 'ngModel',
-        link: function(scope, elm, attrs, ctrl) {
-          ctrl.$parsers.unshift(function callback (viewValue) {
+        link: function(scope, elm, attrs, ngModelCtrl) {
+          ngModelCtrl.$parsers.unshift(function callback (viewValue) {
             if (INTEGER_REGEXP.test(viewValue)) {
               // it is valid
-              ctrl.$setValidity('integer', true);
+              ngModelCtrl.$setValidity('integer', true);
               return viewValue;
             }
             else {
               // it is invalid, return undefined (no model update)
-              ctrl.$setValidity('integer', false);
+              ngModelCtrl.$setValidity('integer', false);
               return undefined;
             }
           });
@@ -55,13 +50,13 @@
     app.directive('smartFloat', function() {
       return {
         require: 'ngModel',
-        link: function(scope, elm, attrs, ctrl) {
-          ctrl.$parsers.unshift(function callback (viewValue) {
+        link: function(scope, elm, attrs, ngModelCtrl) {
+          ngModelCtrl.$parsers.unshift(function callback (viewValue) {
             if (FLOAT_REGEXP.test(viewValue)) {
-              ctrl.$setValidity('float', true);
+              ngModelCtrl.$setValidity('float', true);
               return parseFloat(viewValue.replace(',', '.'));
             } else {
-              ctrl.$setValidity('float', false);
+              ngModelCtrl.$setValidity('float', false);
               return undefined;
             }
           });

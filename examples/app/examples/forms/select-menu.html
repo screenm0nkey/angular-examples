@@ -5,12 +5,9 @@
    <div ng-controller="MyCntrl">
     <ul>
       <li ng-repeat="color in colors">
-        Name: <input ng-model="color.name">
-        [<a href ng-click="colors.splice($index, 1)">X</a>]
+        Name: <input ng-model="color.name">[<a href ng-click="colors.splice($index, 1)">X</a>]
       </li>
-      <li>
         [<a href ng-click="colors.push({})">add</a>]
-      </li>
     </ul>
 
     <hr/>
@@ -19,12 +16,14 @@
     <select ng-model="color" ng-options="c.name for c in colors"></select>
     <br>
 
+
     Color (null allowed):
     <span class="nullable">
       <select ng-model="color" ng-options="c.name for c in colors">
         <option value="">-- choose color --</option>
       </select>
     </span><br/>
+
 
     Color grouped by shade:
     <select ng-model="color" ng-options="c.name group by c.shade for c in colors">
