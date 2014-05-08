@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="angularjs-starter">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>Custom Plunker</title>
+</head>
+
+<body ng-controller="MainCtrl">
+  <a ng-click="addNew()">+ add new</a>
+  <form name="mainForm" ng-submit="submitAll()">
+    <ul>
+      <li ng-repeat="item in items" ng-form="subForm">
+        <input type="text" required name="name" ng-model="item.name"/>
+        <span ng-show="subForm.name.$error.required">required</span>
+        <button type="button" ng-disabled="subForm.$invalid" ng-click="submitOne(item)">Submit One</button>
+      </li>
+    </ul>
+    <button type="submit" ng-disabled="mainForm.$invalid">Submit All</button>
+  </form>
+  <hr/>
+  <div ng-show="lastSubmit">Last Submit:</div>
+  <pre>{{lastSubmit | json}}</pre>
+
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+  var app = angular.module('angularjs-starter', []);
+
+  app.controller('MainCtrl', function($scope) {
+    $scope.items = [];
+    $scope.addNew = function (){
+      $scope.items.push({ name: '' });
+    };
+
+    $scope.submitOne = function (item){
+      $scope.lastSubmit = angular.copy(item);
+    };
+
+    $scope.submitAll = function() {
+      $scope.lastSubmit = angular.copy($scope.items);
+    }
+  });
+  </script>
+</body>
+
+</html>

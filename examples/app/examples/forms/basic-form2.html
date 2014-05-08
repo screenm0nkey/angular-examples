@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+
+<head>
+  <meta charset="utf-8" />
+  <title>My AngularJS App</title>
+  <style>
+  section {
+    font-size:14px;
+    margin:10px 0;
+  }
+  .form-section p {
+    margin:5px 0;
+  }
+  .form-section input:not([type='submit']) {
+    height:18px;
+    outline:0;
+    padding:2px 4px;
+    width:220px;
+  }
+  .form-section .custom-error {
+    color:#FF0000;
+  }
+  [type='submit'] {
+    background:@EEEEEE;
+    border:1px solid #666666;
+    height:26px;
+    padding:4px 5px 3px;
+    vertical-align:-1px;
+    width:50px;
+  }
+  </style>
+</head>
+
+<body ng-controller="stageController">
+  {{$log.log('this.myForm.userId.$error', this.myForm.userId.$error)}}
+  {{$log.log(this)}}
+  <form name="myForm" novalidate ng-submit="submitForm();">
+   <h3>The power of the pattern directive</h3>
+
+   <div class="form-section">
+    <p>User id:</p>
+
+    <input type="text" name="userId" ng-model="userId" required ng-pattern="/^id_[0-9]+$/" />
+    <input type="submit" ng-disabled="myForm.userId.$pristine || myForm.userId.$dirty && myForm.userId.$invalid">
+
+    <div class="custom-error" ng-show="myForm.userId.$dirty && myForm.userId.$invalid">
+      Invalid:
+      <span ng-show="myForm.userId.$error.required">User id is required.</span>
+      <span ng-show="myForm.userId.$error.pattern">User id doesn't respect the pattern.</span>
+    </div>
+  </div>
+</form>
+<script src="/lib/angular/angular.js"></script>
+<script>
+'use strict';
+  // Declare app level module which depends on filters, and services
+  angular.module('myApp', []);
+
+  function stageController($scope, $log) {
+    $scope.$log = $log;
+    $scope.submitForm = function () {
+      console.info("Here I should implement the logic to send a request to the server.");
+    }
+  }
+  </script>
+</body>
+
+</html>

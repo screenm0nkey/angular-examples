@@ -27,10 +27,12 @@ $scope.$on('$routeUpdate', function(){
 // ************
 // $locationChangeStart
 // $locationChangeSuccess
+
 // $routeUpdate
 // $routeChangeStart
 // $routeChangeSuccess
 // $routeChangeError
+
 // $destroy <- broadcast when a scope is destroyed
 
 // Emits
