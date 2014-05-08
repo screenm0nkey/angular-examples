@@ -2,19 +2,8 @@
 <html ng-app="app">
 <head>
   <script src="/lib/angular/angular.js"></script>
-  <style>
-  * {
-    font-family: 'Droid Sans', sans-serif;
-  }
-  #log {
-    margin-top:10px;
-    font-size:10px
-  }
-  </style>
 </head>
 <body ng-controller="DemoCtrl as demo">
-
-  <h3>Custom transclude</h3>
 
   <ul notifier>
     <li announcer ng-repeat="item in items">
@@ -26,70 +15,72 @@
 
 
   <script>
-  var app = angular.module('app',[]);
+    var app = angular.module('app',[]);
 
-  app.controller('DemoCtrl', function($scope) {
-    $scope.items = [];
+    app.controller('DemoCtrl', function($scope) {
+      $scope.items = [];
 
-    this.addItem = function() {
-      $scope.items.push(Math.random());
-    }
-    this.removeItem = function(index){
-      $scope.items.splice(index,1);
-    }
-    // add three items for a start, which ng-repeat will compile and insert the
-    // element into the DOM. each of the ng-repeat items contains a an
-    // 'announcer' directive. the directives link and controller method will be
-    // invoked each time one is added.
-    for (var i=0; i<3; i++) {
-      this.addItem();
-    }
-  });
-
-
-  // this directive contains the logic for adding logging information
-  app.directive('notifier', function() {
-    return {
-      restrict: 'A',
-      controller : function($scope,$element){
-        this.addElement = function(elmScope){
-          console.log('item added', elmScope);
-          document.getElementById('log').innerHTML += 'item added: ' + elmScope.item + '<br>';
-        }
-        this.removeElement = function(elmScope){
-          console.log('item removed', elmScope);
-          document.getElementById('log').innerHTML += 'item removed: ' + elmScope.item + '<br>';
-        }
+      this.addItem = function() {
+        $scope.items.push(Math.round(Math.random()*1000));
       }
-    }
-  });
+      this.removeItem = function(index){
+        $scope.items.splice(index,1);
+      }
+      // add three items for a start, which ng-repeat will compile and insert
+      // the element into the DOM. each of the ng-repeat items contains a an
+      // 'announcer' directive. the directives link and controller method will
+      // be invoked each time one is added.
+      for (var i=0; i<3; i++) {
+        this.addItem();
+      }
+    });
 
-  // becuase this directive is on an ng-repeat, compile is only called once and
-  // the link and and controller fucntions are called each time ng-repeat add an element
-  app.directive('announcer', function() {
-    // this directive announces creation/destruction to the parent notifier if any
-    return {
-      restrict: 'A',
-      require : '?^notifier',
-      controller : function () {
-        console.log('CONTROLLER')
-      },
-      compile : function () {
-        console.log('COMPILE');
 
-        return function link (scope, element, attrs, notifierCtrl) {
-          console.log('LINK');
-          if(notifierCtrl){
-            notifierCtrl.addElement(scope);
-
-            scope.$on("$destroy",function(){
-             notifierCtrl.removeElement(scope);
-           });
+    // this directive contains the logic for adding logging information
+    app.directive('notifier', function() {
+      return {
+        restrict: 'A',
+        controller : function($scope,$element){
+          this.addElement = function(elmScope){
+            console.log('item added', elmScope);
+            document.getElementById('log').innerHTML += 'item added: ' + elmScope.item + '<br>';
+          }
+          this.removeElement = function(elmScope){
+            console.log('item removed', elmScope);
+            document.getElementById('log').innerHTML += 'item removed: ' + elmScope.item + '<br>';
           }
         }
       }
-    }
-  })
+    });
+
+    // becuase this directive is on an ng-repeat, compile is only called once
+    // and the link and and controller functions are called each time ng-repeat
+    // add an element
+    app.directive('announcer', function() {
+      // this directive announces creation/destruction to the parent notifier if
+      // any
+      return {
+        restrict: 'A',
+        require : '?^notifier',
+        controller : function () {
+          console.log('CONTROLLER')
+        },
+        compile : function () {
+          console.log('COMPILE'); //called once
+
+          return function link (scope, element, attrs, notifierCtrl) {
+            console.log('LINK');
+            if(notifierCtrl) {
+              notifierCtrl.addElement(scope);
+
+              scope.$on("$destroy",function(){
+               notifierCtrl.removeElement(scope);
+             });
+            }
+          }
+        }
+      }
+    })
 
 
   </script>

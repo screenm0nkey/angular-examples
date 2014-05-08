@@ -58,7 +58,7 @@
          $el = angular.element('<div>{{nick}}</div>');
          linkFn = $compile($el);
          $('body').append($el);
-         // but you can compile this without scope and it only cotains text
+         // but you can compile this without scope and it only contains text
          // which needs interpolation
          linkFn(scope);
        }

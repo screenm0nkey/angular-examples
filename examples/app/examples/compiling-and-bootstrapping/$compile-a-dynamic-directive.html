@@ -14,15 +14,15 @@
   var app = angular.module('App', []);
 
   app.directive('hi', function() {
-   return {
-     template: '<h2>Hi There</h2>',
-     replace: true,
-     compile : function () {
-       console.log(1, 'hi compile');
-       return function link () {
-        console.log(1, 'hi link');
+    return {
+      template: '<h2>Hi There</h2>',
+      replace: true,
+      compile : function () {
+        console.log(1, 'hi compile');
+        return function link () {
+          console.log(1, 'hi link');
+        }
       }
-    }
   };
 });
 
@@ -47,17 +47,20 @@
      '<a ng-click="addType(\'hello\')">Click me Add Hello</a>',
      link: function(scope, element, attr) {
        scope.addType = function(type) {
-         // you can't $compile without a scope as it contains a directive
-         var el = $compile('<div ' + type + '></div>')(scope);
-         $('body').append(el);
+         // you can't $compile an element which contains a directive, without a
+         // scope
+         var linkFn = $compile('<div ' + type + '></div>');
+         var $el = linkFn(scope)
+         $('body').append($el);
 
          // this does the same thing as the code above
          scope.nick = "Nick";
-         el = angular.element('<div>{{nick}}</div>'),
-         compiled = $compile(el);
-         $('body').append(el);
-         // but you can compile this without scope because it's just an expression
-         compiled(scope);
+         $el = angular.element('<div>{{nick}}</div>');
+         linkFn = $compile($el);
+         $('body').append($el);
+         // but you can compile this without scope and it only contains text
+         // which needs interpolation
+         linkFn(scope);
        }
      }
    };
