@@ -36,8 +36,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
 
   // $route, routeParams
-  app.controller("ListCtrl", function($scope, $location) {
-
+  app.controller("ListCtrl", function($scope, $location,  $stateParams) {
     $scope.items = ['one', 'two', 'three'];
 
     $scope.selected = $location.path().replace('/alt-', '');

@@ -27,6 +27,8 @@
         $scope.item = $stateParams.item;
       }
     });
+
+     $urlRouterProvider.otherwise('/home');
   })
 
   .controller("ListCtrl", function($scope) {
