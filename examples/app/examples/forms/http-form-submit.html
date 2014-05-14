@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+  <title>Angular Forms</title>
+  <!-- LOAD BOOTSTRAP CSS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+
+</head>
+<!-- apply the module and controller to our body so angular is applied to that -->
+<body ng-app="formApp" ng-controller="formController">
+  <div class="container">
+    <div class="col-md-6 col-md-offset-3">
+
+      <!-- PAGE TITLE -->
+      <div class="page-header">
+        <h4><span class="glyphicon glyphicon-tower"></span> Submitting Forms with Angular</h4>
+      </div>
+
+      <!-- SHOW ERROR/SUCCESS MESSAGES -->
+      <div id="messages" class="alert" ng-show="message"
+           ng-class="{ 'alert-danger' : !merror, 'alert-success' : merror }">{{ message }}</div>
+
+      <!-- FORM -->
+      <form ng-submit="processForm()">
+        <!-- NAME -->
+        <div id="name-group" class="form-group" ng-class="{ 'has-error' : errorName }">
+          <label>Name</label>
+          <input type="text" name="name" class="form-control" placeholder="Bruce Wayne" ng-model="formData.name">
+          <span class="help-block" ng-show="errorName">{{ errorName }}</span>
+        </div>
+
+        <!-- SUPERHERO NAME -->
+        <div id="superhero-group" class="form-group" ng-class="{ 'has-error' : errorSuperhero }">
+          <label>Superhero Alias</label>
+          <input type="text" name="superheroAlias" class="form-control" placeholder="Caped Crusader" ng-model="formData.superheroAlias">
+          <span class="help-block" ng-show="errorSuperhero">{{ errorSuperhero }}</span>
+        </div>
+
+        <!-- SUBMIT BUTTON -->
+        <button type="submit" class="btn btn-success btn-lg btn-block">
+          <span class="glyphicon glyphicon-flash"></span> Submit!
+        </button>
+      </form>
+
+      <!-- SHOW DATA FROM INPUTS AS THEY ARE BEING TYPED -->
+      <pre>
+        {{ formData }}
+      </pre>
+    </div>
+  </div>
+
+
+  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+    var formApp = angular.module('formApp', []);
+
+    function formController($scope, $http) {
+      $scope.formData = {};
+
+      // process the form
+      $scope.processForm = function() {
+        $http({
+          method  : 'POST',
+          url     : '/forms',
+          // param serializes the JSON
+          data    : $.param($scope.formData),
+          // pass in data as strings
+          // set the headers so angular passing info as form data (not request payload)
+          headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+        })
+        .success(function(data) {
+          if (!data.success) {
+            // if not successful, bind errors to error variables
+            $scope.errorName = data.errors.name;
+            $scope.errorSuperhero = data.errors.superheroAlias;
+          } else {
+            $scope.errorName = null;
+            $scope.errorSuperhero = null;
+          }
+          $scope.merror = data.success;
+          $scope.message = data.message;
+          });
+      };
+
+    }
+
+    </script>
+  </body>
+  </html>

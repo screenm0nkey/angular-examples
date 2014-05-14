@@ -1,0 +1,75 @@
+html, body {
+  height: 100%;
+  padding: 10px;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+li.selected {
+  background-color: black;
+  color : white;
+}
+
+.container {
+  height: 100%;
+}
+
+div[ui-view=header] {
+  background-color: pink;
+}
+
+div[ui-view=footer] {
+  background-color: pink;
+}
+
+div[ui-view=content] {
+  background-color: #dfdfdf;
+}
+
+div[ui-view=sidebar] {
+  min-width: 200px;
+  position: relative;
+  left: 20px;
+  background-color: orange;
+  border-right: 1px solid #eeeeee;
+  margin-right: 20px;
+  float:left;
+}
+
+.clear:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.logo {
+  width: auto;
+  height: 45px;
+}
+
+.whiz {
+  width: auto;
+  height: 170px;
+  padding: 10px;
+}
+
+.thumbs-up {
+  width: auto;
+  height: 145px;
+  padding: 10px;
+}
+
+.sidebar {
+  border-right: 1px solid #eeeeee;
+  margin-right: 5px;
+}
+
+.text-crazy {
+  background-color: #ff002b;
+  color: #ffff00;
+  padding: 3px;
+}

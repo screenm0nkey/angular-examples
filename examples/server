@@ -22,11 +22,19 @@ app.configure(function () {
   app.use(express.bodyParser());
 });
 
+//  read a json file from the system and return it
 app.get("/data/cache", function (req, res) {
   var pathx = path.join(__dirname, 'app/data/cache.json');
   var arr = JSON.parse(fs.readFileSync(pathx, 'utf8'));
   res.json(arr);
   res.end();
+});
+
+app.get("/data/event/:num", function (req, res) {
+  setTimeout(function() {
+    res.json({"name":"you typed in your name as "+req.params.num});
+    res.end();
+  }, 1000);
 });
 
 app.get("/someurl", function (req, res) {
@@ -48,11 +56,13 @@ app.post("/forms", function (req, res) {
     b.success = false;
     b.errors = {};
 
-    if (!b.name)
+    if (!b.name) {
       b.errors.name = 'Missing name';
+    }
 
-    if (!b.superheroAlias)
+    if (!b.superheroAlias) {
       b.errors.superheroAlias = 'Fill out superher sucker!';
+    }
 
   } else {
     b.message = 'The request is good';

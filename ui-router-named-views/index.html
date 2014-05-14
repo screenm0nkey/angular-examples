@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body ng-app="ui-router-named-views">
+
+<egghead-banner title="egghead.io presents: ui-router named views"></egghead-banner>
+
+<div class="container">
+
+  <!-- Header -->
+  <div ui-view="header" class="row"></div>
+
+  <div class="row clear">
+    <!-- Sidebar/Nav -->
+    <div ui-view="sidebar" class="col-xs-3"></div>
+    <!-- Content -->
+    <div ui-view="content" class="col-xs-9"></div>
+  </div>
+
+  <!-- Footer -->
+  <div ui-view="footer" class="row"></div>
+</div>
+
+
+
+<script type="text/javascript" src="lib/underscore.js"></script>
+<script type="text/javascript" src="lib/angular.js"></script>
+<script type="text/javascript" src="lib/angular-ui-router.js"></script>
+<script type="text/javascript" src="lib/angular-route.js"></script>
+<script type="text/javascript" src="app/alt-one/alt-one.js"></script>
+<script type="text/javascript" src="app/alt-two/alt-two.js"></script>
+<script type="text/javascript" src="app/alt-three/alt-three.js"></script>
+<script type="text/javascript" src="common/directives/blink/blink.js"></script>
+<script type="text/javascript" src="common/directives/egghead-banner/egghead-banner.js"></script>
+<script type="text/javascript" src="app/app.js"></script>
+</body>
+</html>

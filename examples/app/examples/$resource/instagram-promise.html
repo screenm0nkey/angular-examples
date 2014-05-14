@@ -41,7 +41,6 @@
     $scope.pics = [];
 
     instagram.fetchPopular().then(function(data){
-      debugger
       $scope.pics = data;
     });
   }

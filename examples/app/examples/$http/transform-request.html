@@ -6,12 +6,16 @@
 
   <div ng-controller="controller.View">
     <form name="form">
+      Type tweet in here. <br>
       <textarea ng-model="request.tweet" required></textarea>
+      <hr>
+      Type any words that appear in tweet that you want to appear as hash tags
       <input type="text" ng-model="request.commaSeparatedAutoTags">
       <button ng-click="onTweet($event, form.$valid)">Tweet</button>
     </form>
 
-    These reponses are coming from the server {{ tweets | json }}
+    <hr>
+    These reponses are coming from the server <pre>{{ tweets | json }}</pre>
   </div>
 
 

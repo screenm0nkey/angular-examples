@@ -1,0 +1,7 @@
+<div class="row sidebar">
+  <h4>Nav {{selected}}</h4>
+  <ul class="list-unstyled">
+    <li><a ui-sref="app">Home</a></li>
+    <li ng-repeat="item in items" ng-class="{'selected' : item === selected }"><a ui-sref="app.alt-{{item | lowercase}}" ng-click="selectme(item)">{{item}}</a></li>
+  </ul>
+</div>

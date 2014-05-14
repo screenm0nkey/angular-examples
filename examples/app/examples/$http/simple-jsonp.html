@@ -19,10 +19,9 @@
   var app =  angular.module("app", []);
 
   app.controller("MyController", function($scope, $http, $log) {
-    var url = "http://www.flickr.com/services/feeds/photos_public.gne",
-        xhr = $http({
+        var xhr = $http({
           method : 'JSONP',
-          url : url,
+          url : "http://www.flickr.com/services/feeds/photos_public.gne",
           params : {
             tags:'cats',
             format:'json',
