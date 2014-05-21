@@ -6,16 +6,22 @@
 </head>
 <body ng-controller="MainCtrl">
 
-  <button ng-click="addit(markup)">Add</button>
+  <form>
+    <input type="text" ng-model="text" required>
+    <button ng-click="addit(markup)">Add</button>
+  </form>
+
 
   <script>
   var app = angular.module('app', []);
 
   app.controller('MainCtrl', function($scope, $compile) {
     $scope.addit = function (markup) {
-      $compile("<h1>NICK</h1>")($scope, function(cloned, scope) {
-        debugger;
+      $compile("<h1>{{text}}</h1>")($scope, function(cloned, scope) {
+        console.log(cloned[0])
+        angular.element('body').prepend(cloned);
       });
+
     }
   });
 

@@ -17,7 +17,8 @@
 
   angular.module('privilegeService', ['ngResource', 'ngMockE2E']).
   factory('Privilege', function ($resource) {
-    return $resource('api/users/:userId/privileges',
+    return $resource(
+      'api/users/:userId/privileges',
       {userId: '@id'},
       {'query':  {method:'GET', isArray:false}});
   });

@@ -1,0 +1,37 @@
+
+<html>
+<head>
+
+</head>
+
+<body  ng-app="app" ng-controller="myController" ng-cloak>
+ <li ng-repeat="task in tasks">{{task.id}}</li>
+
+ <script src="/lib/angular/angular.js"></script>
+ <script>
+
+ var app = angular.module('app', []);
+
+
+ app.controller('myController', function ($scope, myService) {
+  myService.getstuff().then(function (data) {
+    $scope.tasks = data;
+  })
+ });
+
+ app.factory('myService', function ($http, $q) {
+  return {
+    getstuff : function () {
+      // note that the data object is differnt when passed to 'then' and 'success'
+      // 'then' gets a whole data object
+      return $http.get('/getarray').then(function(result) {
+        return result.data;
+      });
+    }
+  }
+ })
+
+
+ </script>
+</body>
+</html>

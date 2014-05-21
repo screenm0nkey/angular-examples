@@ -6,21 +6,24 @@
 
 <body>
   <div id="container1">
-    {{random}}
-
     <div ng-controller="MainCtrl" hello>{{random * 100}}</div>
   </div>
 
   <div id="container2">
-    {{random}}
     <div ng-controller="MainCtrl" hello>{{random * 100}}</div>
   </div>
 
 
   <script src="/lib/angular/angular.js"></script>
   <script type="text/javascript">
+  // Good to note here that the compile method is called before the controller
+  // is invoked. so it goes...
+  // Compile hello
+  // MainCtrl 003
+  // Controller hello 003
+  // Link hello 003
   window.MainCtrl = function ($scope) {
-    console.log('Main', $scope)
+    console.log('MainCtrl', $scope.$id)
   }
 
   var app = angular.module('app', []);
@@ -31,10 +34,13 @@
 
   app.directive('hello', function() {
     return {
+      controller : function ($scope) {
+        console.log('Controller hello', $scope.$id);
+      },
       compile : function () {
-        console.log('compile');
-        return function link () {
-          console.log('link');
+        console.log('Compile hello');
+        return function link (scope) {
+          console.log('Link hello', scope.$id);
         }
       }
     };
@@ -46,3 +52,6 @@
   </script>
 </body>
 </html>
+
+
+

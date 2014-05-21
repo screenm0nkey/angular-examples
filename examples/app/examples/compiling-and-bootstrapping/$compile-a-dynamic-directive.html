@@ -41,26 +41,41 @@
   };
 });
 
-  app.directive('customDirective', function($compile) {
+  app.directive('customDirective', function($compile, $timeout) {
    return {
      template: '<a ng-click="addType(\'hi\')">Click me Hi</a><br/>' +
      '<a ng-click="addType(\'hello\')">Click me Add Hello</a>',
      link: function(scope, element, attr) {
        scope.addType = function(type) {
-         // you can't $compile an element which contains a directive, without a
-         // scope
+         // you can't $compile an element which contains a directive, without
+         // supplying a scope object
          var linkFn = $compile('<div ' + type + '></div>');
          var $el = linkFn(scope)
          $('body').append($el);
 
-         // this does the same thing as the code above
-         scope.nick = "Nick";
-         $el = angular.element('<div>{{nick}}</div>');
+         // this does the same thing as the code above but you can compile it
+         // without scope as it only contains text which needs interpolation.
+         // whats every intertesting is that the link function is called after
+         // the digest loop has finished so the text isn't interpolated with the
+         // scope object until the next time the digest runs, and that is on the
+         // next click.
+         scope.name = "Nick";
+         $el = angular.element('<div>{{name}}</div>');
          linkFn = $compile($el);
          $('body').append($el);
-         // but you can compile this without scope and it only contains text
-         // which needs interpolation
-         linkFn(scope);
+         setTimeout(function () {
+          linkFn(scope);
+         }, 300);
+
+         // to get around this we can use the angular $timeout which
+         // calls the digest when it completes
+         scope.name = "Steven";
+         $el = angular.element('<div>{{name}}</div>');
+         linkFn = $compile($el);
+         $('body').append($el);
+         $timeout(function () {
+          linkFn(scope);
+         }, 500);
        }
      }
    };

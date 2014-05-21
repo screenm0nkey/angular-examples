@@ -52,7 +52,8 @@ angular.module('myApp')
   $httpBackend.when('PUT', '/users')
   .respond(function(method, url, data) {
     data = angular.fromJson(data);
-    users[userId] = {userName: data.userName, userId: userId};
+    data = { userName: data.userName, userId: userId};
+    users[userId] = data;
     userId++;
     return [200, users[data.userId]];
   });

@@ -19,6 +19,7 @@
   </p>
 
   <form name="myForm" ng-submit="show()">
+    Type something here.
     <input type="text" ng-model="user.name" required>
     <button type="submit" ng-disabled="myForm.$invalid">Submit</button>
   </form>
@@ -32,12 +33,12 @@
 
   var app = angular.module('app', ['ngResource']);
 
-  app.factory('Event', function ($resource, $q) {
+  app.factory('Resource', function ($resource, $q) {
     var Event = $resource('/data/event/:id', {id: '@id'});
     return Event;
   });
 
-  app.controller('MainCtrl', function ($scope, Event) {
+  app.controller('MainCtrl', function ($scope, Resource) {
     // success and error callback handlers
     var success = error = function (data) {
       console.log(data);
@@ -45,18 +46,18 @@
 
     $scope.show = function () {
       // basic examples
-      $scope.data1 = Event.get({id: $scope.user.name });
+      $scope.data1 = Resource.get({id: $scope.user.name });
 
       // same example with call backs
-      $scope.data2 = Event.get({id: $scope.user.name }, success, error);
+      $scope.data2 = Resource.get({id: $scope.user.name }, success, error);
 
       // using the class $promise method of the Resource class constructor
-      Event.get({id: $scope.user.name }).$promise.then(function (data) {
+      Resource.get({id: $scope.user.name }).$promise.then(function (data) {
         $scope.data3 = data;
       })
 
       // instantaiting a new instance of Resource and then calling it's methods
-      var ev = new Event({id :  $scope.user.name});
+      var ev = new Resource({id :  $scope.user.name});
       ev.$get().then(function (data) {
          $scope.data4 = data;
       });

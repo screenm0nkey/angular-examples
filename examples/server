@@ -47,6 +47,10 @@ app.post("/twitter", function (req, res) {
   res.end();
 });
 
+app.get("/getarray", function (req, res) {
+  res.json([{"id":1}, {"id":2}, {"id":3}]);
+  res.end();
+});
 
 app.post("/forms", function (req, res) {
   var b = req.body;
