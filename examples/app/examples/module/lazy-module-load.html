@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body ng-app="app">
+  <h3>http://ify.io/lazy-loading-in-angularjs/</h3>
+  <a href="#" ng-click="addController()">Nicks App</a>
+
+  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/angular/angular.js"></script>
+
+  <script>
+
+
+
+    (function() {
+      var app = angular.module('app', []);
+
+      app.config(function($controllerProvider, $compileProvider, $filterProvider, $provide) {
+
+        app.$controllerProvider = $controllerProvider;
+        app.$compileProvider    = $compileProvider;
+        app.$filterProvider     = $filterProvider;
+        app.$provide            = $provide;
+        // app.routeProvider   = $routeProvider;
+      });
+
+      app.run(function ($rootScope, $compile) {
+        $rootScope.addController = function () {
+
+          angular.module('app')
+            .$controllerProvider.register('SomeCtrl', function($scope) {
+              console.log($scope)
+            });
+
+          $compile('<p ng-controller="SomeCtrl">Nick</p>')($rootScope)
+            .appendTo(angular.element('body'));
+        };
+      })
+
+
+    })();
+
+  </script>
+</body>
+</html>

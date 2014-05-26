@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<body ng-app="app" ng-controller="HomeCtrl">
+ <div>
+   <form novalidate name="myForm">
+     Number: <input type="text" name="valText" ng-model="val" even-number />
+   </form>
+ </div>
+ <div>
+   <span style="color: red;" ng-show="myForm.valText.$error.evenNumber">Invalid value</span>
+   <br />
+   <br />
+   <button ng-click="setValue(22)">Change Value to 22</button>
+   <br />
+   <button ng-click="setValue(19)">Change Value to 19</button>
+ </div>
+
+ <script src="/lib/angular/angular.js"></script>
+
+ <script>
+ var app=angular.module('app',[]);
+
+ app.controller('HomeCtrl', function($scope){
+  $scope.val=20;
+
+  $scope.setValue = function(val){
+    $scope.val=val;
+  };
+});
+
+ app.directive('evenNumber', function(){
+  return{
+    require:'ngModel',
+    link: function(scope, elem, attrs, ctrl){
+      ctrl.$parsers.unshift(checkForEven);
+
+      function checkForEven(viewValue){
+        if (parseInt(viewValue)%2 === 0) {
+          ctrl.$setValidity('evenNumber',true);
+        }
+        else{
+          ctrl.$setValidity('evenNumber', false);
+        }
+        return viewValue;
+      }
+    }
+  };
+
+});
+ </script>
+</body>
+</html>

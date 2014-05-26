@@ -1,6 +1,8 @@
 
-  // this is taken from the angular lib. these are the providers
+  // this is taken from the angular lib. these are the default providers
   $provide.provider({
+    // $compile is used for directives
+    $compile : $compileProvider,
     $anchorScroll: $AnchorScrollProvider,
     $animate: $AnimateProvider,
     $browser: $BrowserProvider,

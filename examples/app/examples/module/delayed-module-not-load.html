@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body ng-app="app">
+
+  <a href="#" ng-click="addController()">Nicks App</a>
+
+  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/angular/angular.js"></script>
+
+  <script>
+
+    angular.module('app',[]).run(function ($rootScope, $compile) {
+      $rootScope.addController = function () {
+        // adding a controller like this after the application has bootstrapped
+        // wont work. you will get "'SomeCtrl' is not a function"
+        angular.module('app').controller('SomeCtrl', function() {});
+
+        $compile('<p ng-controller="SomeCtrl">Nick</p>')($rootScope)
+          .appendTo(angular.element('body'));
+      };
+    });
+
+  </script>
+</body>
+</html>
