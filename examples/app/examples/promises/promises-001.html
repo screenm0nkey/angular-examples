@@ -10,16 +10,16 @@
   var app = angular.module("app", []);
 
   app.controller("AppCtrl", function ($scope, $q) {
-
     var defer = $q.defer(),
 
+    // get sword
     func1 = function(weapon) {
-      alert('You can have my ' + weapon); //sword
+      console.log('You can have my ' + weapon); //sword
       return "bow";
     }
 
     func2 = function(weapon) {
-      alert('You can have my ' + weapon); // bow
+      console.log('You can have my ' + weapon); // bow
       var defer = $q.defer();
 
       setTimeout(function () {
@@ -30,7 +30,7 @@
     }
 
     func3 = function(weapon) {
-      alert('And my ' + weapon); //axe
+      console.log('And my ' + weapon); //axe
     }
 
     defer.promise.then(func1).then(func2).then(func3);

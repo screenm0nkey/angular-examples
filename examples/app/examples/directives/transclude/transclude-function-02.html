@@ -14,7 +14,7 @@
   var app = angular.module('app', []);
 
   app.controller('DemoCtrl', function($scope) {
-    console.log(1, $scope)
+    console.log(1, $scope); // $id = 003
     $scope.name = 'world';
   });
 
@@ -23,11 +23,17 @@
       restrict: 'A',
       transclude: true,
       template: '<div>transcluded: </div>',
-      controller: function($element, $attrs, $transclude) {
+      //  notice that we injecting $transclude into the controller
+      controller: function($element, $attrs, $transclude, $scope) {
+        // at this point the $scope is still 003 as we dont use isolate scope
+        console.log(2, $scope);
+
         $transclude(function(clone, scope) {
-          console.log(2, scope)
+          // the scope passed into the clone is a child of the parent scope
+          console.log(3, scope); // $id = 004
+          // as the scope is dfferent we can change the
           scope.name = 'AngularJS';
-          console.log(clone[0])
+          console.log(clone[0]);
           var transcluded = angular.element('<span style="color:red"></span>').append(clone);
           $element.children().append(transcluded);
         });

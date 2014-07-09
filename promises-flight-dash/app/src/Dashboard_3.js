@@ -13,7 +13,7 @@ var FlightDashboard = function( $scope, user, travelService, weatherService ) {
       });
   };
 
-  loadFlight = function(flightID) {
+  loadFlight = function(flightID) { // flight id comes loadDeparture();
     return travelService.getFlight( flightID )// Request #2
       .then( function( flight ) {
         $scope.flight = flight; // Response Handler #2

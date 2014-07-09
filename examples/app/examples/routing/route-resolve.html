@@ -8,7 +8,8 @@
   <script src="/lib/angular/angular-route.js"></script>
 </head>
 <body>
-  <div ng-app="app" ng-controller="AppCtrl">
+  <div ng-app="app">
+  Wait a second...
     <error></error>
     <ng-view></ng-view>
   </div>
@@ -16,7 +17,7 @@
 
   <script>
     // see the Routing folder for better examples of how to route shit.
-    window.app = angular.module('app', ['ngRoute', 'ngResource'])
+    window.app = angular.module('app', ['ngRoute', 'ngResource']);
 
 
     app.config(function ($routeProvider) {
@@ -33,16 +34,16 @@
       });
     });
 
-    var appCtrl = app.controller("AppCtrl", function ($scope) {
+    var appCtrl = app.controller("AppCtrl", function ($scope, loadData, prepData) {
       $scope.model = {
-        message: 'This is my app'
+        message: ['prepData:', prepData, ',loadData:', loadData].join(' ')
       };
     });
 
     appCtrl.loadData = function($q, $timeout) {
       var defer = $q.defer();
       $timeout(function() {
-        defer.resolve("loadData");
+        defer.resolve("laodyeee");
       }, 50);
       return defer.promise;
     };
@@ -50,8 +51,8 @@
     appCtrl.prepData = function($q, $timeout) {
       var defer = $q.defer();
       $timeout(function() {
-        defer.resolve("prepData");
-      }, 500);
+        defer.resolve("prepeee");
+      }, 1500);
       return defer.promise;
     };
 

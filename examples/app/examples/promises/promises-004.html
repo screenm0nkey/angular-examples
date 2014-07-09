@@ -1,0 +1,53 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <div ng-controller="AppCtrl"></div>
+  see promises 3.html
+
+  <script>
+  var app = angular.module("app", []);
+
+  app.controller("AppCtrl", function ($scope, $q) {
+    var defer = $q.defer();
+
+    func1 = function(weapon) {
+      var xhr = $q.defer();
+      console.log('function func1, argument ' + weapon);
+      window.setTimeout(function() {
+        xhr.resolve('func1');
+      }, 1000);
+      return xhr.promise;
+    };
+
+    func2 = function(weapon) {
+      console.log('function func2, argument ' + weapon);
+      return "func2";
+    };
+
+    func3 = function(weapon) {
+      var xhr = $q.defer();
+      console.log('function func3, argument ' + weapon);
+      window.setTimeout(function() {
+        xhr.resolve('func3');
+      }, 1000);
+      return xhr.promise;
+    };
+
+    func4 = function(weapon) {
+      console.log('function func4, argument ' + weapon);
+      return "func4";
+    };
+
+    func5 = function(weapon) {
+      console.log('function func5, argument ' + weapon);
+    };
+
+    defer.promise.then(func1).then(func2).then(func3).then(func4).then(func5);
+    defer.resolve('start');
+  });
+  </script>
+</body>
+</html>

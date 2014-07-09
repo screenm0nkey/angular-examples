@@ -25,9 +25,11 @@
 
   // http://stackoverflow.com/questions/18340872/how-do-you-use-sce-trustashtmlstring-to-replicate-ng-bind-html-unsafe-in-angu
   app.filter('unsafe', function($sce) {
-    debugger
     return function(val) {
-      return $sce.trustAsHtml(val);
+      var rval = $sce.trustAsHtml(val);
+      console.log(val);
+      console.log(rval);
+      return rval;
     };
   });
 

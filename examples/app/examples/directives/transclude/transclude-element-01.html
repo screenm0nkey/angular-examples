@@ -15,7 +15,7 @@
 
 
 
-    <my-transclude-element>
+    <my-transclude-element data-at="someval">
       <span>{{ something }}</span>
       <p>{{ otherThing }}</p>
     </my-transclude-true>
@@ -39,10 +39,10 @@ app.directive('myTranscludeTrue', function() {
    template: '<h3 ng-transclude></h3>',
    link: function(scope, elem, attrs, ctrl, transclude) {
       transclude(scope, function(clone) {
-        console.log(clone)
+        console.log(clone[0]);
      });
    }
- }
+ };
 });
 
 // the difference here the directive, including the content is
@@ -57,10 +57,10 @@ app.directive('myTranscludeElement', function() {
    template: '<h3 ng-transclude></h3>',
    link: function(scope, elem, attrs, ctrl, transclude) {
       transclude(scope, function(clone) {
-        console.log(clone);
+        console.log(clone[0]);
      });
    }
- }
+ };
 });
 </script>
 

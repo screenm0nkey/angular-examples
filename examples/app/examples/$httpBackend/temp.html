@@ -6,11 +6,13 @@
   <script src="/lib/angular/angular-mocks.js"></script>
 </head>
 <body ng-controller="MainCtrl">
+  <pre>
   <ul>
     <li>privileges - {{privileges}}</li>
     <li>Roles - {{privileges.Roles}}</li>
     <li>SubRoles - {{privileges.SubRoles}}</li>
   </ul>
+  </pre>
 
   <script>
   var app = angular.module('plunker', ['privilegeService']);

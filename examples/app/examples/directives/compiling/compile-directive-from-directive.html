@@ -21,7 +21,7 @@
         console.log(1, 'hi compile');
         return function link () {
           console.log(1, 'hi link');
-        }
+        };
       }
   };
 });
@@ -36,7 +36,7 @@
        console.log(2, 'hello compile');
        return function link () {
         console.log(2, 'hello link');
-      }
+      };
     }
   };
 });
@@ -50,7 +50,7 @@
          // you can't $compile an element which contains a directive, without a
          // scope
          var linkFn = $compile('<div ' + type + '></div>');
-         var $el = linkFn(scope)
+         var $el = linkFn(scope);
          $('body').append($el);
 
          // this does the same thing as the code above
@@ -61,7 +61,7 @@
          // but you can compile this without scope and it only contains text
          // which needs interpolation
          linkFn(scope);
-       }
+       };
      }
    };
  });

@@ -10,7 +10,7 @@
   <div ng-app="myApp">
     <span  ng-controller="UserCtrl">
       <ul>
-        <li ng-repeat="user in users">{{user.userId}}: {{user.userName}}</li>
+        <li ng-repeat="user in users">{{user}}</li>
         <button ng-click="addUser()">Add user (HTTP PUT)</button>
       </ul>
     </span>
@@ -37,7 +37,6 @@ angular.module('myApp')
         this.matches = url.match(regexp);
         return this.matches && this.matches.length > 0;
       }
-
     };
   };
 

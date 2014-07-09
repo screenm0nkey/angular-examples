@@ -12,7 +12,7 @@ var FlightDashboard = function( $scope, user, travelService, weatherService, $q 
   return $q.all([
     travelService.getFlight( departure.flightID ), // Request #2
     weatherService.getForecast( departure.date)// Reqeust #3
-  ])
+    ])
   //$q.all() returns an array of results. $q.spread converts them to function args
   .then($q.spread(function( flight, weather ){
     // update the $scope all together for perf improvements
@@ -20,12 +20,10 @@ var FlightDashboard = function( $scope, user, travelService, weatherService, $q 
     $scope.flight= flight; // Response Handler #2
     $scope.weather = weather;// Response Handler #3
   }));
-  };
+};
 
 
   // Wow! So much simpler...
   loadFlight( user ).then( loadFlightWeather );
 
 };
-
-

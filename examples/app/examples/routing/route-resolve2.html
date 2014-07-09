@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/angular/angular-resource.js"></script>
+  <script src="/lib/angular/angular-route.js"></script>
+</head>
+<body>
+  <div ng-app="app">
+    <error></error>
+    <ng-view></ng-view>
+  </div>
+
+
+  <script>
+    // see the Routing folder for better examples of how to route shit.
+    window.app = angular.module('app', ['ngRoute', 'ngResource']);
+
+
+    app.factory("session", function($q, $timeout){
+      return {
+        get: function(){
+          var deferred = $q.defer();
+          $timeout(function(){
+            deferred.resolve({message : "Allo!"});
+          },1000);
+          return deferred.promise;
+        }
+      };
+    });
+
+    app.config(function ($routeProvider) {
+      var originalWhen = $routeProvider.when;
+
+      $routeProvider.when = function(path, route){
+        route.resolve = route.resolve || {};
+        route.resolve = {
+          SSOUser : function(session) {
+            return session.get();
+          }
+        };
+        return originalWhen(path, route);
+      };
+
+      $routeProvider.when('/', {
+        template: "<h3>{{model.message}}</h3>",
+        controller: "AppCtrl"
+      });
+    });
+
+    var appCtrl = app.controller("AppCtrl", function ($scope, SSOUser) {
+
+      $scope.model = {
+        message: SSOUser.message
+      };
+    });
+
+
+
+  </script>
+</body>
+</html>

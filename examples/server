@@ -14,12 +14,26 @@ var staticDirs = ['css','lib', 'data'],
 
 app.use(express.directory(PATH, {icons:true}));
 app.use(express.static(PATH));
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(app.router);
+// app.use(express.static(path.join(__dirname, 'public')));
 
 app.configure(function () {
   staticDirs.forEach(function (item) {
     app.use('/'+item, express.static(path.join(__dirname, 'app/'+item)));
   });
-  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.multipart());
+  // app.use(express.bodyParser());
+});
+
+
+app.post("/upload/image", function (req, res) {
+  console.log(req);
+  res.send('ok');
 });
 
 //  read a json file from the system and return it

@@ -17,12 +17,11 @@
 
   app.controller('MainCtrl', function($scope, $compile) {
     $scope.addit = function (markup) {
-      $compile("<h1>{{text}}</h1>")($scope, function(cloned, scope) {
-        console.log(cloned[0])
-        angular.element('body').prepend(cloned);
+      $compile("<h1>{{text}}</h1>")($scope, function(compiledElement, scope) {
+        console.log(compiledElement[0]);
+        angular.element('body').prepend(compiledElement);
       });
-
-    }
+    };
   });
 
 

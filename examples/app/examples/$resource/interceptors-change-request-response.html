@@ -4,7 +4,7 @@
 
 <head>
   <style>
-  img {width: 100px; height:100px; float:left;}
+  /*img {width: 100px; height:100px; float:left;}*/
   </style>
 </head>
 
@@ -13,10 +13,9 @@
   <div ng-controller="MyController">
     <input type="text" ng-model="tagsrch">
 
-
     <h3>{{title}}</h3>
     <div>
-      <img ng-repeat="item in items" ng-src="{{item.media.m}}" alt="{{item.author}}"  />
+      <a ng-repeat="item in items" ng-href="{{item.link}}" target="_blank"><img ng-src="{{item.media.m}}" alt="{{item.author}}"  /></a>
     </div>
   </div>
 
@@ -32,12 +31,13 @@
   app.config(function ($provide, $httpProvider) {
 
   // Intercept http calls.
-  $provide.factory('MyHttpInterceptor', function ($q) {
+  $provide.factory('MyHttpInterceptor', function ($q, $cookieStore) {
     return {
       // On request success
       request: function (config) {
         // Contains the data about the request before it is sent.
         console.log(1, config);
+        var token = $cookieStore.get("auth");
         config.headers._auth_token = 'apikey="apikey1" accessToken="1234"';
         // Return the config or wrap it in a promise if blank.
         return config || $q.when(config);
@@ -60,7 +60,7 @@
       // On response failture
       responseError: function (rejection) {
         console.log(4, rejection); // Contains the data about the error.
-        if(response.status === 401){
+        if(rejection.status === 401){
           $location.path('/signin');
         }
         // Return the promise rejection.

@@ -1,7 +1,6 @@
 <!doctype html>
 <html ng-app="myApp">
 <head>
-  <script src="/lib/angular/angular.js"></script>
 </head>
 <body>
   <div ng-controller="ParentCtrl">
@@ -13,6 +12,7 @@
      </div>
   </div>
 
+  <script src="/lib/angular/angular.js"></script>
   <script>
    var myApp = angular.module('myApp', []);
 
@@ -21,7 +21,7 @@
         console.log('this', this);
         console.log('$scope', $scope);
         console.log(this === $scope);
-      }
+      };
    }
    function ChildCtrl($scope) {}
 

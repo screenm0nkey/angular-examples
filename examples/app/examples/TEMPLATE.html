@@ -1,17 +1,142 @@
 <!doctype html>
-<html ng-app="app">
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+    div[drm-comment] {
+      position: relative;
+    }
+    ul.menu {
+      position:absolute
+    }
+  </style>
 </head>
-<body ng-controller="MainCtrl">
+<body ng-app="app">
+
+  <table>
+    <tr>
+      <td>
+        <form ng-submit="CommentsController.addComment()" role="form" class="form-horizontal">
+          <table class="table">
+            <tr>
+              <td>
+                <div drm-comment>
+              </td>
+              <td>
+                <button type="submit" value="Submit" class="btn btn-success btn-xs">Submit</button>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </td>
+    </tr>
+  </table>
 
 
   <script src="/lib/angular/angular.js"></script>
-  <script>
-   var app = angular.module('app',[]);
-   app.controller('MainCtrl', function ($scope) {
+  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/underscore.js"></script>
 
-   });
+  <script type="text/ng-template" id="menu.html">
+    <div>
+    {{user.firstname}}
+      <input type="text" ng-model="form.comment" name="form.comment" placeholder="m" class="form-control"/>
+      <ul class="menu">
+        <li ng-repeat="user in users | filter:user.firstname">
+          <a href="">{{ user.firstname }}</a>
+        </li>
+      </ul>
+    </div>
+  </script>
+
+  <script type="text/javascript">
+
+    var app = angular.module('app', []);
+
+    app.directive('drmComment', function() {
+      return {
+        restrict: 'A',
+        scope : true,
+        replace: true,
+        templateUrl: 'menu.html',
+        controller : function($scope, $element, $attrs) {
+
+          $scope.users = [{
+            firstname : 'Paul',
+            lastname : 'Gustafik'
+          },
+          {
+            firstname : 'Pat',
+            lastname : 'Name'
+          },
+          {
+            firstname : 'Mark',
+            lastname : 'Paut'
+          }];
+
+           $element.find('input').on('keyup click', function (ev) {
+             var user = searchString(ev.target);
+
+             if (user) {
+               console.log(user);
+               $scope.user = {firstname : user};
+             } else {
+
+               console.log('hide menu');
+            }
+          });
+
+           var searchString = function(el) {
+             var str = $(el).val();
+             var snippet = str.slice(0, doGetCaretPosition(el));
+             var lastIndexOfAt = snippet.lastIndexOf('@');
+             var indexOfSpace = snippet.lastIndexOf(' ');
+
+             if(indexOfSpace < lastIndexOfAt) {
+               snippet = str.slice(lastIndexOfAt);
+               indexOfSpace = snippet.indexOf(' ');
+
+               if (indexOfSpace < 0) {
+                 indexOfSpace = snippet.length;
+               }
+               snippet = snippet.slice(0, indexOfSpace).replace('@','').toLowerCase();
+             } else {
+               snippet = null;
+             }
+
+             return snippet;
+           };
+
+
+           function doGetCaretPosition (oField) {
+              // Initialize
+              var iCaretPos = 0;
+              // IE Support
+              if (document.selection) {
+                  // Set focus on the element
+                  oField.focus ();
+                  // To get cursor position, get empty selection range
+                  var oSel = document.selection.createRange ();
+                  // Move selection start to 0 position
+                  oSel.moveStart ('character', -oField.value.length);
+                  // The caret position is selection length
+                  iCaretPos = oSel.text.length;
+                }
+              // Firefox support
+              else if (oField.selectionStart || oField.selectionStart == '0')
+                iCaretPos = oField.selectionStart;
+              // Return results
+              return (iCaretPos);
+            }
+
+
+        }
+      };
+    });
+
 
   </script>
+
 </body>
 </html>

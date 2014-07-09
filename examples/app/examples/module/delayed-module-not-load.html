@@ -5,12 +5,11 @@
 <body ng-app="app">
 
   <a href="#" ng-click="addController()">Nicks App</a>
-
   <script src="/lib/jquery.min.js"></script>
   <script src="/lib/angular/angular.js"></script>
 
   <script>
-
+    // this code example show how you CANT load controllers after the app has been bootstrapped.
     angular.module('app',[]).run(function ($rootScope, $compile) {
       $rootScope.addController = function () {
         // adding a controller like this after the application has bootstrapped

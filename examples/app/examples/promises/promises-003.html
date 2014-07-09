@@ -1,0 +1,48 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <script src="/lib/angular/angular.js"></script>
+</head>
+<body>
+  <div ng-controller="AppCtrl"></div>
+  <pre>
+  See console
+  </pre>
+
+  <script>
+  var app = angular.module("app", []);
+  console.log("defer.promise.then(func1).then(func2).then(func3).then(func4).then(func5);")
+
+  app.controller("AppCtrl", function ($scope, $q) {
+    var defer = $q.defer();
+
+    func1 = function(weapon) {
+      console.log('this is function func1, it received ' + weapon);
+      return "func1";
+    };
+
+    func2 = function(weapon) {
+      console.log('this is function func2, it recieved ' + weapon);
+      return "func2";
+    };
+
+    func3 = function(weapon) {
+      console.log('this is function func3, it recieved ' + weapon);
+      return "func3";
+    };
+
+    func4 = function(weapon) {
+      console.log('this is function func4, it recieved ' + weapon);
+      return "func4";
+    };
+
+    func5 = function(weapon) {
+      console.log('this is function func5, it recieved ' + weapon);
+    };
+
+    defer.promise.then(func1).then(func2).then(func3).then(func4).then(func5);
+    defer.resolve('start');
+  });
+  </script>
+</body>
+</html>

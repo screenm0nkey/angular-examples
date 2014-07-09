@@ -47,11 +47,13 @@
 
   app.directive('dropPanel', function(){
     return {
+      // transclude true would not include the input with the drop-panel directive
       transclude: 'element',
       replace: true,
       templateUrl: 'drop-panel.html',
       link: function(scope, el){
-        console.log(el[0])
+        // el is the drop-panel html and not the input element
+        console.log(el[0]);
         var input = $('input');
 
         input.focus(function(){
@@ -62,7 +64,7 @@
           el.removeClass('is-active');
         });
       }
-    }
+    };
   });
  </script>
 

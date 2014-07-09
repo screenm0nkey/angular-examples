@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>AngularJS Plunker</title>
+  <style type="text/css">
+  input { display: block; }
+  </style>
+</head>
+
+<body>
+<a href="http://stackoverflow.com/questions/11616636/how-to-do-two-way-filtering-in-angular-js">see here</a>
+
+  <div ng-app="demo" ng-init="" ng-controller="Demo">
+    <div>
+      <button ng-click="loadData1()">Load Data -- all caps</button>
+      <button ng-click="loadData2()">Load Data -- all lowercase</button>
+    </div>
+
+    <input type="text" lowercase ng-model="data.var1"></input>
+    <input type="text" lowercase ng-model="data.var2"></input>
+    <p>
+      This is the data in the model <br>
+      <code>
+        {{ data }}
+      </code>
+    </p>
+
+  </div>
+
+
+  <script src="/lib/angular/angular.js"></script>
+  <script type="text/javascript">
+
+    var module = angular.module("demo", []);
+
+    module.directive('lowercase', function() {
+      return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attr, ngModel) {
+
+          function fromViewToModel(text) {
+            return (text || '').toUpperCase();
+          }
+
+          function toUser(text) {
+            return (text || '').toLowerCase();
+          }
+          ngModel.$parsers.push(fromViewToModel);
+          ngModel.$formatters.push(toUser);
+        }
+      };
+    });
+
+    function Demo($scope) {
+
+      $scope.data = {
+        var1: 'VALUE 1',
+        var2: 'VALUE 2'
+      };
+
+      $scope.loadData1 = function() {
+        $scope.data = {
+          var1: 'ABCDEF',
+          var2: 'GHJ ILK12345'
+        };
+      };
+
+      $scope.loadData2 = function() {
+        $scope.data = {
+          var1: 'hdsdfjh',
+          var2: 'please talk quietly in the library'
+        };
+      };
+
+    }
+
+  </script>
+</body>
+</html>

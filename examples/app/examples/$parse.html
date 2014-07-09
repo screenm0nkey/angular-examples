@@ -10,7 +10,9 @@
   <script>
   var app = angular.module("app", []);
 
-  app.controller("MainCtrl", function ($scope, $parse) {
+  app.controller("MainCtrl", function ($scope, $parse, $timeout) {
+    $scope.attrs = {};
+
     console.log($parse('name')({name:'sick'})) // sick
     console.log($parse('name')({name:'nick'}, {name:'liz'})) // liz
     console.log($parse('name')({name:'mick'}, {fame:'liz'})) // mick
@@ -30,6 +32,18 @@
       }
     }); //12
 
+
+    $timeout(function() {
+      $scope.attrs.weeks = 11;
+    }, 1000)
+    // watch takes two functions, a watcher and handler. we're passing in
+    // $parse'd value as $parse returns a function and $watch calls that
+    // function with the $scope as the context.
+    $scope.$watch($parse('attrs.weeks'), function(newval, oldval) {
+      if (newval) {
+        console.log('new', newval);
+      };
+    });
   });
 
 

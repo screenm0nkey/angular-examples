@@ -43,6 +43,7 @@
 
           element.on('click', function(event) {
             scope.$apply(function() {
+              debugger
               scope.$eval(attr.myClick, {
                 $event: event
               });

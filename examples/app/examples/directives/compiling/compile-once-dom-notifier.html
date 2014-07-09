@@ -22,10 +22,10 @@
 
       this.addItem = function() {
         $scope.items.push(Math.round(Math.random()*1000));
-      }
+      };
       this.removeItem = function(index){
         $scope.items.splice(index,1);
-      }
+      };
       // add three items for a start, which ng-repeat will compile and insert
       // the element into the DOM. each of the ng-repeat items contains a an
       // 'announcer' directive. the directives link and controller method will
@@ -44,13 +44,13 @@
           this.addElement = function(elmScope){
             console.log('item added', elmScope);
             document.getElementById('log').innerHTML += 'item added: ' + elmScope.item + '<br>';
-          }
+          };
           this.removeElement = function(elmScope){
             console.log('item removed', elmScope);
             document.getElementById('log').innerHTML += 'item removed: ' + elmScope.item + '<br>';
-          }
+          };
         }
-      }
+      };
     });
 
     // becuase this directive is on an ng-repeat, compile is only called once
@@ -63,7 +63,7 @@
         restrict: 'A',
         require : '?^notifier',
         controller : function () {
-          console.log('CONTROLLER')
+          console.log('CONTROLLER');
         },
         compile : function () {
           console.log('COMPILE'); //called once
