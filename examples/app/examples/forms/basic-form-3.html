@@ -9,12 +9,15 @@
   <script>
     function Ctrl($scope) {
       $scope.user = {name: 'guest', last: 'visitor'};
+      $scope.keyup = function(){
+          console.log($scope)
+      }
     }
   </script>
   <div ng-controller="Ctrl">
     <form name="myForm">
       User name:
-      <input type="text" name="userName" ng-model="user.name" required>
+      <input type="text" name="userName" ng-model="user.name" ng-keyup="keyup()" required>
       <span class="error" ng-show="myForm.userName.$error.required">Required!</span><br>
 
       Last name:

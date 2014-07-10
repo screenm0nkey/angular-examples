@@ -8,8 +8,12 @@
       position: relative;
     }
     ul.menu {
-      position:absolute
+      position:absolute;
+      background : #fff;
     }
+     td {
+         display : block;
+     }
   </style>
 </head>
 <body ng-app="app">
@@ -18,10 +22,10 @@
     <tr>
       <td>
         <form ng-submit="CommentsController.addComment()" role="form" class="form-horizontal">
-          <table class="table">
+          <table>
             <tr>
               <td>
-                <div drm-comment>
+                <div drm-comment class="foo">
               </td>
               <td>
                 <button type="submit" value="Submit" class="btn btn-success btn-xs">Submit</button>
@@ -40,11 +44,11 @@
 
   <script type="text/ng-template" id="menu.html">
     <div>
-    {{user.firstname}}
+     <p>Match = {{ searchStr }}</p>
       <input type="text" ng-model="form.comment" name="form.comment" placeholder="m" class="form-control"/>
-      <ul class="menu">
-        <li ng-repeat="user in users | filter:user.firstname">
-          <a href="">{{ user.firstname }}</a>
+      <ul class="menu" ng-show="searchStr">
+        <li ng-repeat="user in users | filter:searchStr">
+          <a href="" ng-click="addUser()">{{ user.email }}</a>
         </li>
       </ul>
     </div>
@@ -60,52 +64,54 @@
         scope : true,
         replace: true,
         templateUrl: 'menu.html',
-        controller : function($scope, $element, $attrs) {
+        controller : function($scope, $element) {
 
           $scope.users = [{
-            firstname : 'Paul',
-            lastname : 'Gustafik'
+            email : 'paul.gustafik',
+            guid : 1
           },
           {
-            firstname : 'Pat',
-            lastname : 'Name'
+            email : 'pat.name',
+            guid : 2
           },
           {
-            firstname : 'Mark',
-            lastname : 'Paut'
+            email : 'mark.paut',
+            guid : 3
           }];
 
-           $element.find('input').on('keyup click', function (ev) {
-             var user = searchString(ev.target);
 
-             if (user) {
-               console.log(user);
-               $scope.user = {firstname : user};
+           $element.find('input').on('keyup click', _.debounce(function (e) {
+             var searchStr = searchString( $(e.target).val(), doGetCaretPosition(e.target));
+
+               if (searchStr) {
+               $scope.searchStr = searchStr ;
              } else {
-
-               console.log('hide menu');
+                $scope.searchStr = null;
             }
-          });
+               $scope.$digest()
+          }, 50));
 
-           var searchString = function(el) {
-             var str = $(el).val();
-             var snippet = str.slice(0, doGetCaretPosition(el));
-             var lastIndexOfAt = snippet.lastIndexOf('@');
-             var indexOfSpace = snippet.lastIndexOf(' ');
+           // Based on where the caret is in the text input the search will return a matching search string
+           // i.e. if the caret is on the word '@cars' in 'I like @cars' then it will return 'cars'
+           var searchString = function(originalStrValue, caretPosition) {
+             var selectionToCaret = originalStrValue.slice(0, caretPosition);
+             var lastIndexOfAt = selectionToCaret.lastIndexOf('@');
+             var lastIndexOfSpace = selectionToCaret.lastIndexOf(' ');
+             var searchStr;
 
-             if(indexOfSpace < lastIndexOfAt) {
-               snippet = str.slice(lastIndexOfAt);
-               indexOfSpace = snippet.indexOf(' ');
+             if(lastIndexOfSpace < lastIndexOfAt) {
+               searchStr = originalStrValue.slice(lastIndexOfAt); // snippet is everything from lastIndex to end
+               var indexOfSpaceInSearchStr = searchStr.indexOf(' ');
 
-               if (indexOfSpace < 0) {
-                 indexOfSpace = snippet.length;
+               if (indexOfSpaceInSearchStr < 0) {
+                   indexOfSpaceInSearchStr = searchStr.length;
                }
-               snippet = snippet.slice(0, indexOfSpace).replace('@','').toLowerCase();
+               searchStr = searchStr.slice(0, indexOfSpaceInSearchStr).replace('@','').toLowerCase();
              } else {
-               snippet = null;
+               searchStr = null;
              }
 
-             return snippet;
+             return searchStr;
            };
 
 
