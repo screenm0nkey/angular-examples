@@ -13,18 +13,18 @@
   app.controller("MainCtrl", function ($scope, $parse, $timeout) {
     $scope.attrs = {};
 
-    console.log($parse('name')({name:'sick'})) // sick
-    console.log($parse('name')({name:'nick'}, {name:'liz'})) // liz
-    console.log($parse('name')({name:'mick'}, {fame:'liz'})) // mick
-    console.log($parse('name')({name:'pick'}, {})) // pick
+    console.log($parse('name')({name:'sick'})); // sick
+    console.log($parse('name')({name:'nick'}, {name:'liz'})); // liz
+    console.log($parse('name')({name:'mick'}, {fame:'liz'})); // mick
+    console.log($parse('name')({name:'pick'}, {})); // pick
     console.log($parse('event.name')({
       event : {
         name:'nick'
       }
-    })) // nick
+    })); // nick
 
-    var fn = $parse('name')
-    fn({ name:function(){console.log(10)}})() //10
+    var fn = $parse('name');
+    fn({ name:function(){console.log(10);}})(); //10
 
     $parse('clickme()')({
       clickme : function(){
@@ -35,14 +35,14 @@
 
     $timeout(function() {
       $scope.attrs.weeks = 11;
-    }, 1000)
+    }, 1000);
     // watch takes two functions, a watcher and handler. we're passing in
     // $parse'd value as $parse returns a function and $watch calls that
     // function with the $scope as the context.
     $scope.$watch($parse('attrs.weeks'), function(newval, oldval) {
       if (newval) {
         console.log('new', newval);
-      };
+      }
     });
   });
 

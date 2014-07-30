@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html ng-app="angularjs-starter">
-
+<html ng-app="app">
 <head lang="en">
   <meta charset="utf-8">
-  <title>Custom Plunker</title>
+  <title>Custom Form</title>
 </head>
-<body ng-controller="MainCtrl">
 
-  <a ng-click="addNew()" style="cursor:pointer;">+ add new</a>
+<body ng-controller="MainCtrl">
+  <a ng-click="addNew()" style="cursor:pointer;">+ add new form input</a>
 
   <form name="mainForm" ng-submit="submitAll()">
     <ul>
@@ -15,7 +14,7 @@
         <input type="text" required name="name" ng-model="item.name"/>
         <span ng-show="subForm.name.$error.required">required</span>
         <button type="button" ng-disabled="subForm.$invalid" ng-click="submitOne(item)">
-          Submit One
+          Submit Single Form
         </button>
       </li>
     </ul>
@@ -23,21 +22,22 @@
       Submit All
     </button>
   </form>
-
   <hr/>
   <div ng-show="lastSubmit">Last Submit:</div>
   <pre>{{lastSubmit | json}}</pre>
 
+
+
   <script src="/lib/angular/angular.js"></script>
   <script>
-  var app = angular.module('angularjs-starter', []);
+  var app = angular.module('app', []);
 
   app.controller('MainCtrl', function($scope) {
     $scope.items = [];
 
     $scope.addNew = function (){
       $scope.items.push({ name: '' });
-      console.log($scope)
+      console.log($scope);
     };
 
     $scope.submitOne = function (item){
@@ -46,7 +46,7 @@
 
     $scope.submitAll = function() {
       $scope.lastSubmit = angular.copy($scope.items);
-    }
+    };
   });
   </script>
 </body>

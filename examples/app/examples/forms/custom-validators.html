@@ -21,37 +21,43 @@
  </div>
 
  <script src="/lib/angular/angular.js"></script>
+ <script src="/lib/jquery.min.js"></script>
 
  <script>
- var app=angular.module('app',[]);
+   var app=angular.module('app',[]);
 
- app.controller('HomeCtrl', function($scope){
-  $scope.val=20;
+   app.controller('HomeCtrl', function($scope){
+    $scope.val=20;
 
-  $scope.setValue = function(val){
-    $scope.val=val;
-  };
-});
+    $scope.setValue = function(val){
+      $scope.val=val;
 
- app.directive('evenNumber', function(){
-  return{
-    require:'ngModel',
-    link: function(scope, elem, attrs, ctrl){
-      ctrl.$parsers.unshift(checkForEven);
+      $('input[name=valText]').trigger('change')
+    };
 
-      function checkForEven(viewValue){
-        if (parseInt(viewValue)%2 === 0) {
-          ctrl.$setValidity('evenNumber',true);
+
+  });
+
+   app.directive('evenNumber', function(){
+    return{
+      require:'ngModel',
+      link: function(scope, elem, attrs, ctrl){
+        ctrl.$parsers.unshift(checkForEven);
+
+        function checkForEven(viewValue){
+
+          if (parseInt(viewValue)%2 === 0) {
+            ctrl.$setValidity('evenNumber',true);
+          }
+          else{
+            ctrl.$setValidity('evenNumber', false);
+          }
+          return viewValue;
         }
-        else{
-          ctrl.$setValidity('evenNumber', false);
-        }
-        return viewValue;
       }
-    }
-  };
+    };
 
-});
- </script>
+  });
+</script>
 </body>
 </html>

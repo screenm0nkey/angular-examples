@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="angularjs-starter">
+<html ng-app="app">
 
 <head lang="en">
   <meta charset="utf-8">
@@ -19,15 +19,15 @@
   </form>
   <hr/>
   <div ng-show="lastSubmit">Last Submit:</div>
-  <pre>{{lastSubmit | json}}</pre>
+  <pre>{{items | json}}</pre>
 
   <script src="/lib/angular/angular.js"></script>
   <script>
-    var app = angular.module('angularjs-starter', []);
+    var app = angular.module('app', []);
 
     app.controller('MainCtrl', function($scope) {
       $scope.items = [
-      { id: 1, name: 'username', isRequired: true},
+      { id: 1, name: 'username', isRequired: true },
       { id: 2, name: 'password', isRequired: true, type:'password'},
       { id: 3, name: 'email', isRequired: true, type:'email'},
       { id: 4, name: 'telno', isRequired: true, type:'number'}

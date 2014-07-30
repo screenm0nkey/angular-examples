@@ -39,10 +39,11 @@
   });
 
   app.controller('MainCtrl', function ($scope, Resource) {
+    var success, error;
     // success and error callback handlers
-    var success = error = function (data) {
+    success = error = function (data) {
       console.log(data);
-    }
+    };
 
     $scope.show = function () {
       // basic examples
@@ -54,7 +55,7 @@
       // using the class $promise method of the Resource class constructor
       Resource.get({id: $scope.user.name }).$promise.then(function (data) {
         $scope.data3 = data;
-      })
+      });
 
       // instantaiting a new instance of Resource and then calling it's methods
       var ev = new Resource({id :  $scope.user.name});

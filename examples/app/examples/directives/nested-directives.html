@@ -23,10 +23,10 @@
 
         $scope.sayHello = function() {
           alert(greetings.join());
-        }
+        };
         this.addGreeting = function(greeting) {
           greetings.push(greeting);
-        }
+        };
       }
     };
   });
@@ -40,7 +40,7 @@
       link: function(scope, element, attrs, controller) {
         controller.addGreeting('finnish');
       }
-    }
+    };
   });
 
   myApp.directive('hindi', function() {

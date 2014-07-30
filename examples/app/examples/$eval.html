@@ -16,21 +16,21 @@
 
   app.controller('MainCtrl', function($scope) {
 
-    $scope.f = 'Nick'
-    $scope.l = 'Lowman'
+    $scope.f = 'Nick';
+    $scope.l = 'Lowman';
     $scope.m = function () {
       console.log('That good yar');
       return 'Tim';
-    }
-    $scope.d = { nick : 11 }
-    $scope.arr = [1,22,3]
+    };
+    $scope.d = { nick : 11 };
+    $scope.arr = [1,22,3];
 
     // $eval returns the value on the evaluation
     console.log($scope.$eval("f+' '+l")); // Nick Lowman
-    $scope.$eval("m")() // 'That good yar'
-    $scope.$eval("m()") // 'That good yar'
+    $scope.$eval("m")(); // 'That good yar'
+    $scope.$eval("m()"); // 'That good yar'
     // this will log Tim as it invokes the method which returns 'Tim'
-    console.log($scope.$eval("m()")) // 'That good yar' and 'Tim'
+    console.log($scope.$eval("m()")); // 'That good yar' and 'Tim'
 
     $scope.$eval('a = 1');
     $scope.$eval('b = 2');

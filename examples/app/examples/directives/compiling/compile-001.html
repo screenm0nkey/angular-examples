@@ -29,14 +29,14 @@
      scope : {},
      compile: function(tElement, attrs) {
        var content = tElement.children();
-       console.log(1, content[0])
+       console.log(1, content[0]);
        tElement.append(content.clone());
        // link function
         return function link (scope, element, attributes, controller) {
-          scope.hello = "Scope test";
-        }
+          scope.hello = "double directive";
+        };
       }
-    }
+    };
   });
 
   app.directive('ntimes', function() {
@@ -53,9 +53,9 @@
           // debugger at this point you will see all the dom elements before interpolation
           scope.count = attributes.repeat;
           scope.hello = "More text";
-        }
+        };
      }
-   }
+   };
  });
 
   </script>
