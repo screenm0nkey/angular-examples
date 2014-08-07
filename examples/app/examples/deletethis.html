@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+  p {
+    text-decoration: line-through;
+  }
+  </style>
+</head>
+<body>
+
+
+<p>strike</p>
+
+
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/underscore.js"></script>
+
+  <script type="text/javascript">
+ var formDataModelSaved = [{
+  category : 'TYPE',
+  selected : [1,2]
+ },
+ {
+  category : 'CLASS',
+  selected : [3,4]
+ }];
+
+ var converted = {};
+
+ _.each(formDataModelSaved, function(item) {
+  converted[item.category] = item.selected;
+ });
+
+  var selected = {
+    TYPE  : [3,4,5],
+    CLASS : [3,4,5]
+  };
+
+_.each(selected, function(value, key) {
+  var valuesAsArray = value;
+  var deletedValuesArray = _.difference(converted[key], valuesAsArray);
+  console.log(deletedValuesArray);
+});
+
+
+
+
+
+
+
+  </script>
+
+</body>
+</html>
