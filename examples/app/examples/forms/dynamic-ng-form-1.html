@@ -10,7 +10,7 @@
 
   <form name="mainForm" ng-submit="submitAll()">
     <ul>
-      <li ng-repeat="item in items" ng-form="subForm">
+      <li ng-repeat="item in items" >
         <input type="text" required name="name" ng-model="item.name"/>
         <span ng-show="subForm.name.$error.required">required</span>
         <button type="button" ng-disabled="subForm.$invalid" ng-click="submitOne(item)">
