@@ -1,163 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Document</title>
+  <meta charset="UTF-8" />
+  <title>Content with Menu</title>
+  <style>
+    .content .left {
+      float:left;
+      width:100px;
+      background-color:green;
+    }
+    .content .right {
+      margin-left:100px;
+      background-color:red;
+    }
+    .cf:before,
+    .cf:after {
+      content: " "; /* 1 */
+      display: table; /* 2 */
+    }
+    .cf:after {
+      clear: both;
+    }
+    .cf {
+      *zoom: 1;
+    }
 
+  </style>
 </head>
 <body>
-
-
-
-
-  <script src="/lib/angular/angular.js"></script>
-  <script src="/lib/jquery.min.js"></script>
-  <script src="/lib/underscore.js"></script>
-
-  <script type="text/javascript">
-
-
-    var convertToFormObj= function(formItem){
-      var obj = {};
-
-      if (formItem.selected && formItem.selected.length) {
-        if (formItem.multiselect === true) {
-          var values = {};
-          obj[formItem.category] = values;
-
-          _.each(formItem.selected, function (selected) {
-            values[selected] = true;
-          });
-
-        } else if (formItem.multiselect === false) {
-          obj[formItem.category] = String(formItem.selected[0]);
-        }
-      }
-
-      return obj;
-    };
-
-
-    var convertToSubObj = function (formItem) {
-      var omitted = _.omit(formItem, ['category', 'multiselect', 'selected']);
-      var obj;
-
-        _.each(omitted, function(value, key) {
-          _.each(omitted[key], function(item) {
-            var keyName = [formItem.category, '_', key, '_', item.category].join('');
-            value[0].category = keyName;
-            obj = value[0];
-          });
-        });
-
-        return obj;
-    };
-
-
-    var convertDataToAngularFormModel = function (formDataArray) {
-      var obj = {};
-
-      var traverseFormItems = function(formItem) {
-        var subs = convertToSubObj(formItem);
-         if (_.isObject(subs)) {
-          traverseFormItems(subs);
-         }
-        angular.extend(obj, convertToFormObj(formItem));
-      };
-
-      for (var i = formDataArray.length - 1; i >= 0; i--) {
-        traverseFormItems(formDataArray[i]);
-      }
-
-        console.log(obj);
-        console.log(classificationModel);
-        console.log(_.isEqual(obj, classificationModel));
-      };
-
-
-
-      var get = [
-      { category:'ISDA_TYPE', multiselect : true, selected : [1, 2]},
-      {
-        category:'ISSUE_TYPE',
-        multiselect : true,
-        selected : [3, 4],
-        3 : [{
-          category : 'CSA_Excluded_Products',
-          multiselect : true,
-          selected: [1, 2]
-        }]
-      },
-      {
-        category:'CLIENT_TYPE',
-        multiselect : false,
-        selected : [5]
-      }
-      ];
-
-      var put = [
-      {category: 'ISDA_TYPE','selected':[1,2]},
-      {
-        category: 'ISSUE_TYPE',
-        selected:[3,4],
-        3: [{
-          category: 'CSA_Excluded_Products',
-          selected:[1,2]
-        }]
-      },
-      {category: 'CLIENT_TYPE','selected':[5]}
-      ];
-
-      var classificationModel = {
-        ISDA_TYPE: {
-          1 : true,
-          2 : true
-        },
-        ISSUE_TYPE: {
-          3 : true,
-          4 : true
-        },
-        ISSUE_TYPE_3_CSA_Excluded_Products: {
-          1 : true,
-          2 : true
-        },
-        CLIENT_TYPE: '5'
-      };
-
-
-      convertDataToAngularFormModel(get);
-
-
-
-      var extractsubkeys = function(formModel) {
-        _.each(formModel, function(value, key){
-         var exec = /(\d+)_([a-zA-Z_]+)$/.exec(key);
-         var obj = {}
-
-         if (exec && exec.length) {
-            var arr = [];
-            obj[exec[1]] = arr;
-            arr.push({
-              category : exec[2],
-              selected : _.toArray(value)
-            });
-         }
-
-
-        });
-
-        console.log(obj)
-      };
-
-
-      extractsubkeys(classificationModel);
-
-
-
-
-
-
-    </script>
-
-  </body>
-  </html>
+  <div class="content">
+    <div class="cf">
+      <div class="left">Title!</div>
+      <div class="right">
+        Creating the user interface using node-webkit is no different than creating a webpage (with the slight difference that you know the rendering engine, so you don't have to provide any fallbacks for older browsers, or use libraries like jQuery - and actually you shouldn't, because they include fallback code that will slow down your app). Let's create an index.html file that we will use:
+      </div>
+    </div>
+    <div class="cf">
+      <div class="left">Title!</div>
+      <div class="right">
+        Creating the user interface using node-webkit is no different than creating a webpage (with the slight difference that you know the rendering engine, so you don't have to provide any fallbacks for older browsers, or use libraries like jQuery - and actually you shouldn't, because they include fallback code that will slow down your app). Let's create an index.html file that we will use:
+      </div>
+    </div>
+  </div>
+</body>
+</html>
