@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+
+</head>
+<body>
+
+<script src="/lib/underscore.js"></script>
+<script type="text/javascript">
+
+var str = "some/path/to/data";
+var splitPath = str.split('/');
+var db = {
+  some : {
+    age : 10
+  }
+}
+var dbc = db;
+
+for (var i = 0, len = splitPath.length; i < len; i++) {
+  var part = splitPath.shift();
+
+  if (i === len-1) {
+    dbc[part] = 'data';
+  } else {
+    dbc[part] = dbc[part] || {};
+    dbc = dbc[part];
+  }
+};
+
+console.log(db)
+
+</script>
+
+
+</body>
+</html>

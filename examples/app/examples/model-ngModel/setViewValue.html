@@ -17,7 +17,6 @@
     <script src="/lib/jquery.min.js"></script>
 
     <script type="text/javascript">
-
     var eventsApp = angular.module("eventsApp", []);
 
     eventsApp.controller('MainCtrl', function ($scope) {
@@ -35,6 +34,8 @@
       var el = angular.element($('#name'));
 
       el.scope().$apply(function(){
+        // the element has to have an ng-model directive applied to it for you
+        // to be able to use el.controller('ngModel')
         console.log(el.controller('ngModel'));
         // this just sets the value of the form input
         el.val(value);

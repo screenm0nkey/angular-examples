@@ -48,11 +48,11 @@
         $scope.user = new SmartUserModel(1);
       }])
 
-    app.controller('EighthCtrl', ['$scope', 'SmartUserModel', function($scope, SmartUserModel) {
-      $scope.user = new SmartUserModel(1);
-    }])
+      app.controller('EighthCtrl', ['$scope', 'SmartUserModel', function($scope, SmartUserModel) {
+        $scope.user = new SmartUserModel(1);
+      }])
 
-    app.provider('SmartUserModel', function() {
+      app.provider('SmartUserModel', function() {
         this.$get = ['$timeout', function($timeout) {
           var User = function User(id) {
             if (User.cached[id]) return User.cached[id];
@@ -63,6 +63,6 @@
           return User;
         }];
       });
-  </script>
-</body>
-</html>
+    </script>
+  </body>
+  </html>

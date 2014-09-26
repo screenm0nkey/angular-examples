@@ -48,7 +48,7 @@
      link: function(scope, element, attr) {
        scope.addType = function(type) {
          // you can't $compile an element which contains a directive, without a
-         // scope
+         // scope object
          var linkFn = $compile('<div ' + type + '></div>');
          var $el = linkFn(scope);
          $('body').append($el);
@@ -58,7 +58,7 @@
          $el = angular.element('<div>{{nick}}</div>');
          linkFn = $compile($el);
          $('body').append($el);
-         // but you can compile this without scope and it only contains text
+         // but you can compile this without scope as it only contains text
          // which needs interpolation
          linkFn(scope);
        };

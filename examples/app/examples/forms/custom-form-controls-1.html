@@ -30,6 +30,7 @@
       return {
         require: 'ngModel',
         link: function(scope, elm, attrs, ngModelCtrl) {
+          // $parsers > View to Model
           ngModelCtrl.$parsers.unshift(function callback (viewValue) {
             if (INTEGER_REGEXP.test(viewValue)) {
               // it is valid
@@ -39,7 +40,7 @@
             else {
               // it is invalid, return undefined (no model update)
               ngModelCtrl.$setValidity('integer', false);
-              return undefined;
+              return viewValue;
             }
           });
         }
@@ -57,7 +58,7 @@
               return parseFloat(viewValue.replace(',', '.'));
             } else {
               ngModelCtrl.$setValidity('float', false);
-              return undefined;
+              return viewValue;
             }
           });
         }

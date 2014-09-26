@@ -37,14 +37,19 @@
 
            // model -> view
            ngModelCtrl.$render = function() {
-             elm.html(ngModelCtrl.$viewValue);
+              elm.html(ngModelCtrl.$viewValue);
+              console.log('$render');
+              console.log(ngModelCtrl);
            };
 
-          // after 1sec we update the scope and then called the $render method
-          // which will update the view
-          $timeout(function (aParam) {
+          // after 1 sec we update the scope. the $timeout then calls the $digest
+          // which notices the value has changed and updates ngModel and the
+          // $render method is called
+          $timeout(function () {
             scope.content = 'NICK';
-            ngModelCtrl.$render()
+            console.log('$scope.content = NICK');
+            // this is the same as ngModelCtrl
+            console.log(elm.controller('ngModel'))
           },1000)
 
              // load init value from DOM

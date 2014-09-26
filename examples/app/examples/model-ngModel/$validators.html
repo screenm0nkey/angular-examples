@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Validators</title>
+  <style type="text/css">
+    input.ng-invalid { border : solid red 1px;}
+  </style>
+</head>
+
+<body ng-app="demo">
+  <form>
+    <input ng-model="data.someval" name="validatorTest" validators required/>
+    {{data.someval}}
+  </form>
+
+  <script src="/lib/angular/angular.js"></script>
+  <script type="text/javascript">
+
+    var module = angular.module("demo", []);
+
+    module.directive('validators', function() {
+      return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attr, ngModel) {
+          debugger
+          ngModel.$validators.validCharacters = function(modelValue, viewValue) {
+            debugger
+            var value = modelValue || viewValue;
+            return /[0-9]+/.test(value) &&
+            /[a-z]+/.test(value) &&
+            /[A-Z]+/.test(value) &&
+            /\W+/.test(value);
+          };
+        }
+      };
+    });
+
+
+
+  </script>
+</body>
+</html>

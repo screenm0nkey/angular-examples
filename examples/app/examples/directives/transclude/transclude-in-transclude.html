@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Content with Menu</title>
+  <style type="text/css">
+      tabgroup {
+        display: block;
+        border: solid red 1px;
+      }
+      div.tab {
+        display: block;
+        border:solid green 2px;
+      }
+      .btn {
+        border: solid 1px blue;
+        background-color: lightBlue;
+        border-radius: 4px;
+      }
+  </style>
+</head>
+<body ng-app="app">
+
+<tabgroup>
+  <tab title="Description">
+    <p>Some stuff for description</p>
+  </tab>
+  <tab title="Specs">
+    <p>Some stuff for description</p>
+  </tab>
+  <tab title="Reviews">
+    <p>Some stuff for Reviews</p>
+  </tab>
+</tabgroup>
+
+
+
+  <script src="/lib/angular/angular.js"></script>
+  <script type="text/javascript">
+
+    var app = angular.module("app", []);
+
+    app.directive('tabgroup', function() {
+      return {
+        // note: you cannot replace conntent when you have more than one root element.
+        restrict: 'E',
+        transclude : true,
+        template : '<div class="btn" ng-repeat="tab in tabs">{{tab.title}}</div><div ng-transclude></div>',
+        controller: function($scope) {
+          $scope.tabs = [];
+          this.addTab = function(tab){
+            $scope.tabs.push(tab);
+            console.log(tab);
+          };
+        }
+      };
+    });
+
+    app.directive('tab', function() {
+      return {
+        restrict: 'E',
+        scope : {
+          title :'@'
+        },
+        transclude : true,
+        replace: true,
+        require : '^tabgroup',
+        template : '<div class="tab" ng-transclude=""><div>',
+        link: function(scope, element, attr, ctrl) {
+          ctrl.addTab(scope);
+        }
+      };
+    });
+
+  </script>
+</body>
+</html>

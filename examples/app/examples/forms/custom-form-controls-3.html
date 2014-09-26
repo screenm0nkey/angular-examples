@@ -31,11 +31,8 @@
 
     $scope.setValue = function(val){
       $scope.val=val;
-
       $('input[name=valText]').trigger('change')
     };
-
-
   });
 
    app.directive('evenNumber', function(){
@@ -45,7 +42,6 @@
         ctrl.$parsers.unshift(checkForEven);
 
         function checkForEven(viewValue){
-
           if (parseInt(viewValue)%2 === 0) {
             ctrl.$setValidity('evenNumber',true);
           }

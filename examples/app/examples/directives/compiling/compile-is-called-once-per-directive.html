@@ -33,13 +33,18 @@
   var myApp = angular.module('myApp', []);
 
   myApp.directive('myClick', function() {
+    var ccount = 0;
+    var lcount = 0;
+
     return {
       // compile called twice for each directive
       compile: function(element, attr) {
-        console.log('in compile: ' + attr.myClick);
+
+        console.log(++ccount, 'in compile: ' + attr.myClick);
         // link called 5 times for each instance
         return function link (scope, element, attr) {
-          console.log('in link: ' + attr.myClick);
+
+          console.log(++lcount, 'in link: ' + attr.myClick);
 
           element.on('click', function(event) {
             scope.$apply(function() {

@@ -5,17 +5,17 @@
   <meta charset="utf-8" />
   <title>AngularJS Plunker</title>
   <style type="text/css">
-  input { display: block; }
+    input { display: block; }
   </style>
 </head>
 
 <body>
-<a href="http://stackoverflow.com/questions/11616636/how-to-do-two-way-filtering-in-angular-js">see here</a>
+  <a href="http://stackoverflow.com/questions/11616636/how-to-do-two-way-filtering-in-angular-js">see here</a>
 
   <div ng-app="demo" ng-init="" ng-controller="Demo">
     <div>
-      <button ng-click="loadData1()">Load Data -- all caps</button>
-      <button ng-click="loadData2()">Load Data -- all lowercase</button>
+      <button ng-click="loadData1()">Load Data 1</button>
+      <button ng-click="loadData2()">Load Data 2</button>
     </div>
 
     <input type="text" lowercase ng-model="data.var1"></input>
@@ -40,22 +40,22 @@
         restrict: 'A',
         require: 'ngModel',
         link: function(scope, element, attr, ngModel) {
-
           function fromViewToModel(text) {
             return (text || '').toUpperCase();
           }
 
-          function toUser(text) {
+          function fromModelToView(text) {
             return (text || '').toLowerCase();
           }
-          ngModel.$parsers.push(fromViewToModel);
-          ngModel.$formatters.push(toUser);
+          // $parsers > format data going from View to Model
+          ngModel.$parsers.unshift(fromViewToModel);
+          // $formatters > format data going from Model to View
+          ngModel.$formatters.unshift(fromModelToView);
         }
       };
     });
 
     function Demo($scope) {
-
       $scope.data = {
         var1: 'VALUE 1',
         var2: 'VALUE 2'

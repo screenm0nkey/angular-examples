@@ -1,0 +1,117 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+  <style type="text/css">
+    form.ng-invalid {
+      border: solid pink 5px;
+    }
+    input.ng-invalid {
+      border: solid red 5px;
+    }
+  </style>
+</head>
+<body ng-controller="MainCtrl">
+  <pre>
+    Open the console so you can see the $error object.
+    Delete the 'name' field.
+    Type an invalid number into the 'age'.
+    Delete the age field.
+    Type a long invalid strong into the 'age'
+  </pre>
+
+  <form name="formy">
+    Name : <input type="text" name="name" ng-model="person.name" required> <br>
+    <span ng-show="formy.name.$error.required">This is required!</span> <br>
+
+    Age : <input type="text" ng-model="person.age" name="age" integer toolong required /> <br>
+    <span ng-show="formy.age.$error.required">This is required!</span> <br>
+    <span ng-show="formy.age.$error.notinteger">This is not valid age!</span> <br>
+    <span ng-show="formy.age.$error.toolong">This is more than 5 chars!</span> <br>
+
+    <button ng-click="resetForm(this.formy)">Reset</button>
+  </form>
+
+  {{log('this.formy.$error', this.formy.$error)}}
+  <!-- {{log('age.$parsers', this.formy.age.$parsers)}} -->
+
+
+  <script src="/lib/angular/angular.js"></script>
+  <script>
+    var app = angular.module('app', []);
+
+    app.run(function($rootScope, $log){
+      $rootScope.log = $log.log;
+    });
+
+    app.controller('MainCtrl', function($scope) {
+      $scope.person = {
+        name : 'Nick',
+        age : 10
+      }
+
+      var person = angular.copy($scope.person);
+
+      $scope.resetForm = function(formy){
+        //reset the model
+        $scope.person = angular.copy(person);
+        // we have to manually remove the custom $parser objects from $formy.$error
+        // as angular only seems to remove the default ones like 'required'
+        formy.age.$setValidity('notinteger', true);
+        formy.age.$setValidity('toolong', true);
+        // set form to pristine state
+        formy.$setPristine();
+      }
+    });
+
+
+    app.directive('integer', function() {
+      INTEGER_REGEXP = /^-?\d+$/;
+
+      return {
+        require: 'ngModel',
+        link: function(scope, elm, attrs, ngModelCtrl) {
+          // name the function expression as it's easier too see them in when
+          // looking $scope.formy.age.$parsers.
+          // $parsers > View to Model
+          ngModelCtrl.$parsers.unshift(function notinteger (viewValue) {
+            if (INTEGER_REGEXP.test(viewValue)) {
+              // it is valid
+              ngModelCtrl.$setValidity('notinteger', true);
+              // this sets the value on the model which is person.name
+              return viewValue;
+            }
+            else {
+              // it is invalid
+              ngModelCtrl.$setValidity('notinteger', false);
+              // this sets the value on the model which is person.age
+              return viewValue;
+            }
+          });
+        }
+      };
+    });
+
+
+    app.directive('toolong', function() {
+      return {
+        require: 'ngModel',
+        link: function(scope, elm, attrs, ngModelCtrl) {
+          // $parsers > View to Model
+          ngModelCtrl.$parsers.unshift(function toolong (viewValue) {
+            if (viewValue.length < 5) {
+              ngModelCtrl.$setValidity('toolong', true);
+              return viewValue;
+            }
+            else {
+              ngModelCtrl.$setValidity('toolong', false);
+              return viewValue;
+            }
+          });
+        }
+      };
+    });
+
+
+  </script>
+</body>
+</html>
