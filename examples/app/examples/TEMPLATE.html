@@ -4,34 +4,32 @@
 
 </head>
 <body>
+  <form action="" str="formy">
+    <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+    <a href="#" id="fileSelect">Select some files</a>
+  </form>
 
-<script src="/lib/underscore.js"></script>
-<script type="text/javascript">
+  <script>
+    var newFileName = '230 nick';
+    var str = /^\d+\s\w/.exec(newFileName)[0].toUpperCase()
+    newFileName = str + (newFileName.slice(str.length))
+    console.log(newFileName)
 
-var str = "some/path/to/data";
-var splitPath = str.split('/');
-var db = {
-  some : {
-    age : 10
-  }
-}
-var dbc = db;
 
-for (var i = 0, len = splitPath.length; i < len; i++) {
-  var part = splitPath.shift();
+    window.handleFiles= function(files) {
+      console.log(files);
+    };
 
-  if (i === len-1) {
-    dbc[part] = 'data';
-  } else {
-    dbc[part] = dbc[part] || {};
-    dbc = dbc[part];
-  }
-};
+    var fileSelect = document.getElementById("fileSelect"),
+    fileElem = document.getElementById("fileElem");
 
-console.log(db)
-
+    fileSelect.addEventListener("click", function (e) {
+      if (fileElem) {
+        fileElem.click();
+      }
+  e.preventDefault(); // prevent navigation to "#"
+}, false);
 </script>
-
 
 </body>
 </html>
