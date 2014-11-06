@@ -3,7 +3,7 @@
 
     angular.module("uiRouterExample", ["ui.router"])
 
-        .config(function ($stateProvider, $urlRouterProvider) {
+        .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             $stateProvider
                 .state('home', {
                     url: '/home',
@@ -22,6 +22,7 @@
                     }
                 });
 
+            $locationProvider.html5Mode(true);
             $urlRouterProvider.otherwise('/home');
         })
 
