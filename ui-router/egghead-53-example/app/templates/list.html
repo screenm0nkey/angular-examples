@@ -3,7 +3,7 @@
         <a class="list-group-item"
             ng-repeat="item in shoppingList"
             ng-class="{active: item.selected}"
-            ng-href="#/list/{{item.name | lowercase}}"
+            ng-href="/list/{{item.name | lowercase}}"
             ng-click="selectItem(item)">{{item.name}}</a>
     </div>
     <div ui-view class="col-xs-9"></div>

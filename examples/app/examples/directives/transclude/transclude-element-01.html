@@ -8,40 +8,40 @@
 
 <body ng-controller="MainCtrl">
 
-    <my-transclude-true data-at="transclude:true">
-      <span>{{ something }}</span>
-      <p>{{ otherThing }}</p>
-    </my-transclude-true>
+  <my-transclude-true data-at="transclude:true">
+  <span>{{ something }}</span>
+  <p>{{ otherThing }}</p>
+</my-transclude-true>
 
-    <my-transclude-element data-at="transclude:element">
-      <span>{{ something }}</span>
-      <p>{{ otherThing }}</p>
-    </my-transclude-true>
+<my-transclude-element data-at="transclude:element">
+<span>{{ something }}</span>
+<p>{{ otherThing }}</p>
+</my-transclude-true>
 
 
 <script>
-var app = angular.module('myapp', []);
+  var app = angular.module('myapp', []);
 
-app.controller('MainCtrl', function($scope) {
-  $scope.something = "something";
-  $scope.otherThing = "other thing";
-});
+  app.controller('MainCtrl', function($scope) {
+    $scope.something = "something";
+    $scope.otherThing = "other thing";
+  });
 
 // look at the console.log and you can see only the content is moved
 app.directive('myTranscludeTrue', function() {
- return {
-   transclude: true,
-   replace: true,
-   scope: {},
-   restrict: 'AE',
-   template: '<h3 ng-transclude></h3>',
-   link: function(scope, elem, attrs, ctrl, transclude) {
-    console.log('transclude: true', elem[0])
+  return {
+     transclude: true,
+     replace: true,
+     scope: {},
+     restrict: 'AE',
+     template: '<h3 ng-transclude></h3>',
+     link: function(scope, elem, attrs, ctrl, transclude) {
+      console.log('transclude: true', elem[0])
       transclude(scope, function(clone) {
         // console.log(clone[0]);
-     });
-   }
- };
+      });
+    }
+  };
 });
 
 // the difference here is the directive, including the content is
@@ -57,11 +57,11 @@ app.directive('myTranscludeElement', function() {
    link: function(scope, elem, attrs, ctrl, transclude) {
 
     console.log('transclude: element',elem[0])
-      transclude(scope, function(clone) {
-        // console.log(clone[0]);
-     });
-   }
- };
+    transclude(scope, function(clone) {
+      // console.log(clone[0]);
+    });
+  }
+};
 });
 </script>
 

@@ -1,28 +1,21 @@
 #!/usr/bin/env node
-
 "use strict";
 
 var express     = require('express'),
-    fs          = require('fs'),
-    staticDir   = express['static'],
     path        = require('path');
 
-var staticDirs = ['lib','css', 'js', 'lib', 'partials', 'styles', 'templates', 'assets'],
-    expApp = express();
+var staticDirs = ['lib','css', 'js', 'partials'],
+    app = express();
 
-expApp.configure(function () {
-  expApp.use('/', staticDir('app/'));
-
-  staticDirs.forEach(function (item) {
-    expApp.use('/'+item, staticDir('app/'+item));
-  });
-  expApp.use(express.bodyParser());
+app.configure(function () {
+    staticDirs.forEach(function (item) {
+        app.use('/'+item, express['static']('app/'+item));
+    });
 });
 
-
-expApp.get("/", function(req, res) {
-  fs.createReadStream('app/index.html').pipe(res);
+app.all("*", function(req, res, next) {
+    res.sendfile(path.join(__dirname, 'app/index.html'));
 });
 
 console.log('Listening on Port 1970');
-expApp.listen(1970);
+app.listen(1970);

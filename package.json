@@ -6,6 +6,7 @@
   "engine": "node >= 0.8.12",
   "devDependencies": {
     "express": "~3.4.8",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "morgan": "^1.5.0"
   }
 }

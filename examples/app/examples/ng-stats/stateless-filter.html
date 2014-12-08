@@ -55,6 +55,10 @@
 <script type="text/javascript">
   var app = angular.module('app', ['angularStats']);
 
+  app.constant('timer', {
+    wait: 3
+  });
+
   app.controller('MainCtrl', function MainCtrl(timer) {
     'use strict';
     var vm = this;
@@ -72,16 +76,14 @@
     vm.onItemCountChange(vm.itemCount);
   });
 
-  app.value('timer', {
-    wait: 3
-  });
+
 
   app.filter('waitFilter', function() {
     var waitFilter = function waitFilter(input, wait) {
       var now = new Date();
       while(new Date() - now < wait) {
-      // keep waiting...
-    }
+        // console.log(new Date() - now);
+      }
     return 'Item ' + input + ' waited ' + (new Date() - now) + 'ms';
   };
   return waitFilter;
