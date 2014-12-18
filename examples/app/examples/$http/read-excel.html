@@ -1,0 +1,32 @@
+<html>
+<head>
+
+</head>
+
+<body  ng-app="app" ng-controller="myController" ng-cloak>
+<script src="/lib/angular/angular.js"></script>
+<script>
+
+    var app = angular.module('app', []);
+
+    app.controller('myController', function ($scope, myService) {
+        $scope.tasks = myService.getstuff();
+    });
+
+    app.factory('myService', function ($http, $q) {
+        return {
+            getstuff : function () {
+                /* test to see if it's possible to read an excel file */
+                var deferred = $q.defer();
+                $http.get('text-copy.xls').success(function (data) {
+                    deferred.resolve(data);
+                });
+                return deferred.promise;
+            }
+        }
+    })
+
+
+</script>
+</body>
+</html>
