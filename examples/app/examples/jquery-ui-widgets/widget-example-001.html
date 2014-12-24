@@ -5,10 +5,10 @@
     <title>Document</title>
 </head>
 <body>
+http://learn.jquery.com/jquery-ui/widget-factory/how-to-use-the-widget-factory/
 
-
-<script src="https://code.jquery.com/jquery-1.11.2.js"></script>
-<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="jquery-1.11.2.js"></script>
+<script src="jquery-ui.js"></script>
 
 <script data-type="widget">
     $.widget( "custom.progressbar", {
@@ -55,6 +55,8 @@
     var bar = $( "<div></div>" )
             .appendTo( "body" )
             .progressbar({
+                value : 40,
+                smell :27,
                 // callback name matches event being triggered and is called back
                 holyshit: function( event, data ) {
                     console.log( "Callbacks are great!", event, data );
@@ -67,6 +69,14 @@
             });
     // this is calling the option() method
     bar.progressbar( "option", {value : 100, smell : 10} );
+    // this is also doing the same thing
+    bar.data( "custom-progressbar").option({value :100, smell:100});
+
+    // You can also create an instance without going through the plugin method, by calling the constructor directly, with the options and element arguments:
+    var another = $.custom.progressbar( {value:30}, $( "<div></div>" ).appendTo( "body") );
+
+    // Same result as before.
+    console.log( another.options.value );
 
 </script>
 </body>
