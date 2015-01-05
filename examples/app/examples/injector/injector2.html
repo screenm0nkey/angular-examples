@@ -1,46 +1,47 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular/angular.js"></script>
+    <script src="/lib/angular/angular.js"></script>
 </head>
 <body ng-app="app">
-  {{gtitle}}
+{{gtitle}}
 
-  <script>
+<script>
+    /* annotate will show whats in the function */
+    console.log(12, angular.injector().annotate(['$compile', '$rootScope', function (_$compile, _$rootScope) {
+    }])) //["$compile", "$rootScope"]
 
-console.log(12, angular.injector().annotate(['$compile', '$rootScope', function(obfus_$compile, obfus_$rootScope) {}]))//["$compile", "$rootScope"]
+    var app = angular.module("app", []);
 
-  var app = angular.module("app", []);
+    var someFunction = function ($rootScope) {
+        console.log($rootScope)
+        return "called1!";
+    };
 
-  var someFunction = function($rootScope) {
-    console.log($rootScope)
-    return "called1!";
-  };
-
-  app.factory("game", function ($rootScope, $http) {
-    return "called game!";
-  });
-
-  var divide = function(numerator, denominator) {
-    return numerator / denominator;
-  }
-
-  // you dont need to pass the injector a module to annotate a function
-  console.log(1, angular.injector().annotate(divide)) // ["numerator", "denominator"]
-
-  app.run(function($rootScope, $injector) {
-    // the $injector will work in the context of the "[app]" module
-    console.log(2, $injector.annotate(someFunction)); //["$rootScope"]
-    console.log(3, $injector.invoke(someFunction)); //called1!
-
-    // invoke will inject the fucntions dependencies and then call the function
-    // this is the same...
-    $injector.invoke(function(game){
-      console.log(game) //called game!
+    app.factory("game", function ($rootScope, $http) {
+        return "called game!";
     });
 
-  });
+    var divide = function (numerator, denominator) {
+        return numerator / denominator;
+    }
 
-  </script>
+    // you dont need to pass the injector a module to annotate a function
+    console.log(1, angular.injector().annotate(divide)) // ["numerator", "denominator"]
+
+    app.run(function ($rootScope, $injector) {
+        // the $injector will work in the context of the "[app]" module
+        console.log(2, $injector.annotate(someFunction)); //["$rootScope"]
+        console.log(3, $injector.invoke(someFunction)); //called1!
+
+        // invoke will inject the fucntions dependencies and then call the function
+        // this is the same...
+        $injector.invoke(function (game) {
+            console.log(game) //called game!
+        });
+
+    });
+
+</script>
 </body>
 </html>

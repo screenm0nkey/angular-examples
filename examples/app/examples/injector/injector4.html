@@ -17,14 +17,13 @@
 
   var app = angular.module('simpleExample', ['ng']);
 
-  angular.injector(['simpleExample']).invoke(['$rootScope','$compile',
-    function($rootScope, $compile){
+  angular.injector(['simpleExample']).invoke(['$rootScope', '$compile', function($rootScope, $compile){
 
       $rootScope.$watch(function () {
         console.log('watch')
-      })
+      });
 
-      var elm = $compile('<a href="" ng-click="someFunctionOnRootScope()">Click me</a>')($rootScope);
+      var elm = $compile('<a href="#" ng-click="someFunctionOnRootScope()">Click me</a>')($rootScope);
 
       $rootScope.someFunctionOnRootScope = function(){
         alert("Hello there!");

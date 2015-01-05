@@ -10,13 +10,14 @@
 
   <script>
     // this code example show how you CANT load controllers after the app has been bootstrapped.
+    // see the lazy load example to see how to do this.
     angular.module('app',[]).run(function ($rootScope, $compile) {
       $rootScope.addController = function () {
         // adding a controller like this after the application has bootstrapped
         // wont work. you will get "'SomeCtrl' is not a function"
         angular.module('app').controller('SomeCtrl', function() {});
 
-        $compile('<p ng-controller="SomeCtrl">Nick</p>')($rootScope)
+        $compile('<p ng-controller="SomeCtrl">Controller</p>')($rootScope)
           .appendTo(angular.element('body'));
       };
     });

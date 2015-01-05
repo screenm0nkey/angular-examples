@@ -22,22 +22,22 @@
   // MainCtrl 003
   // Controller hello 003
   // Link hello 003
-  window.MainCtrl = function ($scope) {
-    console.log('MainCtrl', $scope.$id)
-  }
-
   var app = angular.module('app', []);
+
+  app.controller('MainCtrl', function ($scope) {
+    console.log('MainCtrl', $scope.$id)
+  });
 
   app.run(function($rootScope){
     $rootScope.random =Math.random()
-  })
+  });
 
   app.directive('hello', function() {
     return {
       controller : function ($scope) {
         console.log('Controller hello', $scope.$id);
       },
-      compile : function () {
+      compile : function (tEl, tAttr) {
         console.log('Compile hello');
         return function link (scope) {
           console.log('Link hello', scope.$id);
