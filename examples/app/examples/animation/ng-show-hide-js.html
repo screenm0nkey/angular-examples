@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example - example-example3-production</title>
+
+    <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/angular-1.2/angular.min.js"></script>
+    <script src="/lib/angular-1.2/angular-animate.js"></script>
+
+</head>
+<body ng-app="MyApp">
+
+<div ng-init="isHidden=false">
+    <button ng-click="isHidden=!isHidden">Show / Hide Element</button>
+    <div class="my-show-hide-animation" ng-hide="isHidden">
+        I am visible!
+    </div>
+</div>
+
+<script>
+    var myApp = angular.module("MyApp", ["ngAnimate"]);
+
+    myApp.animation('.my-show-hide-animation', function() {
+        return {
+            beforeAddClass : function(element, className, done) {
+                if(className == 'ng-hide') {
+                    jQuery(element).animate({
+                        opacity:0
+                    }, done);
+                }
+                else {
+                    done();
+                }
+            },
+            removeClass : function(element, className, done) {
+                if(className == 'ng-hide') {
+                    element.css('opacity',0);
+                    jQuery(element).animate({
+                        opacity:1
+                    }, done);
+                }
+                else {
+                    done();
+                }
+            }
+        };
+    });
+</script>
+</body>
+</html>

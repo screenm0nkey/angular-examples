@@ -104,7 +104,7 @@ browser.waitForAngular();
 // get a reference to the modal
 modal = browser.findElement(by.id("login-modal"));
 
-browser.get('/angular/affiliate/9884736621?base=jl_fc&category=at_home_FCconsultation&SHID=bypass');
+browser.get('/angular-1.2/affiliate/9884736621?base=jl_fc&category=at_home_FCconsultation&SHID=bypass');
 browser.sleep(5000);
 browser.findElement(by.css('div.ui-view')).getText().
 browser.getCurrentUrl()

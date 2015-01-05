@@ -12630,8 +12630,8 @@ function $RootScopeProvider(){
         //
         // see:
         // - https://code.google.com/p/v8/issues/detail?id=2073#c26
-        // - https://github.com/angular/angular.js/issues/6794#issuecomment-38648909
-        // - https://github.com/angular/angular.js/issues/1313#issuecomment-10378451
+        // - https://github.com/angular-1.2/angular.js/issues/6794#issuecomment-38648909
+        // - https://github.com/angular-1.2/angular.js/issues/1313#issuecomment-10378451
 
         this.$parent = this.$$nextSibling = this.$$prevSibling = this.$$childHead =
             this.$$childTail = this.$root = null;
@@ -13648,7 +13648,7 @@ function $SceDelegateProvider() {
  *      (even when the RegExp did not have the `^` and `$` codes.)  In addition, any flags
  *      present on the RegExp (such as multiline, global, ignoreCase) are ignored.
  *    - If you are generating your JavaScript from some other templating engine (not
- *      recommended, e.g. in issue [#4006](https://github.com/angular/angular.js/issues/4006)),
+ *      recommended, e.g. in issue [#4006](https://github.com/angular-1.2/angular.js/issues/4006)),
  *      remember to escape your regular expression (and be aware that you might need more than
  *      one level of escaping depending on your templating engine and the way you interpolated
  *      the value.)  Do make use of your platform's escaping mechanism as it might be good
@@ -14202,7 +14202,7 @@ function $SnifferProvider() {
       // Android has history.pushState, but it does not update location correctly
       // so let's not use the history API at all.
       // http://code.google.com/p/android/issues/detail?id=17471
-      // https://github.com/angular/angular.js/issues/904
+      // https://github.com/angular-1.2/angular.js/issues/904
 
       // older webkit browser (533.9) on Boxee box has exactly the same problem as Android has
       // so let's not use the history API also
@@ -14363,7 +14363,7 @@ var originUrl = urlResolve(window.location.href, true);
  *   http://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement
  *   http://www.aptana.com/reference/html/api/HTMLAnchorElement.html
  *   http://url.spec.whatwg.org/#urlutils
- *   https://github.com/angular/angular.js/pull/2902
+ *   https://github.com/angular-1.2/angular.js/pull/2902
  *   http://james.padolsey.com/javascript/parsing-urls-with-the-dom/
  *
  * @function
@@ -14852,7 +14852,7 @@ function filterFilter() {
        it('should update', function() {
          if (browser.params.browser == 'safari') {
            // Safari does not understand the minus key. See
-           // https://github.com/angular/protractor/issues/481
+           // https://github.com/angular-1.2/protractor/issues/481
            return;
          }
          element(by.model('amount')).clear();
@@ -16589,7 +16589,7 @@ var inputType = {
 
         // currently protractor/webdriver does not support
         // sending keys to all known HTML5 input controls
-        // for various browsers (see https://github.com/angular/protractor/issues/562).
+        // for various browsers (see https://github.com/angular-1.2/protractor/issues/562).
         function setInput(val) {
           // set the value of the element and force validation.
           var scr = "var ipt = document.getElementById('exampleInput'); " +
@@ -16673,7 +16673,7 @@ var inputType = {
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
-      // for various browsers (https://github.com/angular/protractor/issues/562).
+      // for various browsers (https://github.com/angular-1.2/protractor/issues/562).
       function setInput(val) {
         // set the value of the element and force validation.
         var scr = "var ipt = document.getElementById('exampleInput'); " +
@@ -16758,7 +16758,7 @@ var inputType = {
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
-      // for various browsers (https://github.com/angular/protractor/issues/562).
+      // for various browsers (https://github.com/angular-1.2/protractor/issues/562).
       function setInput(val) {
         // set the value of the element and force validation.
         var scr = "var ipt = document.getElementById('exampleInput'); " +
@@ -16842,7 +16842,7 @@ var inputType = {
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
-      // for various browsers (https://github.com/angular/protractor/issues/562).
+      // for various browsers (https://github.com/angular-1.2/protractor/issues/562).
       function setInput(val) {
         // set the value of the element and force validation.
         var scr = "var ipt = document.getElementById('exampleInput'); " +
@@ -16925,7 +16925,7 @@ var inputType = {
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
-      // for various browsers (https://github.com/angular/protractor/issues/562).
+      // for various browsers (https://github.com/angular-1.2/protractor/issues/562).
       function setInput(val) {
         // set the value of the element and force validation.
         var scr = "var ipt = document.getElementById('exampleInput'); " +
@@ -18328,7 +18328,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
  *
  * For best practices on using `ngModel`, see:
  *
- *  - [https://github.com/angular/angular.js/wiki/Understanding-Scopes]
+ *  - [https://github.com/angular-1.2/angular.js/wiki/Understanding-Scopes]
  *
  * For basic examples, how to use `ngModel`, see:
  *
@@ -20127,7 +20127,7 @@ forEach(
  * Note that when an element is removed using `ngIf` its scope is destroyed and a new scope
  * is created when the element is restored.  The scope created within `ngIf` inherits from
  * its parent scope using
- * [prototypal inheritance](https://github.com/angular/angular.js/wiki/The-Nuances-of-Scope-Prototypal-Inheritance).
+ * [prototypal inheritance](https://github.com/angular-1.2/angular.js/wiki/The-Nuances-of-Scope-Prototypal-Inheritance).
  * An important implication of this is if `ngModel` is used within `ngIf` to bind to
  * a javascript primitive defined in the parent scope. In this case any modifications made to the
  * variable within the child scope will override (hide) the value in the parent scope.
@@ -20352,7 +20352,7 @@ var ngIfDirective = ['$animate', function($animate) {
       it('should load template2.html', function() {
         if (browser.params.browser == 'firefox') {
           // Firefox can't handle using selects
-          // See https://github.com/angular/protractor/issues/480
+          // See https://github.com/angular-1.2/protractor/issues/480
           return;
         }
         templateSelect.click();

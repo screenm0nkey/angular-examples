@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link data-require="bootstrap-css@3.x" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <script src="/lib/angular-1.2/angular.min.js"></script>
+    <script src="/lib/angular-1.2/angular-animate.js"></script>
+    <script src="/lib/angular-1.2/angular-route.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="animations.css" />
+    <script src="script-css.js"></script>
+  </head>
+
+  <body ng-app="coursesApp">
+    <div class="container">
+      <div class="row page-header">
+        <h2>Virtual Training</h2>
+      </div>
+      
+      <div data-ng-view="" id="div-view" class="view-slide-in"></div>
+    </div>
+  </body>
+
+</html>

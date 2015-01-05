@@ -1,0 +1,38 @@
+<!doctype html>
+<html ng-app="MyApp">
+<head>
+  <style>
+    /* starting animations */
+    .my-special-animation.ng-enter {
+      -webkit-animation:0.5s red-to-blue;
+      animation:0.5s red-to-blue;
+    }
+
+    @keyframes red-to-blue {
+      from { background:red; }
+      to { background:blue; }
+    }
+
+    @-webkit-keyframes red-to-blue {
+      from { background:red; }
+      to { background:blue; }
+    }
+  </style>
+
+
+<link rel="stylesheet" type="text/css" href="animations.css" />
+</head>
+<body>
+<div ng-init="on=true">
+  <button ng-click="on=!on">Toggle On/Off</button>
+  <div class="my-special-animation" ng-if="on">
+    This content will enter and leave
+  </div>
+</div>
+<script src="/lib/angular-1.2/angular.min.js"></script>
+<script src="/lib/angular-1.2/angular-animate.js"></script>
+<script>
+  var myApp = angular.module("MyApp", ["ngAnimate"]);
+</script>
+</body>
+</html>
