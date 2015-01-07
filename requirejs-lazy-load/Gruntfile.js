@@ -23,10 +23,10 @@ module.exports = function(grunt) {
 
         requirejs: {
             /* these settings are merged with the config settings in 'app/js/main.js' */
-            js: {
+            compile: {
                 options: {
                     uglify2: {
-                        mangle: false
+                        mangle: true
                     },
                     preserveLicenseComments: false,
                     keepBuildDir: false,
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
                     mainConfigFile: "app/js/main.js",
                     name: 'main', // this needs to be the same as the app/js/main.js
                     out: "app/js/build.js",
-                    optimize: 'none'/*'uglify2'*/
+                    optimize: 'uglify2'
                 }
             }
         }

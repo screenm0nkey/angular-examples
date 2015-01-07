@@ -1,5 +1,6 @@
 "use strict";
-
+/* so the build file won't contain any of the files which are being lazy loaded as that's being
+* dealt with using the dependencyResolverFor.js */
 require.config({
     baseUrl: '/js',
     paths: {
