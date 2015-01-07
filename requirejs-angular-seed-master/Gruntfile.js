@@ -11,6 +11,24 @@ module.exports = function(grunt) {
                 src: 'src/<%= pkg.name %>.js',
                 dest: 'build/<%= pkg.name %>.min.js'
             }
+        },
+
+        requirejs: {
+            /* these settings are merged with the config settings in 'app/js/main.js' */
+            compile: {
+                options: {
+                    uglify2: {
+                        mangle: false
+                    },
+                    preserveLicenseComments: false,
+                    generateSourceMaps:true,
+                    baseUrl: "app/js",
+                    mainConfigFile: "app/js/main.js",
+                    name: 'main',
+                    out: "app/js/build.js",
+                    optimize: 'none'
+                }
+            }
         }
     });
 
