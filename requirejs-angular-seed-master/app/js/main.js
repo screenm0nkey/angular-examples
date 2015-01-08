@@ -7,7 +7,8 @@ require.config({
 		angularRoute: '../bower_components/angular-route/angular-route',
 		angularMocks: '../bower_components/angular-mocks/angular-mocks',
 		text: '../bower_components/requirejs-text/text',
-		samplePlugin : '../lib/sample-amd-jquery-plugin'
+		samplePlugin : '../lib/sample-jquery-plugin',
+		sampleAmdPlugin : '../lib/sample-amd-jquery-plugin'
 	},
 	shim: {
 		'angular' : {
@@ -18,9 +19,15 @@ require.config({
 		'angularMocks': {
 			deps:['angular'],
 			exports :'angular.mock'
+		},
+		// so you don't have to shim this as it will still load when required
+		// as a dependency in any of the other modules. but it's good practise to.
+		samplePlugin : {
+			deps : ['jquery']
 		}
 	},
 	priority: [
+		'jquery',
 		"angular"
 	]
 });

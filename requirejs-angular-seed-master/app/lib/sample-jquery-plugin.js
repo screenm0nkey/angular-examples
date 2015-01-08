@@ -1,15 +1,5 @@
-//https://github.com/umdjs/umd/blob/master/jqueryPlugin.js
-
-(function (factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
-    } else {
-        // Browser globals
-        factory(jQuery);
-    }
-}(function ($, undefined) {
-    var pluginName = "myLovelyAmdPlugin",
+(function ($, undefined) {
+    var pluginName = "myNotSoLovelyPlugin",
         defaults = {
             bgColor: "green"
         };
@@ -18,7 +8,7 @@
     function Plugin( element, options ) {
         this.element = element;
         this.$element = $(element);
-        this.options = $.extend( {}, defaults, options);
+        this.options = $.extend( {}, defaults, options) ;
         this._defaults = defaults;
         this._name = pluginName;
         this.init();
@@ -38,4 +28,4 @@
             }
         });
     };
-}));
+}(jQuery));
