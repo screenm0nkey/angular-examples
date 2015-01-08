@@ -13,6 +13,25 @@ module.exports = function(grunt) {
             }
         },
 
+        copy: {
+            build: {
+                // cwd points to a directory the source files are relative to
+                cwd: 'app',
+                src: ['**'],
+                dest: 'build/app',
+                expand: true
+            }
+        },
+
+        clean: {
+            build: {
+                src: [ 'build' ]
+            },
+            prepareBuild : {
+                src: ['build/app/bower_components']
+            }
+        },
+
         requirejs: {
             /* these settings are merged with the config settings in 'app/js/main.js' */
             compile: {
@@ -25,7 +44,7 @@ module.exports = function(grunt) {
                     baseUrl: "app/js",
                     mainConfigFile: "app/js/main.js",
                     name: 'main',
-                    out: "app/js/build.js",
+                    out: "app/build/main.js",
                     optimize: 'none'
                 }
             }
@@ -35,8 +54,11 @@ module.exports = function(grunt) {
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     // Default task(s).
     grunt.registerTask('default', ['uglify']);
+    grunt.registerTask('build', ['copy', 'requirejs', 'clean']);
 
 };
