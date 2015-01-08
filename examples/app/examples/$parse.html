@@ -8,6 +8,8 @@
   <div enter="loadMoreTweets()">Click and see console</div>
 
   <script>
+    //NOTE: See $interpolate if you want to parse a string expression i.e. $interpolate('hello {{name}}')({name:nick})
+
   var app = angular.module("app", []);
 
   app.controller("MainCtrl", function ($scope, $parse, $timeout) {
