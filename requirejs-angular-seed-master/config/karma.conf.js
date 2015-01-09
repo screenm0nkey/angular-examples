@@ -1,7 +1,8 @@
 module.exports = function(config) {
 	config.set({
-		// basePath is used to build the path to the app's files in require i.e. '/base/app/bower_components/angular/angular' becomes
-		// '../app/bower_components/angular/angular'
+		/* basePath is used to build the path to the app's files in require i.e. '/base/app/bower_components/angular/angular' becomes
+		 '../app/bower_components/angular/angular'. noode uses the karma config to find the files and add watchers
+		*/
 		basePath: '../',
 		frameworks: ['jasmine', 'requirejs'],
 		// "included". Should the files be included in the browser using <script> tag? Use false if you wanna load them manually, eg. using Require.js.

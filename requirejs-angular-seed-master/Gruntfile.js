@@ -32,6 +32,17 @@ module.exports = function(grunt) {
             }
         },
 
+        karma: {
+            phantom: {
+                configFile: 'config/karma.conf.js',
+                browsers:['PhantomJS']
+            },
+            chrome: {
+                configFile: 'config/karma.conf.js',
+                browsers:['Chrome']
+            }
+        },
+
         requirejs: {
             /* these settings are merged with the config settings in 'app/js/main.js' */
             compile: {
@@ -59,6 +70,5 @@ module.exports = function(grunt) {
 
     // Default task(s).
     grunt.registerTask('default', ['uglify']);
-    grunt.registerTask('build', ['copy', 'requirejs', 'clean']);
 
 };

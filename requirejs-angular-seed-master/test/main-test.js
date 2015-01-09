@@ -1,6 +1,7 @@
-/* we get all the JS files here inc libraries and and then filter it so we are only left with our tests. the array will end up something like [/base/test/unit/controllersSpec.js]
+/* 	we get all the JS files here inc libraries and and then filter it so we are only left with our tests.
+	the array will end up something like [/base/test/unit/controllersSpec.js]
 
-All the files listed in karma.conf's 'files' properties will be added to window.__karma__.files, even if they are 'included: false'
+	All the files listed in karma.conf's 'files' properties will be added to window.__karma__.files, even if they are 'included: false'
 */
 var tests = [];
 for (var file in window.__karma__.files) {
@@ -21,6 +22,7 @@ for (var file in window.__karma__.files) {
 * */
 
 require.config({
+	baseUrl: '/base/app/js',
 	paths: {
 		jquery : '/base/app/lib/jquery1.112.min',
 		angular: '/base/app/bower_components/angular/angular',
@@ -31,7 +33,6 @@ require.config({
 		samplePlugin : '/base/app/lib/sample-jquery-plugin',
 		sampleAmdPlugin : '/base/app/lib/sample-amd-jquery-plugin'
 	},
-	baseUrl: '/base/app/js',
 	shim: {
 		angular : {
 			deps:['jquery'],
