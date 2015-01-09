@@ -22,19 +22,28 @@ for (var file in window.__karma__.files) {
 
 require.config({
 	paths: {
+		jquery : '/base/app/lib/jquery1.112.min',
 		angular: '/base/app/bower_components/angular/angular',
 		angularRoute: '/base/app/bower_components/angular-route/angular-route',
 		angularMocks: '/base/app/bower_components/angular-mocks/angular-mocks',
 		text: '/base/app/bower_components/requirejs-text/text',
-		fixtures: '/base/test/unit/fixtures'
+		fixtures: '/base/test/unit/fixtures',
+		samplePlugin : '/base/app/lib/sample-jquery-plugin',
+		sampleAmdPlugin : '/base/app/lib/sample-amd-jquery-plugin'
 	},
 	baseUrl: '/base/app/js',
 	shim: {
-		'angular' : {'exports' : 'angular'},
+		angular : {
+			deps:['jquery'],
+			exports : 'angular'
+		},
 		'angularRoute': ['angular'],
 		'angularMocks': {
 			deps:['angular'],
 			'exports':'angular.mock'
+		},
+		samplePlugin : {
+			deps : ['jquery']
 		}
 	},
 	deps: tests,

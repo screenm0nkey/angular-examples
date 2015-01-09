@@ -1,7 +1,7 @@
 (function ($, undefined) {
     var pluginName = "myNotSoLovelyPlugin",
         defaults = {
-            bgColor: "green"
+            bgColor: "gold"
         };
 
     // The actual plugin constructor

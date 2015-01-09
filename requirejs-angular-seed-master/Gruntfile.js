@@ -37,15 +37,15 @@ module.exports = function(grunt) {
             compile: {
                 options: {
                     uglify2: {
-                        mangle: false
+                        mangle: true
                     },
                     preserveLicenseComments: false,
                     generateSourceMaps:true,
                     baseUrl: "app/js",
                     mainConfigFile: "app/js/main.js",
                     name: 'main',
-                    out: "app/build/main.js",
-                    optimize: 'none'
+                    out: "app/js/build.js",
+                    optimize: 'uglify2'
                 }
             }
         }

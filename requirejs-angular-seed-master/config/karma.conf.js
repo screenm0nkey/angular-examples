@@ -12,6 +12,7 @@ module.exports = function(config) {
 			{pattern: 'test/unit/*.js', included: false},
 			{pattern: 'test/unit/**/*.js', included: false},
 			{pattern: 'app/bower_components/**/*.js', included: false},
+			{pattern: 'app/lib/**/*.js', included: false},
 			// main-test.js needs to be last as it's here that we use requirejs to load the files
 			// http://karma-runner.github.io/0.10/plus/requirejs.html
 			'test/main-test.js'
@@ -21,7 +22,7 @@ module.exports = function(config) {
 
 	LogLevel: config.LOG_DEBUG,
 
-	browsers: ['Chrome'], //Firefox
+	browsers: ['PhantomJS'], //Chrome Firefox
 
 	junitReporter: {
 		outputFile: 'test_out/unit.xml',

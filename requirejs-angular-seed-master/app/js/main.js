@@ -1,6 +1,11 @@
 'use strict';
 
+/*
+	NOTE. remember to update the karma.conf.js and main-test.js file you
+	change the paths or shim below.
+* */
 require.config({
+	baseUrl: "app/js",
 	paths: {
 		jquery : '../lib/jquery1.112.min',
 		angular: '../bower_components/angular/angular',
@@ -22,6 +27,7 @@ require.config({
 		},
 		// so you don't have to shim this as it will still load when required
 		// as a dependency in any of the other modules. but it's good practise to.
+		// as it has a dependency in jquery
 		samplePlugin : {
 			deps : ['jquery']
 		}

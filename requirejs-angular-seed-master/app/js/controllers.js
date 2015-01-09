@@ -14,6 +14,7 @@ define(['angular', 'services'], function (angular) {
 		}])
 		// More involved example where controller is required from an external file
 		.controller('MyCtrl2', ['$scope', '$injector', function($scope, $injector) {
+			debugger
 			// this controller is not invoked until it's loaded, which is when the user selects 'View 2' from the menu
 			require(['controllers/myctrl2'], function(myctrl2) {
 				// injector method takes an array of modules as the first argument
