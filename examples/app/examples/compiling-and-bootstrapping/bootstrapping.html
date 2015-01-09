@@ -13,15 +13,9 @@
     <div ng-controller="MainCtrl" hello>{{random * 100}}</div>
   </div>
 
-
   <script src="/lib/angular-1.2/angular.js"></script>
   <script type="text/javascript">
-  // Good to note here that the compile method is called before the controller
-  // is invoked. so it goes...
-  // Compile hello
-  // MainCtrl 003
-  // Controller hello 003
-  // Link hello 003
+
   var app = angular.module('app', []);
 
   app.controller('MainCtrl', function ($scope) {

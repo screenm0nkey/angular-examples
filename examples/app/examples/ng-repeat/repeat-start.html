@@ -4,19 +4,19 @@
 </head>
 <body ng-controller="MainCtrl as app">
 
-  <div ng-repeat-start="thing in app.things">{{thing}}</div>
-    Stuff
-  <div ng-repeat-end="">{{thing}}</div>
+<div ng-repeat-start="thing in app.things">{{thing}}</div>
+    <strong>- Stuff</strong>
+<div ng-repeat-end="">{{thing}}</div>
 
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
-   var app = angular.module('app',[]);
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+    var app = angular.module('app', []);
 
-   app.controller('MainCtrl', function () {
-    this.things = ["one", "two", "three"];
-   });
+    app.controller('MainCtrl', function () {
+        this.things = ["one", "two", "three"];
+    });
 
-  </script>
+</script>
 </body>
 </html>

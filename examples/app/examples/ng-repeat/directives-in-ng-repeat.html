@@ -4,34 +4,37 @@
 </head>
 <body ng-controller="MainCtrl as app">
 
-  <button ng-click="app.things.push({})">Add</button>
+    <input type="text"
+           ng-focus="name=''"
+           ng-model="name" />
 
-  <div ng-repeat="thing in app.things" nick-dir="{{$index}}">
-    <a href="#">{{$index}}</a>
-  </div>
+    <button ng-click="app.things.push({ idz : name })">Add</button>
 
+    <div ng-repeat="thing in app.things" nick-dir="{{$index}}">
+        <a href="#">{{$index}} {{thing.idz}}</a>
+    </div>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
-   var app = angular.module('app',[]);
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <script>
+        var app = angular.module('app', []);
 
-  app.directive('nickDir', function () {
-    return {
-      compile :function (element, attrs) {
-        // this will be called once
-        console.log('compile', attrs.nickDir)
-        return function link (scope, element, attrs) {
-          // and this will be called each time the add button is clicked
-          console.log('link', attrs.nickDir)
-        }
-      }
-    }
-  })
+        app.directive('nickDir', function () {
+            return {
+                compile: function (element, attrs) {
+                    // compile will be called once
+                    console.log('compile', attrs.nickDir)
+                    return function link(scope, element, attrs) {
+                        // and this will be called each time the add button is clicked
+                        console.log('link', attrs.nickDir)
+                    }
+                }
+            }
+        });
 
-   app.controller('MainCtrl', function () {
-    this.things = [];
-   });
+        app.controller('MainCtrl', function () {
+            this.things = [];
+        });
 
-  </script>
+    </script>
 </body>
 </html>

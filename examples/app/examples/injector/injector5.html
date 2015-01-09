@@ -1,38 +1,35 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/jquery.min.js"></script>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
 
-
-  <script>
-  MyCtrl = function($scope){
-    // this scope is the child of the scope below
-    $scope.content.label = "stink";
-  }
-
-
-  angular.injector(['ng']).invoke(function($rootScope, $compile) {
-    // this scope is the parent scope to the one in the controller
-    var scope = $rootScope.$new()
-
-    scope.content = {
-      label:'it worked!'
+<script>
+    MyCtrl = function ($scope) {
+        // this scope is the child of the scope below
+        $scope.content.label = "hello";
     }
-    // this will interpolate 'stink'
-    var el = $compile('<h1 ng-controller="MyCtrl">{{content.label}}</h1>')(scope);
 
-    $(document.body).append(el);
+    angular.injector(['ng']).invoke(function ($rootScope, $compile) {
+        // this scope is the parent scope to the one in the controller
+        var scope = $rootScope.$new()
 
-    setTimeout(function () {
-      scope.$digest()
-    }, 1000);
-  })
+        scope.content = {
+            label: 'it worked!'
+        }
+        // this will interpolate 'stink'
+        var el = $compile('<h1 ng-controller="MyCtrl">{{content.label}}</h1>')(scope);
+
+        $(document.body).append(el);
+
+        setTimeout(function () {
+            scope.$digest()
+        }, 1000);
+    })
 
 
-
-  </script>
+</script>
 </body>
 </html>

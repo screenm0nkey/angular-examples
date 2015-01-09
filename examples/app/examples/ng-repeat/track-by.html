@@ -2,7 +2,7 @@
 <html ng-app="Demo">
 <head>
   <meta charset="utf-8" />
-  <title> Using Track-By With ngRepeat In AngularJS </title>
+  <title>Using Track-By With ngRepeat In AngularJS</title>
 </head>
 <body ng-controller="AppController">
 
@@ -22,8 +22,7 @@
     NOTE: You can also use a $scope-based function like:
     ... track by identifier( item ) -->
   <ul>
-    <li ng-repeat="friend in friendsTwo track by friend.id"
-        bn-log-dom-creation="With-{{friend.name}}-{{friend.id}}">
+    <li ng-repeat="friend in friendsTwo track by friend.id" bn-log-dom-creation="With-{{friend.name}}-{{friend.id}}">
       {{ friend.id }} &mdash; {{ friend.name }}
     </li>
   </ul>
@@ -48,20 +47,20 @@
       setTimeout(function() {
         // because the objects in the first array are not using track by, angular
         // gives them an $$hashKey property, but only after the repeat has
-        // finsihed. the $$hashKey is not available in the the directive
+        // finished. the $$hashKey is not available in the the directive
         console.dir($scope.friendsOne);
         //without
         console.dir($scope.friendsTwo );
       },50);
     };
 
-    function getId () {
+    function getRandomId () {
       return Math.round(Math.random()*10000)
     }
 
     function getFriends() {
       return [{
-        id: getId(),
+        id: getRandomId(),
         name: "Sarah"
       },{
         // so in the track-by list, the dom node linked to nick by nick.id will
@@ -71,7 +70,7 @@
         id: 11,
         name: "Nick"
       },{
-        id: getId(),
+        id: getRandomId(),
         name: "Joanna"
       }];
     }

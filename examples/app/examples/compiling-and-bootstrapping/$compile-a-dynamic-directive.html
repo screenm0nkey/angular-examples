@@ -4,84 +4,89 @@
 </head>
 <body>
 
-  <div ng-app='App'>
+<div ng-app='App'>
     <div custom-directive></div>
-  </div>
 
-  <script src="/lib/jquery.min.js"></script>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
-  var app = angular.module('App', []);
+    <script type="text/ng-template" id="tpl.html">
+        <a ng-click="addType('hi')">Click me Hi</a><br/>
+        <a ng-click="addType('hello')">Click me Add Hello</a>
+    </script>
+</div>
 
-  app.directive('hi', function() {
-    return {
-      template: '<h2>Hi There</h2>',
-      replace: true,
-      compile : function () {
-        console.log(1, 'hi compile');
-        return function link () {
-          console.log(1, 'hi link');
-        }
-      }
-  };
-});
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+    var app = angular.module('App', []);
 
-  // every time a new directive is compiled both it's compile and link functions
-  // are called
-  app.directive('hello', function() {
-   return {
-     template: '<h2>Hello There</h2>',
-     replace: true,
-     compile : function () {
-       console.log(2, 'hello compile');
-       return function link () {
-        console.log(2, 'hello link');
-      }
-    }
-  };
-});
+    app.directive('hi', function () {
+        return {
+            template: '<h2>Hi There</h2>',
+            replace: true,
+            compile: function () {
+                console.log(1, 'hi compile');
+                return function link() {
+                    console.log(1, 'hi link');
+                }
+            }
+        };
+    });
 
-  app.directive('customDirective', function($compile, $timeout) {
-   return {
-     template: '<a ng-click="addType(\'hi\')">Click me Hi</a><br/>' +
-     '<a ng-click="addType(\'hello\')">Click me Add Hello</a>',
-     link: function(scope, element, attr) {
-       scope.addType = function(type) {
-         // you can't $compile an element which contains a directive, without
-         // supplying a scope object
-         var linkFn = $compile('<div ' + type + '></div>');
-         var $el = linkFn(scope)
-         $('body').append($el);
+    // every time a new directive is compiled both it's compile and link functions
+    // are called and registered
+    app.directive('hello', function () {
+        return {
+            restrict : 'E',
+            template: '<h4>Hello There</h4>',
+            replace: true,
+            compile: function () {
+                console.log(2, 'hello compile');
+                return function link() {
+                    console.log(2, 'hello link');
+                }
+            }
+        };
+    });
 
-         // this does the same thing as the code above but you can compile it
-         // without scope as it only contains text which needs interpolation.
-         // whats every intertesting is that the link function is called after
-         // the digest loop has finished so the text isn't interpolated with the
-         // scope object until the next time the digest runs, and that is on the
-         // next click.
-         scope.name = "Nick";
-         $el = angular.element('<div>{{name}}</div>');
-         linkFn = $compile($el);
-         $('body').append($el);
-         setTimeout(function () {
-          linkFn(scope);
-         }, 300);
+    app.directive('customDirective', function ($compile, $timeout) {
+        return {
+            templateUrl: 'tpl.html',
+            link: function (scope) {
+                scope.addType = function (type) {
+                    // you can't $compile an element which contains a directive, without
+                    // supplying a scope object
+                    var linkFn = $compile('<' + type + '></'+ type+'>');
+                    var $el = linkFn(scope)
+                    $('body').append($el);
 
-         // to get around this we can use the angular $timeout which
-         // calls the digest when it completes
-         scope.name = "Steven";
-         $el = angular.element('<div>{{name}}</div>');
-         linkFn = $compile($el);
-         $('body').append($el);
-         $timeout(function () {
-          linkFn(scope);
-         }, 500);
-       }
-     }
-   };
- });
+                    // this does the same thing as the code above but you can compile it
+                    // without scope as it only contains text which needs $interpolation.
+                    // whats intertesting is the link function is called after
+                    // the digest loop has finished so the text isn't interpolated with the
+                    // scope object until the next time the digest runs, and that is on the
+                    // next click.
+                    scope.name = "Nick";
+                    var $el2 = angular.element('<div>{{name}}</div>');
+                    var linkFn2 = $compile($el2);
+                    $('body').append($el2);
+                    setTimeout(function () {
+                        linkFn2(scope);
+                    }, 500);
+
+                    // to get around this we can use the angular $timeout which
+                    // calls the digest when it completes
+                    scope.name2 = "Steven";
+                    var $el3 = angular.element('<div>{{name2}}</div>');
+                    var linkFn3 = $compile($el3);
+                    $('body').append($el3);
+                    $timeout(function () {
+                        linkFn3(scope);
+                    }, 200);
+                }
+            }
+        };
+    });
 
 
-  </script>
+</script>
 </body>
 </html>

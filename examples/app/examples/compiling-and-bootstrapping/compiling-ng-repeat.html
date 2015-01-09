@@ -1,71 +1,71 @@
 v<!doctype html>
 <html ng-app="Demo">
 <head>
-  <meta charset="utf-8" />
-  <title> Using Track-By With ngRepeat In AngularJS </title>
+    <meta charset="utf-8"/>
+    <title> Using Track-By With ngRepeat In AngularJS </title>
 
-  <style type="text/css">
-  a[ ng-click ] {
-    cursor: pointer ;
-    text-decoration: underline ;
-  }
-  </style>
+    <style type="text/css">
+        a[ ng-click ] {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body ng-controller="AppController">
-  <ul>
+<ul>
     <li ng-repeat="friend in friendsOne track by friend.id"
         nl-log="With-{{friend.name}}-{{friend.id}}">
-      {{ friend.id }} &mdash; {{ friend.name }}
+        {{ friend.id }} &mdash; {{ friend.name }}
     </li>
-  </ul>
-  <a ng-click="rebuildFriends()">Rebuild Friends</a>
+</ul>
+<a ng-click="rebuildFriends()">Rebuild Friends</a>
 
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script type="text/javascript">
-  var app = angular.module( "Demo", [] );
+<script src="/lib/angular-1.2/angular.js"></script>
+<script type="text/javascript">
+    var app = angular.module("Demo", []);
 
-  app.controller("AppController", function( $scope ) {
-    $scope.rebuildFriends = function() {
-      console.log( "\nRebuilding..." );
-      $scope.friendsOne = getFriends();
-    };
+    app.controller("AppController", function ($scope) {
+        $scope.rebuildFriends = function () {
+            console.log("\nRebuilding...");
+            $scope.friendsOne = getFriends();
+        };
 
-    $scope.rebuildFriends()
+        $scope.rebuildFriends()
 
-    function getRandomId () {
-      return Math.round(Math.random()*10000)
-    }
-
-    function getFriends() {
-      return [{
-        id: getRandomId(),
-        name: "Sarah"
-      },{
-        id: 11, // nick keeps the same id
-        name: "Nick"
-      },{
-        id: getRandomId(),
-        name: "Joanna"
-      }];
-    }
-  });
-
-  app.directive("nlLog", function() {
-    return {
-      compile : function () {
-        // compile will only ever be called once
-        console.log('compile');
-        return function link( $scope, element, attributes ) {
-          // but the linking function is called every time.
-          console.log(attributes.nlLog, $scope.$index);
+        function getRandomId() {
+            return Math.round(Math.random() * 10000)
         }
-      }
-    }
-  });
+
+        function getFriends() {
+            return [{
+                id: getRandomId(),
+                name: "Sarah"
+            }, {
+                id: 11, // nick keeps the same id
+                name: "Nick"
+            }, {
+                id: getRandomId(),
+                name: "Joanna"
+            }];
+        }
+    });
+
+    app.directive("nlLog", function () {
+        return {
+            compile: function () {
+                // compile will only ever be called once
+                console.log('compile');
+                return function link($scope, element, attributes) {
+                    // but the linking function is called every time.
+                    console.log(attributes.nlLog, $scope.$index);
+                }
+            }
+        }
+    });
 
 
-    </script>
+</script>
 
-  </body>
-  </html>
+</body>
+</html>

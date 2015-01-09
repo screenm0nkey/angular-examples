@@ -1,0 +1,24 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+    <script src="/lib/angular-1.2/angular.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+    {{stringy}}
+
+<script>
+    //NOTE: $parse is used by $interpolate to parse the object
+    // http://stackoverflow.com/questions/17900588/what-is-the-difference-between-the-parse-interpolate-and-compile-services
+
+    var app = angular.module("app", []);
+    app.controller("MainCtrl", function ($scope, $interpolate) {
+        $scope.stringy = $interpolate('Hello {{ person.name }}')({
+            person: {
+                name: 'Angular'
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

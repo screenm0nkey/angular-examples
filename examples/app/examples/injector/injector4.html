@@ -1,37 +1,35 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
 
+<script>
+    // The ng module
+    // **************
+    // angular.bootstrap automatically adds the ng module to the dependencies when
+    // used (manually or with ngApp). $rootScope / $compile services are part of the
+    // ng module. You need to use injector.invoke if you want these services. You
+    // should probably use angular in more traditional ways.
 
-  <script>
+    var app = angular.module('simpleExample', ['ng']);
 
-// The ng module
-// **************
-// angular.bootstrap automatically adds the ng module to the dependencies when
-// used (manually or with ngApp). $rootScope / $compile services are part of the
-// ng module. You need to use injector.invoke if you want these services. You
-// should probably use angular in more traditional ways.
+    angular.injector(['simpleExample']).invoke(['$rootScope', '$compile', function ($rootScope, $compile) {
 
-  var app = angular.module('simpleExample', ['ng']);
+        $rootScope.$watch(function () {
+            console.log('watch')
+        });
 
-  angular.injector(['simpleExample']).invoke(['$rootScope', '$compile', function($rootScope, $compile){
+        var elm = $compile('<a href="#" ng-click="someFunctionOnRootScope()">Click me</a>')($rootScope);
 
-      $rootScope.$watch(function () {
-        console.log('watch')
-      });
-
-      var elm = $compile('<a href="#" ng-click="someFunctionOnRootScope()">Click me</a>')($rootScope);
-
-      $rootScope.someFunctionOnRootScope = function(){
-        alert("Hello there!");
-      }
-      angular.element(document.body).append(elm);
+        $rootScope.someFunctionOnRootScope = function () {
+            alert("Hello there!");
+        }
+        angular.element(document.body).append(elm);
     }]);
 
 
-  </script>
+</script>
 </body>
 </html>

@@ -1,40 +1,39 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
 
-  <div ng-repeat="n in [] | range:100">
+<div ng-repeat="n in [] | range:100">
     {{ $index }} - do something
-  </div>
+</div>
 
-   <script>
-  var app = angular.module('app',[]).run(function (someService) {
+<script>
+    var app = angular.module('app', []).run(function (someService) {
+        // this shows how to invoke a filter programatically
+//        someService([], 10); // x === array length 10
+    });
+
+    // this allows you to augment the array before it's used so an empty array is populated with data
+    app.filter('range', function () {
+        // the input is the empty array and total is the value 100
+        return function (input, total) {
+            total = parseInt(total);
+            for (var i = 0; i < total; i++) {
+                input.push(i);
+            }
+            return input;
+        };
+    });
+
     // this shows how to invoke a filter programatically
-    var x = someService([],10); // x === array length 10
-  });
+    app.factory('someService', ['$filter', function ($filter) {
+        return function () {
+            return $filter('range').apply(this, arguments);
+        };
+    }]);
 
-  // this allows you to augment the array before it's used so an emoty array is
-  // populated with data
-  app.filter('range', function() {
-    // the input is the empty array and total is the value 100
-    return function(input, total) {
-      total = parseInt(total);
-      for (var i=0; i<total; i++) {
-        input.push(i);
-      }
-      return input;
-    };
-  });
-
-  // this shows how to invoke a filter programatically
-  app.factory('someService', '$filter', function($filter) {
-    return function() {
-      return $filter('range').apply(this, arguments);
-    };
-  });
-
-  </script>
+</script>
 </body>
 </html>

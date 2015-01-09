@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Egghead.io</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+</head>
+<body ng-app="egghead" ng-controller="AppCtrl as app">
+
+  <textarea name="" id="" cols="30" rows="10" ng-model="app.someHtml"></textarea>
+  <div ng-bind-html="app.someHtml"></div>
+  Notice that the red style has been stripped. This is becuase angular thinks its unsafe.
+  To avoid this use $sce.trustAsHtml()
+
+  <script src="/lib/angular-1.2/angular.js"></script>
+  <script src="/lib/angular-1.2/angular-sanitize.js"></script>
+  <script>
+  var egghead = angular.module("egghead", ["ngSanitize"]);
+
+  egghead.controller("AppCtrl", function ($sce) {
+    var app = this;
+    // app.someHtml = $sce.trustAsHtml('<a href="http://egghead.io" style="color:red">Learn stuff!</strong>');
+    app.someHtml = '<a href="http://egghead.io" style="color:red">Learn stuff!</strong>';
+  });
+
+  </script>
+</body>
+</html>
