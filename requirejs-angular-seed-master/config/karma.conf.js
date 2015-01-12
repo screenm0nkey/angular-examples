@@ -23,7 +23,7 @@ module.exports = function(config) {
 
 	LogLevel: config.LOG_DEBUG,
 
-	browsers: ['Chrome'], //Chrome Firefox PhantomJS
+	browsers: ['Chrome'], // Chrome Firefox PhantomJS
 
 	junitReporter: {
 		outputFile: 'test_out/unit.xml',

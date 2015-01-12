@@ -98,7 +98,7 @@
         link: function(scope, elm, attrs, ngModelCtrl) {
           // $parsers > View to Model
           ngModelCtrl.$parsers.unshift(function toolong (viewValue) {
-            if (viewValue.length < 5) {
+            if (viewValue && viewValue.length < 5) {
               ngModelCtrl.$setValidity('toolong', true);
               return viewValue;
             }

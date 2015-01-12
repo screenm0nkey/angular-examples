@@ -1,34 +1,40 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-controller="MainCtrl">
-  <input type="text" ng-model="nick">
-  <input type="text" ng-model="nick">
-  <p>{{nick}}</p>
+<input type="text" ng-model="nick">
+<input type="text" ng-model="nick">
 
-  <script>
-  var app = angular.module('app', []);
+<p>{{nick}}</p>
 
-  app.controller('MainCtrl', function($scope, $timeout) {
-    $scope.$watch('nick', function () {
-      console.log('watch');
+<script>
+    var app = angular.module('app', []);
 
-      $scope.$evalAsync(function () {
-       console.log('evalAsync');
-     });
+    app.controller('MainCtrl', function ($scope, $timeout) {
+        $scope.$watch('nick', function () {
+            console.log('watch');
 
-      $scope.$$postDigest(function () {
-        console.log('postDigest');
-      });
+            // this will execute second
+            $scope.$$postDigest(function () {
+                console.log('postDigest');
+            });
 
-      $timeout(function() {
-        console.log('timeout');
-      });
+            // this will execute last
+            $timeout(function () {
+                console.log('timeout');
+            });
+
+            // this will execute first
+            $scope.$evalAsync(function () {
+                console.log('evalAsync');
+            });
+
+
+        });
     });
-  });
 
-  </script>
+</script>
 </body>
 </html>
