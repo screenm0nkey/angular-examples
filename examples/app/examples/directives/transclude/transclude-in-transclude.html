@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Content with Menu</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <style type="text/css">
         tabgroup {
             display: block;
@@ -25,10 +26,10 @@
 
 <tabgroup>
     <tab title="Description">
-        <p>Some stuff for description</p>
+        <p>Some stuff for Description</p>
     </tab>
     <tab title="Specs">
-        <p>Some stuff for description</p>
+        <p>Some stuff for Specs</p>
     </tab>
     <tab title="Reviews">
         <p>Some stuff for Reviews</p>
@@ -38,12 +39,11 @@
 
 <script src="/lib/angular-1.2/angular.js"></script>
 <script type="text/javascript">
-
     var app = angular.module("app", []);
 
     app.directive('tabgroup', function () {
         return {
-            // note: you cannot replace conntent when you have more than one root element.
+            // note: you cannot replace content when you have more than one root element.
             restrict: 'E',
             transclude: true,
             template: '<div class="btn" ng-repeat="tab in tabs">{{tab.title}}</div><div ng-transclude></div>',

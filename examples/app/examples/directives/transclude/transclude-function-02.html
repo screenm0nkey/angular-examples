@@ -5,32 +5,31 @@
 </head>
 <body ng-controller="DemoCtrl">
 
-
 scope.name = {{ name }}
-<div data-my-directive>this is original content ({{ name }})</div>
+<data-my-directive>this is original content ({{ name }})</data-my-directive>
 
 
 <script>
     var app = angular.module('app', []);
 
     app.controller('DemoCtrl', function ($scope) {
-        console.log(1, $scope); // $id = 003
+        console.log(1, $scope.$id); // $id = 003
         $scope.name = 'world';
     });
 
-    app.directive('myDirective', function ($parse) {
+    app.directive('myDirective', function () {
         return {
-            restrict: 'A',
+            restrict: 'E',
             transclude: true,
             template: '<div>transcluded: </div>',
             //  notice that we injecting $transclude into the controller
             controller: function ($element, $attrs, $transclude, $scope) {
                 // at this point the $scope is still 003 as we dont use isolate scope
-                console.log(2, $scope);
+                console.log(2, $scope.$id);
 
                 $transclude(function (clone, scope) {
                     // the scope passed into the clone is a child of the parent scope
-                    console.log(3, scope); // $id = 004
+                    console.log(3, scope.$id); // $id = 004
                     // as the scope is dfferent we can change the
                     scope.name = 'AngularJS';
                     console.log(clone[0]);

@@ -5,25 +5,26 @@
 </head>
 <body ng-app="myapp">
 
-<p badger><a href="#">This text has been transcluded!</a></p>
+<badger><a href="#">This text has been transcluded!</a></badger>
 
 <script>
     var app = angular.module('myapp', []);
 
     app.directive('badger', function () {
         return {
-            template: '<h3><span ng-transclude></span>This Test</h3>',
+            template: '<h3><span ng-transclude></span> <br/>This text hasnt</h3>',
             transclude: 'element',
-            restrict: 'AE',
+            restrict: 'E',
             replace: true,
             link: function (scope, elem, attrs, ctrl, transclude) {
-                // scope here is $id:002
+                console.log(1, scope.$id);
+
                 transclude(function (clone, scope) {
                     // scope here is $id:004
-                    console.log(2, scope);
+                    console.log(2, scope.$id);
                     // clone is copy of the transcluded element, even though the example
                     // has already been translcuded
-                    console.log(clone[0]);
+                    console.log(3, clone[0]);
                     clone.css('background-color', 'yellow');
                     clone.text('shot');
                     elem.after(clone);
