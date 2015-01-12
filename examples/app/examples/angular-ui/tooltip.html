@@ -4,20 +4,21 @@
 </head>
 <body ng-controller="MainCtrl">
 
-  <a href="#" tooltip="hover">Tooltip</a>
+<a href="#" tooltip="hover">Tooltip</a>
 
-  <script src="/lib/jquery.min.js"></script>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="angular-ui.js"></script>
-  <script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/angular-1.2/angular.js"></script>
+<script src="angular-ui.js"></script>
+<script>
 
-    var app = angular.module( 'app', ['ui.bootstrap.tooltip'], function( $tooltipProvider ) {
-      // place tooltips left instead of top by default
-      $tooltipProvider.options( { placement: 'left' } );
+    var app = angular.module('app', ['ui.bootstrap.tooltip'], function ($tooltipProvider) {
+        // place tooltips left instead of top by default
+        $tooltipProvider.options({placement: 'left'});
     });
 
-    app.controller('MainCtrl', function ($scope) {})
+    app.controller('MainCtrl', function ($scope) {
+    })
 
-  </script>
+</script>
 </body>
 </html>

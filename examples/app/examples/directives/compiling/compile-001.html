@@ -1,63 +1,63 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-controller="MainCtrl">
 
-  <double>
-   <h4 style="color:red;">{{hello}} - 2</h4>
-  </double>
+<double>
+    <h4 style="color:red;">{{hello}} - 2</h4>
+</double>
 
-  <ntimes repeat="5">
-      <p>{{hello}} - {{count}}</p>
-  </ntimes>
+<ntimes repeat="5">
+    <p>{{hello}} - {{count}}</p>
+</ntimes>
 
-  <script>
-  var app = angular.module('app', []);
+<script>
+    var app = angular.module('app', []);
 
-  app.controller('MainCtrl', function ($scope) {
-    $scope.name = 'MainCtrl';
-  });
+    app.controller('MainCtrl', function ($scope) {
+        $scope.name = 'MainCtrl';
+    });
 
-  // the red ones
-  app.directive('double', function() {
-   return {
-     restrict: 'E',
-     // notice that even though this has an isolate scope the text inside the h4
-     // tag is using the same scope as the MainCtrl as thats where it sits
-     scope : {},
-     compile: function(tElement, attrs) {
-       var content = tElement.children();
-       console.log(1, content[0]);
-       tElement.append(content.clone());
-       // link function
-        return function link (scope, element, attributes, controller) {
-          scope.hello = "double directive";
+    // the red ones
+    app.directive('double', function () {
+        return {
+            restrict: 'E',
+            // notice that even though this has an isolate scope the text inside the h4
+            // tag is using the same scope as the MainCtrl as thats where it sits
+            scope: {},
+            compile: function (tElement, attrs) {
+                var content = tElement.children();
+                console.log(1, content[0]);
+                tElement.append(content.clone());
+                // link function
+                return function link(scope, element, attributes, controller) {
+                    scope.hello = "double directive";
+                };
+            }
         };
-      }
-    };
-  });
+    });
 
-  app.directive('ntimes', function() {
-   return {
-     restrict: 'E',
-     compile: function(tElement, attrs) {
-       var content = tElement.children();
-       for (var i = 0; i < attrs.repeat - 1; i++) {
-         tElement.append(content.clone());
-       }
-        // link function
-        return function link (scope, element, attributes, controller) {
-          console.log(scope);
-          // debugger at this point you will see all the dom elements before interpolation
-          scope.count = attributes.repeat;
-          scope.hello = "More text";
+    app.directive('ntimes', function () {
+        return {
+            restrict: 'E',
+            compile: function (tElement, attrs) {
+                var content = tElement.children();
+                for (var i = 0; i < attrs.repeat - 1; i++) {
+                    tElement.append(content.clone());
+                }
+                // link function
+                return function link(scope, element, attributes, controller) {
+                    console.log(scope);
+                    // debugger at this point you will see all the dom elements before interpolation
+                    scope.count = attributes.repeat;
+                    scope.hello = "More text";
+                };
+            }
         };
-     }
-   };
- });
+    });
 
-  </script>
+</script>
 </body>
 </html>

@@ -1,28 +1,28 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-controller="MainCtrl">
 
-  {{data.message | reverse}}
+{{data.message | reverse}}
 
-  <script>
-   var app = angular.module('app',[]);
+<script>
+    var app = angular.module('app', []);
 
-   app.factory('DataService', function() {
-    return { message : 'some message'}
-   });
+    app.factory('DataService', function () {
+        return {message: 'some message'}
+    });
 
-   app.filter('reverse', function() {
-    return function (text) {
-      return text.split('').reverse().join('');
-    }
-   });
+    app.filter('reverse', function () {
+        return function (text) {
+            return text.split('').reverse().join('');
+        }
+    });
 
-   app.controller('MainCtrl', function ($scope, DataService) {
-      $scope.data = DataService;
-   });
-  </script>
+    app.controller('MainCtrl', function ($scope, DataService) {
+        $scope.data = DataService;
+    });
+</script>
 </body>
 </html>

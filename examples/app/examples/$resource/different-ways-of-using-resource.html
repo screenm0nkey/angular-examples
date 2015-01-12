@@ -2,71 +2,71 @@
 <html lang="en" ng-app="app">
 
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="/lib/angular-1.2/angular-resource.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular-resource.js"></script>
 
 </head>
 
 <body ng-controller="MainCtrl">
 
-  <p>
+<p>
     There is a one second delay after submitting this form. it's to show that
     the object returned from a resource is a Resource object which will act like
     a promise but isn't a promise. to use a promise directly you would need to
     use the $parseProvider.unwrapPromises(true). So the Resouce object can be
     assigned directly to the scope and the view will be updated when the value
     is returned
-  </p>
+</p>
 
-  <form name="myForm" ng-submit="show()">
+<form name="myForm" ng-submit="show()">
     Type something here.
     <input type="text" ng-model="user.name" required>
     <button type="submit" ng-disabled="myForm.$invalid">Submit</button>
-  </form>
+</form>
 
-  data 1 {{data1.name}} <br>
-  data 2 {{data2.name}} <br>
-  data 3 {{data3.name}} <br>
-  data 4 {{data4.name}}
+data 1 {{data1.name}} <br>
+data 2 {{data2.name}} <br>
+data 3 {{data3.name}} <br>
+data 4 {{data4.name}}
 
-  <script>
+<script>
 
-  var app = angular.module('app', ['ngResource']);
+    var app = angular.module('app', ['ngResource']);
 
-  app.factory('Resource', function ($resource, $q) {
-    var Event = $resource('/data/event/:id', {id: '@id'});
-    return Event;
-  });
+    app.factory('Resource', function ($resource, $q) {
+        var Event = $resource('/data/event/:id', {id: '@id'});
+        return Event;
+    });
 
-  app.controller('MainCtrl', function ($scope, Resource) {
-    var success, error;
-    // success and error callback handlers
-    success = error = function (data) {
-      console.log(data);
-    };
+    app.controller('MainCtrl', function ($scope, Resource) {
+        var success, error;
+        // success and error callback handlers
+        success = error = function (data) {
+            console.log(data);
+        };
 
-    $scope.show = function () {
-      // basic examples
-      $scope.data1 = Resource.get({id: $scope.user.name });
+        $scope.show = function () {
+            // basic examples
+            $scope.data1 = Resource.get({id: $scope.user.name});
 
-      // same example with call backs
-      $scope.data2 = Resource.get({id: $scope.user.name }, success, error);
+            // same example with call backs
+            $scope.data2 = Resource.get({id: $scope.user.name}, success, error);
 
-      // using the class $promise method of the Resource class constructor
-      Resource.get({id: $scope.user.name }).$promise.then(function (data) {
-        $scope.data3 = data;
-      });
+            // using the class $promise method of the Resource class constructor
+            Resource.get({id: $scope.user.name}).$promise.then(function (data) {
+                $scope.data3 = data;
+            });
 
-      // instantaiting a new instance of Resource and then calling it's methods
-      var ev = new Resource({id :  $scope.user.name});
-      ev.$get().then(function (data) {
-         $scope.data4 = data;
-      });
-    }
+            // instantaiting a new instance of Resource and then calling it's methods
+            var ev = new Resource({id: $scope.user.name});
+            ev.$get().then(function (data) {
+                $scope.data4 = data;
+            });
+        }
 
-  });
+    });
 
-  </script>
+</script>
 
 </body>
 

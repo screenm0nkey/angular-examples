@@ -1,25 +1,25 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
-  <div ng-controller="MainCtrl">
+<div ng-controller="MainCtrl">
     {{ 10 * 3 }} <br>
     {{ [1,2,3][2] }}<br>
     {{ Math.min(2,3) }}<br>
     {{ 'hello ' + 'world' }}<br>
     {{ a = 8 }}<br>
     {{ a }}<br>
-  </div>
+</div>
 
-  <script>
-   var app = angular.module('app',[]);
-   app.controller('MainCtrl', function ($scope) {
-      $scope.a = 2;
-      $scope.a = 5;
-   })
+<script>
+    var app = angular.module('app', []);
+    app.controller('MainCtrl', function ($scope) {
+        $scope.a = 2;
+        $scope.a = 5;
+    })
 
-  </script>
+</script>
 </body>
 </html>

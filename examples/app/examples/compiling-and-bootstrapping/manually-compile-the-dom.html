@@ -1,55 +1,53 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
-  <div ng-controller="MainCtrl">
+<div ng-controller="MainCtrl">
     <div ng-controller="SubCtrl" hello-dir></div>
-  </div>
+</div>
 
-  <script>
-  window.MainCtrl = function ($scope) {
-    // inherits from root scope
-    console.log('Main', $scope)
-  }
-  window.SubCtrl = function ($scope) {
-    // inherits from rootscope
-    console.log('Sub', $scope)
-  }
-
-  // add our directive to the angular module. the directives are created when
-  // the dom is compiled
-  angular.module('ng').directive('helloDir', function() {
-    return {
-      compile : function () {
-        console.log('compile');
-        return function link () {
-          console.log('link');
-        }
-      }
-    };
-  });
-  // use the injector to kick off your application
-  // use the type inference to auto inject arguments, or use implicit injection
-  angular.injector(['ng']).invoke(function($rootScope, $compile, $document){
-    $rootScope.name = "click me"
-
-    $rootScope.someFunctionOnRootScope = function(){
-      alert("Hello there!");
+<script>
+    window.MainCtrl = function ($scope) {
+        // inherits from root scope
+        console.log('Main', $scope)
+    }
+    window.SubCtrl = function ($scope) {
+        // inherits from rootscope
+        console.log('Sub', $scope)
     }
 
-    var elm = $compile('<a href="#" ng-click="someFunctionOnRootScope()">{{name}}</a>')($rootScope);
-    angular.element(document.body).append(elm);
-    // compile the entire DOM. this is where the directives are set up
-    $compile($document)($rootScope);
-    // then run the digest. comment this out to see what happends
-    $rootScope.$digest();
-  });
+    // add our directive to the angular module. the directives are created when
+    // the dom is compiled
+    angular.module('ng').directive('helloDir', function () {
+        return {
+            compile: function () {
+                console.log('compile');
+                return function link() {
+                    console.log('link');
+                }
+            }
+        };
+    });
+    // use the injector to kick off your application
+    // use the type inference to auto inject arguments, or use implicit injection
+    angular.injector(['ng']).invoke(function ($rootScope, $compile, $document) {
+        $rootScope.name = "click me"
+
+        $rootScope.someFunctionOnRootScope = function () {
+            alert("Hello there!");
+        }
+
+        var elm = $compile('<a href="#" ng-click="someFunctionOnRootScope()">{{name}}</a>')($rootScope);
+        angular.element(document.body).append(elm);
+        // compile the entire DOM. this is where the directives are set up
+        $compile($document)($rootScope);
+        // then run the digest. comment this out to see what happends
+        $rootScope.$digest();
+    });
 
 
-
-
-  </script>
+</script>
 </body>
 </html>

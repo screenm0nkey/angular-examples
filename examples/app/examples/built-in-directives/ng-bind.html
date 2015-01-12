@@ -4,18 +4,18 @@
 </head>
 <body ng-controller="MainCtrl">
 
-  <div>{{method()}}</div>
-  <div ng-bind="method()"></div>
+<div>{{method()}}</div>
+<div ng-bind="method()"></div>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
-   var app = angular.module('app',[]);
-   app.controller('MainCtrl', function ($scope) {
-    $scope.method = function () {
-      return "Value"
-    }
-   });
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+    var app = angular.module('app', []);
+    app.controller('MainCtrl', function ($scope) {
+        $scope.method = function () {
+            return "Value"
+        }
+    });
 
-  </script>
+</script>
 </body>
 </html>

@@ -2,66 +2,68 @@
 <html ng-app="app">
 
 <head>
-  <meta charset="utf-8"/>
-  <title>Solr search</title>
+    <meta charset="utf-8"/>
+    <title>Solr search</title>
 </head>
 
 <body>
 
-  <div ng-app="solrapp">Search Results:
+<div ng-app="solrapp">Search Results:
     <search-results
-      solr-url="http://ec2-75-101-214-153.compute-1.amazonaws.com:8983/solr/statedecoded/search"
-      query="car tax"
-      display-field="catch_line">
+            solr-url="http://ec2-75-101-214-153.compute-1.amazonaws.com:8983/solr/statedecoded/search"
+            query="car tax"
+            display-field="catch_line">
     </search-results>
-  </div>
+</div>
 
-  <script type="text/ng-template" id="my-template.html">
+<script type="text/ng-template" id="my-template.html">
     <div>
-      <input ng-model="query" name="Search"></input>
-      <h2>Search Results for {{query}}</h2>
+        <input ng-model="query" name="Search"></input>
+
+        <h2>Search Results for {{query}}</h2>
       <span ng-repeat="doc in results.docs">
         <p>{{doc[displayField]}}</p>
       </span>
     </div>
-  </script>
+</script>
 
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
-  var app = angular.module('app', []);
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+    var app = angular.module('app', []);
 
-  app.directive('searchResults', function() {
-    return {
-      restrict : 'E',
-      scope : {
-        solrUrl: '@',
-        displayField: '@',
-        query: '@',
-        results: '&'
-      },
-      templateUrl : "my-template.html",
-      controller: function ($scope, $http) {
-        $scope.$watch('query', function () {
-          $http({
-            method: 'JSONP',
-            url: $scope.solrUrl,
-            params: {
-              'json.wrf': 'JSON_CALLBACK',
-              'q': $scope.query,
-              'fl': $scope.displayField
+    app.directive('searchResults', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                solrUrl: '@',
+                displayField: '@',
+                query: '@',
+                results: '&'
+            },
+            templateUrl: "my-template.html",
+            controller: function ($scope, $http) {
+                $scope.$watch('query', function () {
+                    $http({
+                        method: 'JSONP',
+                        url: $scope.solrUrl,
+                        params: {
+                            'json.wrf': 'JSON_CALLBACK',
+                            'q': $scope.query,
+                            'fl': $scope.displayField
+                        }
+                    })
+                            .success(function (data) {
+                                var docs = data.response.docs;
+                                $scope.results.docs = docs;
+
+                            }).error(function () {
+                            });
+                });
             }
-          })
-          .success(function (data) {
-            var docs = data.response.docs;
-            $scope.results.docs = docs;
+        }
+    });
 
-          }).error(function () {});
-        });
-      }
-    }
-  });
-
-  </script>
+</script>
 </body>
 </html>

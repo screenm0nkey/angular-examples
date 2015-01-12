@@ -2,20 +2,20 @@
 <html ng-app="app">
 <head>
 
-  <script src="/lib/angular-1.2/angular-resource.js"></script>
-  <script src="/lib/angular-1.2/angular-route.js"></script>
+    <script src="/lib/angular-1.2/angular-resource.js"></script>
+    <script src="/lib/angular-1.2/angular-route.js"></script>
 </head>
 <body>
 
 
-  <script>
+<script>
     // see the Routing folder for better examples of how to route shit.
     window.app = angular.module('app', ['ngRoute', 'ngResource'])
 
     app.config(function ($routeProvider, $locationProvider) {
-      $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(true);
     });
 
-  </script>
+</script>
 </body>
 </html>

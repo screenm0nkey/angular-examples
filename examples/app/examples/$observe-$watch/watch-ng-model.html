@@ -1,35 +1,35 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
-  <div ng-controller="AppCtrl">
+<div ng-controller="AppCtrl">
     <input watchy type="text" ng-model="person.name">{{person.name}}
-  </div>
+</div>
 
-  <script>
-  var app = angular.module('app',[])
+<script>
+    var app = angular.module('app', [])
 
-  app.controller('AppCtrl', function ($scope) {
-    $scope.person = {}
-  });
+    app.controller('AppCtrl', function ($scope) {
+        $scope.person = {}
+    });
 
-  app.directive('watchy', function() {
-    return {
-      restrict : 'A',
-      scope : {
-        ngModel : '='
-      },
-      link : function (scope, element, attrs) {
-        scope.$watch('ngModel', function (newValue, oldValue) {
-          console.log(2, newValue, oldValue);
-        },true);
+    app.directive('watchy', function () {
+        return {
+            restrict: 'A',
+            scope: {
+                ngModel: '='
+            },
+            link: function (scope, element, attrs) {
+                scope.$watch('ngModel', function (newValue, oldValue) {
+                    console.log(2, newValue, oldValue);
+                }, true);
 
-      }
-    }
-  });
+            }
+        }
+    });
 
-  </script>
+</script>
 </body>
 </html>

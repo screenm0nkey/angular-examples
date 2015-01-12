@@ -1,53 +1,54 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
-  <div ng-controller="AppCtrl">
+<div ng-controller="AppCtrl">
 
     <input type="text" ng-model="data.name">{{data.name}}
     <nick someattr="{{data.name}}"></nick>
     <stick someattr="{{data.name}}" bill="{{data.name}}"></stick>
 
-  </div>
+</div>
 
-  <script>
-  var app = angular.module('app',[])
+<script>
+    var app = angular.module('app', [])
 
-  app.controller('AppCtrl', function ($scope) {});
+    app.controller('AppCtrl', function ($scope) {
+    });
 
-  // so this wont work as you can't watch values which are to be interpolated
-  // i.e. {{}}
-  app.directive('nick', function() {
-    return function(scope, element, attrs) {
-      scope.$watch(attrs.someattr, function (newValue, oldValue) {
-        console.log(1, newValue, oldValue);
-      },true);
-    };
-  });
+    // so this wont work as you can't watch values which are to be interpolated
+    // i.e. {{}}
+    app.directive('nick', function () {
+        return function (scope, element, attrs) {
+            scope.$watch(attrs.someattr, function (newValue, oldValue) {
+                console.log(1, newValue, oldValue);
+            }, true);
+        };
+    });
 
-  // but this will work because your watching a value on the scope. the
-  // interpolation was already done when assigning the value to the isolate scope
-  // we can also observe the attribute.
-  app.directive('stick', function() {
-    return {
-      restrict : 'EA',
-      scope : {someattr : '@', },
-      link : function (scope, element, attrs) {
-        // this is watching the value on this directive's scope
-        scope.$watch('someattr', function (newValue, oldValue) {
-          console.log(2, newValue, oldValue);
-        },true);
+    // but this will work because your watching a value on the scope. the
+    // interpolation was already done when assigning the value to the isolate scope
+    // we can also observe the attribute.
+    app.directive('stick', function () {
+        return {
+            restrict: 'EA',
+            scope: {someattr: '@',},
+            link: function (scope, element, attrs) {
+                // this is watching the value on this directive's scope
+                scope.$watch('someattr', function (newValue, oldValue) {
+                    console.log(2, newValue, oldValue);
+                }, true);
 
-        //this is observing the attribute
-        attrs.$observe('bill', function(newValue) {
-          console.log(3, newValue);
-        });
-      }
-    }
-  });
+                //this is observing the attribute
+                attrs.$observe('bill', function (newValue) {
+                    console.log(3, newValue);
+                });
+            }
+        }
+    });
 
-  </script>
+</script>
 </body>
 </html>

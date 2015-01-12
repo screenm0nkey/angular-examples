@@ -1,101 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  <meta charset="utf-8">
-  <title>Egghead Videos</title>
+    <meta charset="utf-8">
+    <title>Egghead Videos</title>
 </head>
 <body>
 
-  <div ng-app="myApp">
+<div ng-app="myApp">
     <div ng-controller="AvengersCtrl">
-      limit
-      <input type="text" ng-model="limitx">
-      name
-      <input type="text" ng-model="search.name">
-      <table>
-        <tr ng-repeat="actor in avengers.cast | orderBy:'name' | limitTo:limitx | filter:search">
-          <td>{{actor.name | lowercase}}</td>
-          <td>{{actor.character | uppercase}}</td>
-        </tr>
-      </table>
+        limit
+        <input type="text" ng-model="limitx">
+        name
+        <input type="text" ng-model="search.name">
+        <table>
+            <tr ng-repeat="actor in avengers.cast | orderBy:'name' | limitTo:limitx | filter:search">
+                <td>{{actor.name | lowercase}}</td>
+                <td>{{actor.character | uppercase}}</td>
+            </tr>
+        </table>
     </div>
-  </div>
+</div>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
-  var myApp = angular.module('myApp', []);
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+    var myApp = angular.module('myApp', []);
 
-  myApp.factory('Avengers', function() {
-    var Avengers = {};
-    Avengers.cast = [
-    {
-      name: "Robert Downey Jr.",
-      character: "Tony Stark / Iron Man"
-    },
-    {
-      name: "Chris Evans",
-      character: "Steve Rogers / Captain America"
-    },
-    {
-      name: "Mark Ruffalo",
-      character: "Bruce Banner / The Hulk"
-    },
-    {
-      name: "Chris Hemsworth",
-      character: "Thor"
-    },
-    {
-      name: "Scarlett Johansson",
-      character: "Natasha Romanoff / Black Widow"
-    },
-    {
-      name: "Jeremy Renner",
-      character: "Clint Barton / Hawkeye"
-    },
-    {
-      name: "Tom Hiddleston",
-      character: "Loki"
-    },
-    {
-      name: "Clark Gregg",
-      character: "Agent Phil Coulson"
-    },
-    {
-      name: "Cobie Smulders",
-      character: "Agent Maria Hill"
-    },
-    {
-      name: "Stellan Skarsgard",
-      character: "Selvig"
-    },
-    {
-      name: "Samuel L. Jackson",
-      character: "Nick Fury"
-    },
-    {
-      name: "Gwyneth Paltrow",
-      character: "Pepper Potts"
-    },
-    {
-      name: "Paul Bettany",
-      character: "Jarvis (voice)"
-    },
-    {
-      name: "Alexis Denisof",
-      character: "The Other"
-    },
-    {
-      name: "Tina Benko",
-      character: "NASA Scientist"
+    myApp.factory('Avengers', function () {
+        var Avengers = {};
+        Avengers.cast = [
+            {
+                name: "Robert Downey Jr.",
+                character: "Tony Stark / Iron Man"
+            },
+            {
+                name: "Chris Evans",
+                character: "Steve Rogers / Captain America"
+            },
+            {
+                name: "Mark Ruffalo",
+                character: "Bruce Banner / The Hulk"
+            },
+            {
+                name: "Chris Hemsworth",
+                character: "Thor"
+            },
+            {
+                name: "Scarlett Johansson",
+                character: "Natasha Romanoff / Black Widow"
+            },
+            {
+                name: "Jeremy Renner",
+                character: "Clint Barton / Hawkeye"
+            },
+            {
+                name: "Tom Hiddleston",
+                character: "Loki"
+            },
+            {
+                name: "Clark Gregg",
+                character: "Agent Phil Coulson"
+            },
+            {
+                name: "Cobie Smulders",
+                character: "Agent Maria Hill"
+            },
+            {
+                name: "Stellan Skarsgard",
+                character: "Selvig"
+            },
+            {
+                name: "Samuel L. Jackson",
+                character: "Nick Fury"
+            },
+            {
+                name: "Gwyneth Paltrow",
+                character: "Pepper Potts"
+            },
+            {
+                name: "Paul Bettany",
+                character: "Jarvis (voice)"
+            },
+            {
+                name: "Alexis Denisof",
+                character: "The Other"
+            },
+            {
+                name: "Tina Benko",
+                character: "NASA Scientist"
+            }
+        ];
+        return Avengers;
+    })
+
+    function AvengersCtrl($scope, Avengers) {
+        $scope.avengers = Avengers;
+        $scope.limitx = 5;
     }
-    ];
-    return Avengers;
-  })
-
-function AvengersCtrl($scope, Avengers) {
-  $scope.avengers = Avengers;
-  $scope.limitx = 5;
-}
 </script>
 </body>
 </html>

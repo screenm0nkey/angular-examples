@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="/lib/angular-1.2/angular-resource.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular-resource.js"></script>
 </head>
 
 <body ng-controller="SwitchableGridController">
-  <!-- A compact view smaller photos and titles -->
-  <img ng-repeat="p in pics" ng-src="{{p.images.thumbnail.url}}" />
+<!-- A compact view smaller photos and titles -->
+<img ng-repeat="p in pics" ng-src="{{p.images.thumbnail.url}}"/>
 
-  <script>
-  var app = angular.module("app", ['ngResource']);
+<script>
+    var app = angular.module("app", ['ngResource']);
 
-  app.factory('instagram', function($resource){
-    return {
-      fetchPopular: function(callback){
-        var api = $resource('https://api.instagram.com/v1/media/popular', {
-          // this will be the query string
-          callback:'JSON_CALLBACK',
-          client_id: '642176ece1e7445e99244cec26f4de1f'
-        },{
-          fetch:{method:'JSONP'}
-        });
+    app.factory('instagram', function ($resource) {
+        return {
+            fetchPopular: function (callback) {
+                var api = $resource('https://api.instagram.com/v1/media/popular', {
+                    // this will be the query string
+                    callback: 'JSON_CALLBACK',
+                    client_id: '642176ece1e7445e99244cec26f4de1f'
+                }, {
+                    fetch: {method: 'JSONP'}
+                });
 
-        api.fetch(function(response){
-          callback(response.data);
-        });
-      }
-    }
-  });
-
-  function SwitchableGridController($scope, instagram){
-    $scope.layout = 'grid';
-    $scope.pics = [];
-    instagram.fetchPopular(function(data){
-      $scope.pics = data;
+                api.fetch(function (response) {
+                    callback(response.data);
+                });
+            }
+        }
     });
-  }
-  </script>
+
+    function SwitchableGridController($scope, instagram) {
+        $scope.layout = 'grid';
+        $scope.pics = [];
+        instagram.fetchPopular(function (data) {
+            $scope.pics = data;
+        });
+    }
+</script>
 </body>
 </html>

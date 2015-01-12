@@ -1,47 +1,48 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <title></title>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <title></title>
 </head>
 <body ng-controller="MainCtrl">
-   <foo name="Angular Tips"/>
+<foo name="Angular Tips"/>
 
-  <script>
-  // http://angular-tips.com/blog/2013/09/experiment-decorating-directives
-  app = angular.module('app', []);
-  app.controller("MainCtrl", function($scope) {});
-
-  app.controller("fooCtrl", function($scope) {
-    $scope.name = "from the directive controller";
-  });
-
-  app.directive("foo", function() {
-    return {
-      restrict: 'E',
-      replace: true,
-      template: '<div>Hello, {{name}}</div>',
-      controller: 'fooCtrl'
-    };
-  });
-
-  // decorating the controller
-  app.config(function($provide) {
-    $provide.decorator('fooDirective', function($delegate, $controller) {
-      var directive = $delegate[0];
-      var controllerName = directive.controller;
-
-      directive.controller = function($scope, $timeout) {
-        angular.extend(this, $controller(controllerName, {$scope: $scope}));
-
-        $timeout(function() {
-          $scope.name = "from the decorator now";
-        }, 3000);
-      };
-
-      return $delegate;
+<script>
+    // http://angular-tips.com/blog/2013/09/experiment-decorating-directives
+    app = angular.module('app', []);
+    app.controller("MainCtrl", function ($scope) {
     });
-  });
-  </script>
+
+    app.controller("fooCtrl", function ($scope) {
+        $scope.name = "from the directive controller";
+    });
+
+    app.directive("foo", function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div>Hello, {{name}}</div>',
+            controller: 'fooCtrl'
+        };
+    });
+
+    // decorating the controller
+    app.config(function ($provide) {
+        $provide.decorator('fooDirective', function ($delegate, $controller) {
+            var directive = $delegate[0];
+            var controllerName = directive.controller;
+
+            directive.controller = function ($scope, $timeout) {
+                angular.extend(this, $controller(controllerName, {$scope: $scope}));
+
+                $timeout(function () {
+                    $scope.name = "from the decorator now";
+                }, 3000);
+            };
+
+            return $delegate;
+        });
+    });
+</script>
 </body>
 </html>

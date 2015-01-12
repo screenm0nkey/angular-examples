@@ -1,32 +1,32 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
-  <div ng-app="myApp" ng-controller="Ctrl">
+<div ng-app="myApp" ng-controller="Ctrl">
     <span>Time (in ms): {{timeInMs}}</span>
 </div>
 
-  <script>
-  angular.module('myApp', []);
+<script>
+    angular.module('myApp', []);
 
-function Ctrl($scope, $timeout) {
-    var promise;
+    function Ctrl($scope, $timeout) {
+        var promise;
 
-    $scope.timeInMs = 0;
+        $scope.timeInMs = 0;
 
-    var countUp = function() {
-        $scope.timeInMs+= 500;
-        promise = $timeout(countUp, 500);
+        var countUp = function () {
+            $scope.timeInMs += 500;
+            promise = $timeout(countUp, 500);
 
-    if ($scope.timeInMs === 3000) {
-      $timeout.cancel(promise)
+            if ($scope.timeInMs === 3000) {
+                $timeout.cancel(promise)
+            }
+        }
+        $timeout(countUp, 500);
     }
-}
-    $timeout(countUp, 500);
-}
 
-  </script>
+</script>
 </body>
 </html>

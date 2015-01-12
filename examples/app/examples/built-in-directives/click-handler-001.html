@@ -1,65 +1,66 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <style>
-    a {
-      font-weight: bold;
-      text-decoration: underline;
-      cursor : pointer;
-    }
-  </style>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <style>
+        a {
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-  <div ng-app="myApp">
+<div ng-app="myApp">
     <div class="inbox" ng-controller="EmailsCtrl">
-      My Inbox:
-      <ul>
-        <li ng-repeat="message in emails.messages">
-          <p>From: {{ message.from }}</p>
-          <p>Subject: {{ message.subject }}</p>
-          <p>{{ message.sent | date:'MMM d, y h:mm:ss a' }}</p>
-          <a ng-click="deleteEmail($index, $event)">Delete email</a>
-        </li>
-      </ul>
+        My Inbox:
+        <ul>
+            <li ng-repeat="message in emails.messages">
+                <p>From: {{ message.from }}</p>
+
+                <p>Subject: {{ message.subject }}</p>
+
+                <p>{{ message.sent | date:'MMM d, y h:mm:ss a' }}</p>
+                <a ng-click="deleteEmail($index, $event)">Delete email</a>
+            </li>
+        </ul>
     </div>
-  </div>
+</div>
 
 
+<script>
+    // ng-click="$event.stopPropagation()"
 
-  <script>
-  // ng-click="$event.stopPropagation()"
+    var myApp = angular.module('myApp', []);
 
-  var myApp = angular.module('myApp', []);
+    myApp.controller('EmailsCtrl', ['$scope', function ($scope) {
 
-  myApp.controller('EmailsCtrl', ['$scope', function ($scope) {
+        $scope.emails = {};
 
-    $scope.emails = {};
+        $scope.emails.messages = [{
+            "from": "Steve Jobs",
+            "subject": "I think I'm holding my phone wrong :/",
+            "sent": "2013-10-01T08:05:59Z"
+        }, {
+            "from": "Ellie Goulding",
+            "subject": "I've got Starry Eyes, lulz",
+            "sent": "2013-09-21T19:45:00Z"
+        }, {
+            "from": "Michael Stipe",
+            "subject": "Everybody hurts, sometimes.",
+            "sent": "2013-09-12T11:38:30Z"
+        }, {
+            "from": "Jeremy Clarkson",
+            "subject": "Think I've found the best car... In the world",
+            "sent": "2013-09-03T13:15:11Z"
+        }];
 
-    $scope.emails.messages = [{
-      "from": "Steve Jobs",
-      "subject": "I think I'm holding my phone wrong :/",
-      "sent": "2013-10-01T08:05:59Z"
-    },{
-      "from": "Ellie Goulding",
-      "subject": "I've got Starry Eyes, lulz",
-      "sent": "2013-09-21T19:45:00Z"
-    },{
-      "from": "Michael Stipe",
-      "subject": "Everybody hurts, sometimes.",
-      "sent": "2013-09-12T11:38:30Z"
-    },{
-      "from": "Jeremy Clarkson",
-      "subject": "Think I've found the best car... In the world",
-      "sent": "2013-09-03T13:15:11Z"
-    }];
+        $scope.deleteEmail = function (index, event) {
+            $scope.emails.messages.splice(index, 1)
+        };
 
-    $scope.deleteEmail = function (index, event) {
-      $scope.emails.messages.splice(index, 1)
-    };
-
-  }]);
-  </script>
+    }]);
+</script>
 </body>
 </html>

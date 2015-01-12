@@ -1,80 +1,90 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset=utf-8 />
-  <title>bg-splitter</title>
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" media="screen" type="text/css" />
+    <meta charset=utf-8/>
+    <title>bg-splitter</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" media="screen" type="text/css"/>
 
-  <style>
-    body { margin: 0px; font-family: Arial, Helvetica, sans-serif; }
-    .pane-container{padding: 10px; }
-    .close-pane {
-      position: absolute;
-      top : 8px;
-      right : 8px;
-      opacity: 0.9;
-    }
-    .close-pane span {
-      cursor:pointer;
-      font-size : 10px;
-      display : inline-block;
-      line-height : 14px;
-      text-align: center;
-      width : 14px;
-      height : 14px;
-      background: pink;
-      margin-right: 5px;
-    }
-    .close-pane span:hover {
-      background: red;
-      color : white;
-    }
+    <style>
+        body {
+            margin: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-    .close-pane span[disabled]  {
-      cursor:default;
-      opacity: 0.5;
-      color: #ccc;
-    }
-    .close-pane span[disabled]:hover  {
-      background: pink;
-    }
-  </style>
+        .pane-container {
+            padding: 10px;
+        }
+
+        .close-pane {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            opacity: 0.9;
+        }
+
+        .close-pane span {
+            cursor: pointer;
+            font-size: 10px;
+            display: inline-block;
+            line-height: 14px;
+            text-align: center;
+            width: 14px;
+            height: 14px;
+            background: pink;
+            margin-right: 5px;
+        }
+
+        .close-pane span:hover {
+            background: red;
+            color: white;
+        }
+
+        .close-pane span[disabled] {
+            cursor: default;
+            opacity: 0.5;
+            color: #ccc;
+        }
+
+        .close-pane span[disabled]:hover {
+            background: pink;
+        }
+    </style>
 </head>
 <body ng-app="app">
 
-  <bg-splitter orientation="horizontal" id="pane-splitter">
+<bg-splitter orientation="horizontal" id="pane-splitter">
     <bg-pane min-size="0" class="panes-container">
-      <div class="pane-container" bg-close-h>Pane 1</div>
+        <div class="pane-container" bg-close-h>Pane 1</div>
     </bg-pane>
 
     <bg-pane min-size="0" class="panes-container">
-      <bg-splitter orientation="vertical">
-        <bg-pane min-size="0" class="pane-container" bg-close-v>Pane 2</bg-pane>
-        <bg-pane min-size="0" class="pane-container" bg-close-v>Pane 3</bg-pane>
-      </bg-splitter>
+        <bg-splitter orientation="vertical">
+            <bg-pane min-size="0" class="pane-container" bg-close-v>Pane 2</bg-pane>
+            <bg-pane min-size="0" class="pane-container" bg-close-v>Pane 3</bg-pane>
+        </bg-splitter>
     </bg-pane>
-  </bg-splitter>
+</bg-splitter>
 
-  <script src="/lib/jquery.min.js"></script>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="splitter.js"></script>
-  <script src="main.js"></script>
-  <script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/angular-1.2/angular.js"></script>
+<script src="splitter.js"></script>
+<script src="main.js"></script>
+<script>
     var app = angular.module('app', ['bgDirectives']);
     // configure the defaults for the close button provider, which is used for the
     // directive
     app.config(function (bgCloseVerticleProvider, bgCloseHorizontalProvider) {
-      bgCloseVerticleProvider.setDefaults({
-        top : 40
-      });
+        bgCloseVerticleProvider.setDefaults({
+            top: 40
+        });
 
-      bgCloseHorizontalProvider.setDefaults({
-        left : 100
-      });
+        bgCloseHorizontalProvider.setDefaults({
+            left: 100
+        });
     });
-  </script>
+</script>
 </body>
 </html>
 

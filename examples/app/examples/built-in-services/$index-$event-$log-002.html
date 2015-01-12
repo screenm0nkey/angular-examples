@@ -1,51 +1,51 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-controller="FooCtrl">
 
 
-  <button ng-repeat="item in 'nick'.split('') track by $id($index)"
-          ng-click="ev = $event">
+<button ng-repeat="item in 'nick'.split('') track by $id($index)"
+        ng-click="ev = $event">
     {{$index + 1}}. {{item}}
     {{ ev.pageX }}
-  </button>
+</button>
 
-  <hr>
+<hr>
 
-  <button ng-repeat="item in 'lowman'.split('') track by $id($index)"
-          ng-click="myFunc($event, this)">
+<button ng-repeat="item in 'lowman'.split('') track by $id($index)"
+        ng-click="myFunc($event, this)">
     {{$index + 1}}. {{item}}
     {{ ev.pageX }}
-  </button>
+</button>
 
-  <hr>
+<hr>
 
-  <button ng-repeat="item in 'was'.split('') track by $id($index)"
-          ng-click="$log.warn($event)">
+<button ng-repeat="item in 'was'.split('') track by $id($index)"
+        ng-click="$log.warn($event)">
     {{$index + 1}}. {{item}}
-  </button>
+</button>
 
-  <script>
-  var app = angular.module("app", []);
+<script>
+    var app = angular.module("app", []);
 
-  app.config(function ($logProvider) {
-   $logProvider.debugEnabled(true);
- });
+    app.config(function ($logProvider) {
+        $logProvider.debugEnabled(true);
+    });
 
-  app.run(function ($rootScope, $log) {
-   $rootScope.$log = $log;
- });
+    app.run(function ($rootScope, $log) {
+        $rootScope.$log = $log;
+    });
 
-  app.controller("FooCtrl", function($scope) {
-   $scope.myFunc = function (e, scope) {
-     console.warn(e);
-     scope.ev = e
-   };
- });
+    app.controller("FooCtrl", function ($scope) {
+        $scope.myFunc = function (e, scope) {
+            console.warn(e);
+            scope.ev = e
+        };
+    });
 
 
-  </script>
+</script>
 </body>
 </html>

@@ -2,60 +2,60 @@
 <html lang="en">
 
 <head>
-  <title>https://coderwall.com/p/40axlq</title>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <title>https://coderwall.com/p/40axlq</title>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 
 <body ng-app="app" ng-controller="FetchCtrl">
 
-  <button ng-click="fetch()">Fetch</button>
-  <button ng-click="showCache()">Show cache</button>
-  <div>
+<button ng-click="fetch()">Fetch</button>
+<button ng-click="showCache()">Show cache</button>
+<div>
     <pre>http status code: {{status}}</pre>
     <pre>http response data: {{data}}</pre>
-  </div>
+</div>
 
-  <script>
-  var app = angular.module('app', []);
+<script>
+    var app = angular.module('app', []);
 
-  app.config(function ($httpProvider) {
-    $httpProvider.defaults.headers.common = { NickCommon : 11 }
-    $httpProvider.defaults.headers.post = { NickPost : 11 }
-    $httpProvider.defaults.headers.put = { NickPut : 13 }
-  });
-
-
-  function FetchCtrl($scope, $http, $cacheFactory) {
-    // we're changing the default cache to our new cache, so that all requests
-    // will use this new cache
-    var httpDefaultCache = $cacheFactory('myNewDefaultCache', { capacity: 10 });
-    // notice that we can set these properties here or in the config call
-    $http.defaults.cache = httpDefaultCache;
-
-    $scope.showCache = function () {
-      console.log(httpDefaultCache.get('/data/cache'));
-    };
+    app.config(function ($httpProvider) {
+        $httpProvider.defaults.headers.common = {NickCommon: 11}
+        $httpProvider.defaults.headers.post = {NickPost: 11}
+        $httpProvider.defaults.headers.put = {NickPut: 13}
+    });
 
 
-    $scope.fetch = function() {
-      // $http does not return a deferred.
-      xhr = $http({ cache: true, url: '/data/cache', method: 'GET'});
+    function FetchCtrl($scope, $http, $cacheFactory) {
+        // we're changing the default cache to our new cache, so that all requests
+        // will use this new cache
+        var httpDefaultCache = $cacheFactory('myNewDefaultCache', {capacity: 10});
+        // notice that we can set these properties here or in the config call
+        $http.defaults.cache = httpDefaultCache;
 
-      xhr.then(function (res) {
-        console.log(11, res.data[0])
-      });
+        $scope.showCache = function () {
+            console.log(httpDefaultCache.get('/data/cache'));
+        };
 
-      xhr.success(function(data, status) {
-        $scope.status = status;
-        $scope.data = data;
-      })
 
-      xhr.error(function(data, status) {
-        $scope.data = data || "Request failed";
-        $scope.status = status;
-      });
-    };
-  }
+        $scope.fetch = function () {
+            // $http does not return a deferred.
+            xhr = $http({cache: true, url: '/data/cache', method: 'GET'});
+
+            xhr.then(function (res) {
+                console.log(11, res.data[0])
+            });
+
+            xhr.success(function (data, status) {
+                $scope.status = status;
+                $scope.data = data;
+            })
+
+            xhr.error(function (data, status) {
+                $scope.data = data || "Request failed";
+                $scope.status = status;
+            });
+        };
+    }
 
 </script>
 

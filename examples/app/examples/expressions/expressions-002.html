@@ -1,38 +1,39 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
-  <div ng-app="myApp">
+<div ng-app="myApp">
     <div>
-      <a href="" ng-click="toggle = !toggle">Toggle nav</a>
-      <ul ng-show="toggle">
-        <li>Link 1</li>
-        <li>Link 2</li>
-        <li>Link 3</li>
-      </ul>
+        <a href="" ng-click="toggle = !toggle">Toggle nav</a>
+        <ul ng-show="toggle">
+            <li>Link 1</li>
+            <li>Link 2</li>
+            <li>Link 3</li>
+        </ul>
     </div>
 
     <div ng-controller="MainCtrl">
-      <p>Test 1: {{ main.test1.length > 0 && 'My data' || 'No data' }}</p>
-      <p>Test 2: {{ main.test2.length > 0 && 'My data' || 'No data' }}</p>
+        <p>Test 1: {{ main.test1.length > 0 && 'My data' || 'No data' }}</p>
+
+        <p>Test 2: {{ main.test2.length > 0 && 'My data' || 'No data' }}</p>
     </div>
-  </div>
+</div>
 
-  <script>
-  var myApp = angular.module('myApp', []);
+<script>
+    var myApp = angular.module('myApp', []);
 
-  myApp.controller('MainCtrl', ['$scope', function ($scope) {
-    $scope.main = {};
-      // No data
-      $scope.main.test1 = [];
-      // We have data!
-      $scope.main.test2 = [{
-        "some": "data"
-      }];
+    myApp.controller('MainCtrl', ['$scope', function ($scope) {
+        $scope.main = {};
+        // No data
+        $scope.main.test1 = [];
+        // We have data!
+        $scope.main.test2 = [{
+            "some": "data"
+        }];
     }]);
 
-  </script>
+</script>
 </body>
 </html>

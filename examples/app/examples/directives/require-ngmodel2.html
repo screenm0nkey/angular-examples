@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 <head>
-   <script src="/lib/jquery.min.js"></script>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-app="app" ng-controller="MainCtrl">
 
@@ -11,30 +11,30 @@
 {{ someform.comment }}
 
 <script>
-  // this example shows two way binding
-  var app = angular.module("app", []);
-  
-  app.controller('MainCtrl', function ($scope) {
-    $scope.someform ={comment : 'hello'}
-  });
+    // this example shows two way binding
+    var app = angular.module("app", []);
 
-  app.directive('drmComment', function() {
-    return {
-        restrict: 'A',
-        scope: {
-            placeholder: '@',
-            form: '=',
-            name : '@'
+    app.controller('MainCtrl', function ($scope) {
+        $scope.someform = {comment: 'hello'}
+    });
 
-        },
-      template: '<div><input id="testInput" type="text" placeholder="{{placeholder}}" ng-model="form[name]"/></div>',
-       link : function (scope) {
-           debugger
-       }
+    app.directive('drmComment', function () {
+        return {
+            restrict: 'A',
+            scope: {
+                placeholder: '@',
+                form: '=',
+                name: '@'
 
-    }
-  });
+            },
+            template: '<div><input id="testInput" type="text" placeholder="{{placeholder}}" ng-model="form[name]"/></div>',
+            link: function (scope) {
+                debugger
+            }
 
-  </script>
+        }
+    });
+
+</script>
 </body>
 </html>

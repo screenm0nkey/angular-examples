@@ -1,56 +1,57 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <link data-require="bootstrap-css@3.x" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+<head>
+    <link data-require="bootstrap-css@3.x" data-semver="3.1.1" rel="stylesheet"
+          href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
     <script src="/lib/jquery.min.js"></script>
     <script src="/lib/angular-1.2/angular.min.js"></script>
     <script src="/lib/angular-1.2/angular-animate.js"></script>
     <script src="/lib/angular-1.2/angular-route.js"></script>
     <script src="/lib/underscore.js"></script>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css"/>
     <style>
-      .det-anim.switching {
-        transition: all 1s linear;
-        position: relative;
-        opacity: 0.5;
-        left: -20px;
-      }
+        .det-anim.switching {
+            transition: all 1s linear;
+            position: relative;
+            opacity: 0.5;
+            left: -20px;
+        }
     </style>
     <script src="script.js"></script>
     <script src="animations.js"></script>
-  </head>
+</head>
 
-  <body ng-app="coursesApp">
-    <div class="container">
-      <div class="row page-header">
+<body ng-app="coursesApp">
+<div class="container">
+    <div class="row page-header">
         <h2>Virtual Training</h2>
-      </div>
-      <div data-ng-view="" id="div-view" class="view-slide-in"></div>
     </div>
-    
-    <script type="text/ng-template" id="courseDetails.html">
-      <div class="thumbnail">
+    <div data-ng-view="" id="div-view" class="view-slide-in"></div>
+</div>
+
+<script type="text/ng-template" id="courseDetails.html">
+    <div class="thumbnail">
         <div class="caption"><strong>{{course.title}}</strong></div>
         <div ng-show="viewDetails">
-          <div style="text-align:center;">{{course.topic}}</div>
-          <span  style="margin-right: 9px;">Level: {{course.level}}</span>
-          <span class="right">Category: {{course.category}}</span>
-          <br />
-          <span class="left" style="margin-right: 9px;">Rated: {{course.rating}}/5</span>
+            <div style="text-align:center;">{{course.topic}}</div>
+            <span style="margin-right: 9px;">Level: {{course.level}}</span>
+            <span class="right">Category: {{course.category}}</span>
+            <br/>
+            <span class="left" style="margin-right: 9px;">Rated: {{course.rating}}/5</span>
         </div>
         <div ng-hide="viewDetails">
-          Total Views: {{course.totalViews}} <br />
-          Last Week Views: {{course.lastWeekViews}} <br />
+            Total Views: {{course.totalViews}} <br/>
+            Last Week Views: {{course.lastWeekViews}} <br/>
         </div>
         <div class="left"><a href="#/course/{{course.id}}">View Course</a></div>
         <div class="right">
-          <button class="right btn-link" ng-show="!viewDetails">Details</button>
-          <button class="right btn-link" ng-show="viewDetails">Statistics</button>
+            <button class="right btn-link" ng-show="!viewDetails">Details</button>
+            <button class="right btn-link" ng-show="viewDetails">Statistics</button>
         </div>
-      </div>
-      <br />
-    </script>
-  </body>
+    </div>
+    <br/>
+</script>
+</body>
 
 </html>

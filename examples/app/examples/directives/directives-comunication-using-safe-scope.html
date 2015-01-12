@@ -1,36 +1,36 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-controller="MainCtrl">
 
-  <div enter="loadMoreTweets()">Click and see console</div>
+<div enter="loadMoreTweets()">Click and see console</div>
 
-  <script>
-  var app = angular.module("app", []);
+<script>
+    var app = angular.module("app", []);
 
-  app.controller("MainCtrl", function ($scope) {
-    $scope.loadMoreTweets = function () {
-      console.log("Loading tweets!");
-    };
-  });
+    app.controller("MainCtrl", function ($scope) {
+        $scope.loadMoreTweets = function () {
+            console.log("Loading tweets!");
+        };
+    });
 
-  // the safe way to to call methods on the scope is to use $apply.
-  // $apply uses $eval(expr) when called. See $eval
-  app.directive("enter", function ($parse) {
-    return function (scope, element, attrs) {
-      var fn = $parse(attrs.enter);
+    // the safe way to to call methods on the scope is to use $apply.
+    // $apply uses $eval(expr) when called. See $eval
+    app.directive("enter", function ($parse) {
+        return function (scope, element, attrs) {
+            var fn = $parse(attrs.enter);
 
-      element.bind("click", function () {
-        // these all do the same thing
-        scope.loadMoreTweets();
-        scope.$apply('loadMoreTweets()');
-        scope.$apply(attrs.enter);
-        fn(scope);
-      });
-    };
-  });
-  </script>
+            element.bind("click", function () {
+                // these all do the same thing
+                scope.loadMoreTweets();
+                scope.$apply('loadMoreTweets()');
+                scope.$apply(attrs.enter);
+                fn(scope);
+            });
+        };
+    });
+</script>
 </body>
 </html>

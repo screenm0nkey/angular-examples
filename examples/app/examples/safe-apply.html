@@ -1,34 +1,35 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-controller="MainCtrl">
 
-  <script>
-  var app = angular.module("app", []);
+<script>
+    var app = angular.module("app", []);
 
-  app.factory('safeApply', [function($rootScope) {
-    return function($scope, fn) {
-      var phase = $scope.$root.$$phase;
-      if(phase == '$apply' || phase == '$digest') {
-        if (fn) {
-          $scope.$eval(fn);
+    app.factory('safeApply', [function ($rootScope) {
+        return function ($scope, fn) {
+            var phase = $scope.$root.$$phase;
+            if (phase == '$apply' || phase == '$digest') {
+                if (fn) {
+                    $scope.$eval(fn);
+                }
+            } else {
+                if (fn) {
+                    $scope.$apply(fn);
+                } else {
+                    $scope.$apply();
+                }
+            }
         }
-      } else {
-        if (fn) {
-          $scope.$apply(fn);
-        } else {
-          $scope.$apply();
-        }
-      }
-    }
-  }]);
+    }]);
 
-  app.controller('MyCtrl', ['$scope,' 'safeApply', function($scope, safeApply) {
-    safeApply($scope); // no function passed in
-    safeApply($scope, function() {});   // passing a function in
-}])
-  </script>
+    app.controller('MyCtrl', ['$scope,' 'safeApply', function ($scope, safeApply) {
+        safeApply($scope); // no function passed in
+        safeApply($scope, function () {
+        });   // passing a function in
+    }])
+</script>
 </body>
 </html>

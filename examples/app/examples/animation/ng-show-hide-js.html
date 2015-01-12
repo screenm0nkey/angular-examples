@@ -21,23 +21,23 @@
 <script>
     var myApp = angular.module("MyApp", ["ngAnimate"]);
 
-    myApp.animation('.my-show-hide-animation', function() {
+    myApp.animation('.my-show-hide-animation', function () {
         return {
-            beforeAddClass : function(element, className, done) {
-                if(className == 'ng-hide') {
+            beforeAddClass: function (element, className, done) {
+                if (className == 'ng-hide') {
                     jQuery(element).animate({
-                        opacity:0
+                        opacity: 0
                     }, done);
                 }
                 else {
                     done();
                 }
             },
-            removeClass : function(element, className, done) {
-                if(className == 'ng-hide') {
-                    element.css('opacity',0);
+            removeClass: function (element, className, done) {
+                if (className == 'ng-hide') {
+                    element.css('opacity', 0);
                     jQuery(element).animate({
-                        opacity:1
+                        opacity: 1
                     }, done);
                 }
                 else {

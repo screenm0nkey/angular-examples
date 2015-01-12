@@ -1,38 +1,39 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-app="myapp">
 
-  <div output-text>
+<div output-text>
     <p>
-      so even though this html is part of the directive's transclude,
-      it's scope is still with the controller and not the isolate scope
-      of the directive
+        so even though this html is part of the directive's transclude,
+        it's scope is still with the controller and not the isolate scope
+        of the directive
     </p>
-   <p>Hello {{name}}</p>
- </div>
- <div output-text>
-   <p>I love {{hobby}}!!</p>
- </div>
 
- <script>
- var app = angular.module('myapp',[]);
+    <p>Hello {{name}}</p>
+</div>
+<div output-text>
+    <p>I love {{hobby}}!!</p>
+</div>
 
- app.controller('MainCtrl', function($scope) {
-  $scope.name = 'World';
-  $scope.hobby='AngularJS';
-});
+<script>
+    var app = angular.module('myapp', []);
 
- app.directive('outputText',function(){
-  return {
-    transclude: true,
-    scope: {},
-    template: '<div ng-transclude></div>'
-  }
-});
- </script>
+    app.controller('MainCtrl', function ($scope) {
+        $scope.name = 'World';
+        $scope.hobby = 'AngularJS';
+    });
+
+    app.directive('outputText', function () {
+        return {
+            transclude: true,
+            scope: {},
+            template: '<div ng-transclude></div>'
+        }
+    });
+</script>
 
 </body>
 </html>

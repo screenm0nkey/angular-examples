@@ -2,61 +2,61 @@
 <html>
 
 <head>
-  <script type="text/javascript" src="/lib/angular-1.2/angular.js"></script>
+    <script type="text/javascript" src="/lib/angular-1.2/angular.js"></script>
 </head>
 
 <body ng-app="myApp">
 
-  <div class="container">
+<div class="container">
     <div class="row">
-      <p>This page contains two my-click directives; 1 in a ng-repeat and 1 all
-        alone. If you open the console you'll see that the <em>compile</em>
-        method is called twice and the <em>link</em>method 5 times (4 times
-        for the ng-repeat and 1 time for the single usage).
-     </p>
-   </div>
-   <div class="row" ng-init="data.lastClicked = 0">
+        <p>This page contains two my-click directives; 1 in a ng-repeat and 1 all
+            alone. If you open the console you'll see that the <em>compile</em>
+            method is called twice and the <em>link</em>method 5 times (4 times
+            for the ng-repeat and 1 time for the single usage).
+        </p>
+    </div>
+    <div class="row" ng-init="data.lastClicked = 0">
 
-    <p>Last clicked value: {{ data.lastClicked }}</p>
+        <p>Last clicked value: {{ data.lastClicked }}</p>
 
-    <ul>
-      <li ng-repeat="i in [1,2,3,4]">
-        <a href="" my-click="data.lastClicked = i">{{ i }}</a>
-      </li>
-    </ul>
+        <ul>
+            <li ng-repeat="i in [1,2,3,4]">
+                <a href="" my-click="data.lastClicked = i">{{ i }}</a>
+            </li>
+        </ul>
 
-    <a href="" my-click="data.lastClicked = 0">Reset</a>
-  </div>
+        <a href="" my-click="data.lastClicked = 0">Reset</a>
+    </div>
 </div>
 <script>
-  // Code goes here
-  var myApp = angular.module('myApp', []);
+    // Code goes here
+    var myApp = angular.module('myApp', []);
 
-  myApp.directive('myClick', function() {
-    var ccount = 0;
-    var lcount = 0;
+    myApp.directive('myClick', function () {
+        var ccount = 0;
+        var lcount = 0;
 
-    return {
-      // compile called twice for each directive
-      compile: function(element, attr) {
-        console.log(++ccount, 'in compile: ' + attr.myClick);
-        // link called 5 times for each instance
-        return function link (scope, element, attr) {
-          console.log(++lcount, 'in link: ' + attr.myClick);
+        return {
+            // compile called twice for each directive
+            compile: function (element, attr) {
+                console.log(++ccount, 'in compile: ' + attr.myClick);
+                // link called 5 times for each instance
+                return function link(scope, element, attr) {
+                    console.log(++lcount, 'in link: ' + attr.myClick);
 
-          element.on('click', function(event) {
-            scope.$apply(function() {
-              debugger
-              scope.$eval(attr.myClick, {
-                $event: event
-              });
-            });
-          });
+                    element.on('click', function (event) {
+                        scope.$apply(function () {
+                            debugger
+                            scope.$eval(attr.myClick, {
+                                $event: event
+                            });
+                        });
+                    });
+                };
+            }
         };
-      }
-    };
-  });
-  </script>
+    });
+</script>
 </body>
 
 </html>

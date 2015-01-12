@@ -1,40 +1,40 @@
 <!doctype html>
 <html ng-app="ngApp">
 <head>
-  <script src="/lib/jquery.min.js"></script>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 
 <body ng-controller="MainCtrl">
-    <h1>Hello Plunker!</h1>
-    <input focus-on="focusMe"/>
+<h1>Hello Plunker!</h1>
+<input focus-on="focusMe"/>
 
-  <script>
-  var app = angular.module('ngApp', []);
-  // directive
-  app.directive('focusOn', function() {
-     return function(scope, elem, attr) {
-        scope.$on('focusOn', function(e, name) {
-          if(name === attr.focusOn) {
-            elem[0].focus();
-          }
-        });
-     };
-  });
+<script>
+    var app = angular.module('ngApp', []);
+    // directive
+    app.directive('focusOn', function () {
+        return function (scope, elem, attr) {
+            scope.$on('focusOn', function (e, name) {
+                if (name === attr.focusOn) {
+                    elem[0].focus();
+                }
+            });
+        };
+    });
 
-  //service
-  app.factory('focus', function ($rootScope, $timeout) {
-    return function(name) {
-      $timeout(function (){
-        $rootScope.$broadcast('focusOn', name);
-      });
-    }
-  });
+    //service
+    app.factory('focus', function ($rootScope, $timeout) {
+        return function (name) {
+            $timeout(function () {
+                $rootScope.$broadcast('focusOn', name);
+            });
+        }
+    });
 
-  app.controller('MainCtrl', function ($scope, focus) {
-    focus('focusMe');
-  });
+    app.controller('MainCtrl', function ($scope, focus) {
+        focus('focusMe');
+    });
 
-  </script>
+</script>
 </body>
 </html>

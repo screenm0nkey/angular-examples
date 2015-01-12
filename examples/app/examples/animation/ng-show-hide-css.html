@@ -5,18 +5,18 @@
     <title>Example - example-example3-production</title>
     <style>
         .sample-show-hide {
-            padding:10px;
-            border:1px solid black;
-            background:white;
+            padding: 10px;
+            border: 1px solid black;
+            background: white;
         }
 
         .sample-show-hide {
-            -webkit-transition:all linear 10s;
-            transition:all linear 10s;
+            -webkit-transition: all linear 10s;
+            transition: all linear 10s;
         }
 
         .sample-show-hide.ng-hide {
-            opacity:0;
+            opacity: 0;
         }
     </style>
 
@@ -29,6 +29,7 @@
     <label>
         <input type="checkbox" ng-model="checked" style="float:left; margin-right:10px;"> Is Visible...
     </label>
+
     <div class="sample-show-hide" ng-show="checked" style="clear:both;">
         Visible...
     </div>

@@ -1,53 +1,53 @@
 <!doctype html>
 <html ng-app="App">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
 
-  1. Here the text in the directive template is lost but the transclusion
-  has worked properly as greeting1 is replaced with a button
-  <greeting1 ng-transclude>
+1. Here the text in the directive template is lost but the transclusion
+has worked properly as greeting1 is replaced with a button
+<greeting1 ng-transclude>
     <a href="#">Greeting1</a>
-  </greeting1>
+</greeting1>
 
-  <hr>
+<hr>
 
- 2. Here the same directive, the text in the markup is lost becuase you are
- trying to transclude into element you want to transclude, so you are not using
- transclude properly as the 'a' tag is the content to be transcluded
-  <greeting1>
+2. Here the same directive, the text in the markup is lost becuase you are
+trying to transclude into element you want to transclude, so you are not using
+transclude properly as the 'a' tag is the content to be transcluded
+<greeting1>
     <a href="#" ng-transclude>Greeting1</a>
-  </greeting1>
+</greeting1>
 
-  <hr>
+<hr>
 
-  3. Here both texts are kept
-  <greeting2>
+3. Here both texts are kept
+<greeting2>
     <a href="#">Greeting2</a>
-  </greeting2>
+</greeting2>
 
-  <script>
-  var app = angular.module('App', []);
+<script>
+    var app = angular.module('App', []);
 
-  app.directive('greeting1', function() {
-    return {
-      restrict: 'E',
-      replace: true,
-      transclude : true,
-      // the say hello text here is lost
-      template: "<button class='btn'>WHAM!</button>"
-    };
-  });
+    app.directive('greeting1', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            // the say hello text here is lost
+            template: "<button class='btn'>WHAM!</button>"
+        };
+    });
 
-  app.directive('greeting2', function() {
-    return {
-      restrict: 'E',
-      replace: true,
-      transclude : true,
-      template: "<button class='btn'>BAM!<span ng-transclude/></button>"
-    };
-  });
-  </script>
+    app.directive('greeting2', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            template: "<button class='btn'>BAM!<span ng-transclude/></button>"
+        };
+    });
+</script>
 </body>
 </html>

@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html ng-app="eventsApp">
 
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8"/>
     <title>AngularJS Plunker</title>
-  </head>
+</head>
 
-  <body ng-controller="MainCtrl">
+<body ng-controller="MainCtrl">
 
-    <p>
-      <input id="name" ng-model="name"> {{name}}
-    </p>
-    {{print()}}
+<p>
+    <input id="name" ng-model="name"> {{name}}
+</p>
+{{print()}}
 
-    <script src="/lib/angular-1.2/angular.js"></script>
-    <script src="/lib/jquery.min.js"></script>
+<script src="/lib/angular-1.2/angular.js"></script>
+<script src="/lib/jquery.min.js"></script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
     var eventsApp = angular.module("eventsApp", []);
 
     eventsApp.controller('MainCtrl', function ($scope) {
-      var count = 0;
-      $scope.name = 'World';
-      this.name = 'MainCtrl';
+        var count = 0;
+        $scope.name = 'World';
+        this.name = 'MainCtrl';
 
-      $scope.print = function() {
-        console.log(++count, $scope);
-      };
+        $scope.print = function () {
+            console.log(++count, $scope);
+        };
     });
 
-    angular.element(document).ready(function() {
-      var value = 'theNewValue';
-      var el = angular.element($('#name'));
+    angular.element(document).ready(function () {
+        var value = 'theNewValue';
+        var el = angular.element($('#name'));
 
-      el.scope().$apply(function(){
-        // the element has to have an ng-model directive applied to it for you
-        // to be able to use el.controller('ngModel')
-        console.log(el.controller('ngModel'));
-        // this just sets the value of the form input
-        el.val(value);
-        // this updates the object which the ng-model is tied to.
-        window.setTimeout(function() {
-          el.controller('ngModel').$setViewValue(el.val());
-          // we need to run apply again as we've updated the view value
-          el.scope().$apply();
-        }, 500);
-      });
+        el.scope().$apply(function () {
+            // the element has to have an ng-model directive applied to it for you
+            // to be able to use el.controller('ngModel')
+            console.log(el.controller('ngModel'));
+            // this just sets the value of the form input
+            el.val(value);
+            // this updates the object which the ng-model is tied to.
+            window.setTimeout(function () {
+                el.controller('ngModel').$setViewValue(el.val());
+                // we need to run apply again as we've updated the view value
+                el.scope().$apply();
+            }, 500);
+        });
 
     });
 
-    </script>
-  </body>
+</script>
+</body>
 </html>

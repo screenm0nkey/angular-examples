@@ -1,87 +1,89 @@
 <!doctype html>
 <html ng-app="invoice2">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
-  <h3>see basics003 for another version of this without the clutter</h3>
-  <div ng-controller="InvoiceController as invoice">
+<h3>see basics003 for another version of this without the clutter</h3>
+
+<div ng-controller="InvoiceController as invoice">
     {{invoice.print(invoice)}}
     <b>Invoice:</b>
+
     <div>
-      Quantity: <input type="number" ng-model="invoice.qty" required >
+        Quantity: <input type="number" ng-model="invoice.qty" required>
     </div>
     <div>
-      Costs: <input type="number" ng-model="invoice.cost" required >
-      <select ng-model="invoice.inCurr">
-        <option ng-repeat="c in invoice.currencies">
-          {{c}}
-          {{invoice.print(c)}}
-        </option>
-      </select>
+        Costs: <input type="number" ng-model="invoice.cost" required>
+        <select ng-model="invoice.inCurr">
+            <option ng-repeat="c in invoice.currencies">
+                {{c}}
+                {{invoice.print(c)}}
+            </option>
+        </select>
     </div>
     <div>
-      <b>Total:</b>
+        <b>Total:</b>
       <span ng-repeat="c in invoice.currencies">
         {{invoice.total(c) | currency:c}}
         {{invoice.print(c)}}
       </span>
-      <button class="btn" ng-click="invoice.pay()">Pay</button>
+        <button class="btn" ng-click="invoice.pay()">Pay</button>
     </div>
-  </div>
+</div>
 
-  <script>
-  // module
-  angular.module('finance2', [])
-  // Service. register the 'currencyConverter' service with the app
-  .factory('currencyConverter', function() {
-    var currencies = ['USD', 'EUR', 'CNY'],
-        usdToForeignRates = {
-          USD: 1,
-          EUR: 0.74,
-          CNY: 6.09
-        };
+<script>
+    // module
+    angular.module('finance2', [])
+        // Service. register the 'currencyConverter' service with the app
+            .factory('currencyConverter', function () {
+                var currencies = ['USD', 'EUR', 'CNY'],
+                        usdToForeignRates = {
+                            USD: 1,
+                            EUR: 0.74,
+                            CNY: 6.09
+                        };
 
-    function convert(amount, inCurr, outCurr) {
-      return amount * usdToForeignRates[outCurr] * 1 / usdToForeignRates[inCurr];
-    }
+                function convert(amount, inCurr, outCurr) {
+                    return amount * usdToForeignRates[outCurr] * 1 / usdToForeignRates[inCurr];
+                }
 
-    return {
-      currencies: currencies,
-      convert: convert
-    };
-  });
+                return {
+                    currencies: currencies,
+                    convert: convert
+                };
+            });
 
-  // Module.
-  angular.module('lowman', [])
-  .factory('servicePrint', function() {
-    return {
-       print : function (arg) {
-        console.log(12, arg)
-      }
-    }
-  });
+    // Module.
+    angular.module('lowman', [])
+            .factory('servicePrint', function () {
+                return {
+                    print: function (arg) {
+                        console.log(12, arg)
+                    }
+                }
+            });
 
-  // create a new module and load the other module dependancies
-  var app = angular.module('invoice2', ['finance2', 'lowman'])
-  // Controller can now inject services from other modules i.e. servicePrint
-  app.controller('InvoiceController', ['$scope','currencyConverter', 'servicePrint',
-    function ($scope, currencyConverter, servicePrint) {
-    this.qty = 1;
-    this.cost = 2;
-    this.inCurr = 'EUR';
-    this.currencies = currencyConverter.currencies;
+    // create a new module and load the other module dependancies
+    var app = angular.module('invoice2', ['finance2', 'lowman'])
+    // Controller can now inject services from other modules i.e. servicePrint
+    app.controller('InvoiceController', ['$scope', 'currencyConverter', 'servicePrint',
+        function ($scope, currencyConverter, servicePrint) {
+            this.qty = 1;
+            this.cost = 2;
+            this.inCurr = 'EUR';
+            this.currencies = currencyConverter.currencies;
 
-    this.total = function total(outCurr) {
-      return currencyConverter.convert(this.qty * this.cost, this.inCurr, outCurr);
-    };
+            this.total = function total(outCurr) {
+                return currencyConverter.convert(this.qty * this.cost, this.inCurr, outCurr);
+            };
 
-    this.print = servicePrint.print;
+            this.print = servicePrint.print;
 
-    this.pay = function pay() {
-      window.alert("Thanks!");
-    };
-  }]);
-  </script>
+            this.pay = function pay() {
+                window.alert("Thanks!");
+            };
+        }]);
+</script>
 </body>
 </html>

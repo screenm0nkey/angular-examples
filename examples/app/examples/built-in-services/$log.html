@@ -1,26 +1,26 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
-  <div>
+<div>
     <input type="text" ng-model="data.some.thing">
     {{$log.warn(this)}}
-  </div>
+</div>
 
-  <script>
-  var app = angular.module('app',[]);
+<script>
+    var app = angular.module('app', []);
 
-  app.config(function ($logProvider) {
-   $logProvider.debugEnabled(true);
-  });
+    app.config(function ($logProvider) {
+        $logProvider.debugEnabled(true);
+    });
 
-  app.run(function ($rootScope, $log) {
-  // assign a logger to the rootScope
-   $rootScope.$log = $log;
-  });
+    app.run(function ($rootScope, $log) {
+        // assign a logger to the rootScope
+        $rootScope.$log = $log;
+    });
 
-  </script>
+</script>
 </body>
 </html>

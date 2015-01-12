@@ -16,7 +16,8 @@
         </div>
     </div>
     <div ng-controller="EventController" style="padding-left:20px; padding-right:20px">
-        <img ng-src="{{event.imageUrl}}" alt="{{event.name}}" />
+        <img ng-src="{{event.imageUrl}}" alt="{{event.name}}"/>
+
         <div class="row">
             <div class="spann11">
                 <h2 ng-class="myclass" ng-bind-template="{{event.name}} {{event.date}}"></h2>
@@ -29,6 +30,7 @@
         <div ng-bind-html-unsafe="snippet">some title</div>
         <div ng-bind-html="snippet">some title</div>
         <h2 ng-show="boolValue">Show This</h2>
+
         <h2 ng-hide="boolValue">Hide This</h2>
 
         <div class="row">
@@ -45,7 +47,7 @@
             </div>
         </div>
 
-        <hr />
+        <hr/>
 
         <h3>Sessions</h3>
         <ul class="thumbnails">

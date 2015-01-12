@@ -1,16 +1,17 @@
-angular.element(document).injector().invoke(function(FormDataStoreService) {
-  FormDataStoreService.clear()
+angular.element(document).injector().invoke(function (FormDataStoreService) {
+    FormDataStoreService.clear()
 });
 
-angular.injector().annotate(function($http){})
+angular.injector().annotate(function ($http) {
+})
 
 
 // inject a Service
 angular.element(document).injector().get('BasketService')
 
 // inject a filter
-angular.element(document).injector().invoke(function($filter){
-  return $filter('stripPostcodeFilter')('fsdfsdf, de220hu')
+angular.element(document).injector().invoke(function ($filter) {
+    return $filter('stripPostcodeFilter')('fsdfsdf, de220hu')
 })
 
 // get one of angulars default services from the ng module
@@ -18,9 +19,10 @@ var myInjector = angular.injector(["ng"]);
 var $http = myInjector.get("$http");
 
 
-
 var myInjector = angular.injector(["ng"]);
-myInjector.invoke(function($http){debugger});
+myInjector.invoke(function ($http) {
+    debugger
+});
 
 
 // i want to access the Baseket service but it has the followind dependacnies

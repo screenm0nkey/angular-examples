@@ -1,39 +1,39 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.min.js"></script>
+    <script src="/lib/angular-1.2/angular.min.js"></script>
 </head>
 <body ng-app="myapp">
 
-  <div ng-controller="ctrlParent">
+<div ng-controller="ctrlParent">
     {{parentprimitive}}
-    <br />{{parentobj.parentproperty}}
-    <br />{{nick.name}}
+    <br/>{{parentobj.parentproperty}}
+    <br/>{{nick.name}}
     <div ng-controller="ctrlChild" style="border:solid red;">
-      {{nick.name}}
+        {{nick.name}}
     </div>
-  </div>
+</div>
 
-  <script>
-  var app = angular.module('myapp',[]);
+<script>
+    var app = angular.module('myapp', []);
 
-  app.controller('ctrlParent',function($scope){
-    $scope.parentprimitive = "someprimitive"
-    $scope.parentobj = {
-      parentproperty : "somevalue"
-    }
-    $scope.nick = { name : "wee" }
-  });
-
-  app.controller('ctrlChild',function($scope) {
-      // when you assign a primitive attribute to a scope i.e string, number
-      // etc, it is always local to the scope. to see the parent value do
-      // $scope.$parent.parentprimitive
-      $scope.parentprimitive = "this will NOT modify the parent"
-      // this will just change the parent property
-      $scope.parentobj.parentproperty = "this WILL modify the parent";
-      $scope.nick = { name : "poo"}
+    app.controller('ctrlParent', function ($scope) {
+        $scope.parentprimitive = "someprimitive"
+        $scope.parentobj = {
+            parentproperty: "somevalue"
+        }
+        $scope.nick = {name: "wee"}
     });
-  </script>
+
+    app.controller('ctrlChild', function ($scope) {
+        // when you assign a primitive attribute to a scope i.e string, number
+        // etc, it is always local to the scope. to see the parent value do
+        // $scope.$parent.parentprimitive
+        $scope.parentprimitive = "this will NOT modify the parent"
+        // this will just change the parent property
+        $scope.parentobj.parentproperty = "this WILL modify the parent";
+        $scope.nick = {name: "poo"}
+    });
+</script>
 </body>
 </html>

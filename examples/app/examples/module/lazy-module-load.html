@@ -3,44 +3,44 @@
 <head>
 </head>
 <body ng-app="app">
-  <h3>http://ify.io/lazy-loading-in-angularjs/</h3>
-  <a href="#" ng-click="addController()">Click to add controller</a>
+<h3>http://ify.io/lazy-loading-in-angularjs/</h3>
+<a href="#" ng-click="addController()">Click to add controller</a>
 
-  <script src="/lib/jquery.min.js"></script>
-  <script src="/lib/angular-1.2/angular.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/angular-1.2/angular.js"></script>
 
-  <script>
+<script>
 
-    (function() {
-      var app = angular.module('app', []);
+    (function () {
+        var app = angular.module('app', []);
 
-      app.config(function($controllerProvider, $compileProvider, $filterProvider, $provide) {
+        app.config(function ($controllerProvider, $compileProvider, $filterProvider, $provide) {
 
-        app.$controllerProvider = $controllerProvider;
-        app.$compileProvider    = $compileProvider;
-        app.$filterProvider     = $filterProvider;
-        app.$provide            = $provide;
-        // app.routeProvider   = $routeProvider;
-      });
+            app.$controllerProvider = $controllerProvider;
+            app.$compileProvider = $compileProvider;
+            app.$filterProvider = $filterProvider;
+            app.$provide = $provide;
+            // app.routeProvider   = $routeProvider;
+        });
 
-      app.run(function ($rootScope, $compile) {
-        $rootScope.addController = function () {
+        app.run(function ($rootScope, $compile) {
+            $rootScope.addController = function () {
 
-          angular.module('app')
-            .$controllerProvider.register('SomeCtrl', function($scope) {
-                    $scope.someMethod = function () {
-                      console.log('New controller scope = ', $scope);
-                    }
-            });
+                angular.module('app')
+                        .$controllerProvider.register('SomeCtrl', function ($scope) {
+                            $scope.someMethod = function () {
+                                console.log('New controller scope = ', $scope);
+                            }
+                        });
 
-          $compile('<p ng-controller="SomeCtrl" ng-click="someMethod()">Click me. This element uses the new controlller</p>')($rootScope)
-            .appendTo(angular.element('body'));
-        };
-      })
+                $compile('<p ng-controller="SomeCtrl" ng-click="someMethod()">Click me. This element uses the new controlller</p>')($rootScope)
+                        .appendTo(angular.element('body'));
+            };
+        })
 
 
     })();
 
-  </script>
+</script>
 </body>
 </html>

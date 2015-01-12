@@ -26,9 +26,9 @@ angular.module('website', ['ngAnimate'])
                     var scope = element.scope(),
                         finishPoint = element.parent().width();
 
-                    if(scope.direction !== 'right') finishPoint = -finishPoint;
+                    if (scope.direction !== 'right') finishPoint = -finishPoint;
 
-                    TweenLite.to(element, 0.5, {left:finishPoint, ease: Ease.easeInOut, onComplete: done});
+                    TweenLite.to(element, 0.5, {left: finishPoint, ease: Ease.easeInOut, onComplete: done});
                 }
                 else {
                     done();
@@ -41,12 +41,24 @@ angular.module('website', ['ngAnimate'])
                         startPoint = element.parent().width(),
                         tl = new TimelineLite();
 
-                    if(scope.direction === 'right') startPoint = -startPoint;
+                    if (scope.direction === 'right') startPoint = -startPoint;
 
-                    tl.fromTo(element, 0.5, { left: startPoint}, {left:0, ease: Ease.easeInOut, onComplete: done})
-                        .fromTo(element.find('.title'), 0.5, { left: -200, alpha: 0}, {left:0, alpha:1, ease:Ease.easeInOut} )
-                        .fromTo(element.find('.subtitle'), 0.5, { left: -200, alpha: 0}, {left:0, alpha:1, ease:Ease.easeInOut} )
-                        .fromTo(element.find('.avatar'), 0.5, { left: 800, alpha: 0}, {left:300, alpha:1, ease:Ease.easeInOut} );
+                    tl.fromTo(element, 0.5, {left: startPoint}, {left: 0, ease: Ease.easeInOut, onComplete: done})
+                        .fromTo(element.find('.title'), 0.5, {left: -200, alpha: 0}, {
+                            left: 0,
+                            alpha: 1,
+                            ease: Ease.easeInOut
+                        })
+                        .fromTo(element.find('.subtitle'), 0.5, {left: -200, alpha: 0}, {
+                            left: 0,
+                            alpha: 1,
+                            ease: Ease.easeInOut
+                        })
+                        .fromTo(element.find('.avatar'), 0.5, {left: 800, alpha: 0}, {
+                            left: 300,
+                            alpha: 1,
+                            ease: Ease.easeInOut
+                        });
                 }
                 else {
                     done();

@@ -4,43 +4,43 @@
 </head>
 <body ng-controller="MainCtrl as main">
 
-  <a nl-href="{{main.method().link}}" target="_blank">Link</a>
+<a nl-href="{{main.method().link}}" target="_blank">Link</a>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
-  var app = angular.module('app', []);
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+    var app = angular.module('app', []);
 
-  app.controller('MainCtrl', function ($scope, $http, $q) {
-    var val, active;
+    app.controller('MainCtrl', function ($scope, $http, $q) {
+        var val, active;
 
-    this.method = function () {
-      if (!active) {
-        if (val) {
-          return val
-        } else {
-          active = true
-          $http.get('/someurl').success(function (data) {
-            active = false
-            val = data
-          })
+        this.method = function () {
+            if (!active) {
+                if (val) {
+                    return val
+                } else {
+                    active = true
+                    $http.get('/someurl').success(function (data) {
+                        active = false
+                        val = data
+                    })
+                }
+            }
         }
-      }
-    }
-  });
+    });
 
-  app.directive('nlHref', function () {
-    return {
-      restrict: 'A',
-      link: function (scope, element, attr) {
-        attr.$observe('nlHref', function(newValue) {
-          if(newValue) {
-            attr.$set('href', newValue)
-          }
-        })
-      }
-    }
-  })
+    app.directive('nlHref', function () {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attr) {
+                attr.$observe('nlHref', function (newValue) {
+                    if (newValue) {
+                        attr.$set('href', newValue)
+                    }
+                })
+            }
+        }
+    })
 
-  </script>
+</script>
 </body>
 </html>

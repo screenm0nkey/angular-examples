@@ -1,91 +1,96 @@
 <!doctype html>
-<html ng-app="plunker" >
+<html ng-app="plunker">
 <head>
-  <meta charset="utf-8">
-  <title>AngularJS Plunker</title>
-  <style>
-  .pristine.true, .dirty.true, .invalid.true {
-    background: gray;
-  }
-  .valid.false {
-    background: red;
-  }
-  .valid.true {
-    background: green;
-  }
-  .error {
-    color: red;
-  }
-  </style>
+    <meta charset="utf-8">
+    <title>AngularJS Plunker</title>
+    <style>
+        .pristine.true, .dirty.true, .invalid.true {
+            background: gray;
+        }
+
+        .valid.false {
+            background: red;
+        }
+
+        .valid.true {
+            background: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body ng-controller="MainCtrl">
-  <h3>Demo Form</h3>
-  <form name="mainForm" ng-submit="sendForm()">
+<h3>Demo Form</h3>
+
+<form name="mainForm" ng-submit="sendForm()">
     <div>
-      <label for="firstName">First Name</label>
-      <input id="firstName" name="firstName" type="text" ng-model="person.firstName" required/>
-      <span class="error" ng-show="mainForm.firstName.$error.required">required</span>
+        <label for="firstName">First Name</label>
+        <input id="firstName" name="firstName" type="text" ng-model="person.firstName" required/>
+        <span class="error" ng-show="mainForm.firstName.$error.required">required</span>
     </div>
     <div>
-      <label for="lastName">Last Name</label>
-      <input id="lastName" name="lastName" type="text" ng-model="person.lastName" required/>
-      <span class="error" ng-show="mainForm.lastName.$error.required">required</span>
+        <label for="lastName">Last Name</label>
+        <input id="lastName" name="lastName" type="text" ng-model="person.lastName" required/>
+        <span class="error" ng-show="mainForm.lastName.$error.required">required</span>
     </div>
     <div>
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" ng-model="person.email" required/>
-      <span class="error" ng-show="mainForm.email.$error.required">required</span>
-      <span class="error" ng-show="mainForm.email.$error.email">invalid email</span>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" ng-model="person.email" required/>
+        <span class="error" ng-show="mainForm.email.$error.required">required</span>
+        <span class="error" ng-show="mainForm.email.$error.email">invalid email</span>
     </div>
     <div>
-      <input type="checkbox" ng-model="agreedToTerms"
-        name="agreedToTerms" id="agreedToTerms" required/>
-      <label for="agreedToTerms">I agree to the terms</label>
-      <span class="error" ng-show="mainForm.agreedToTerms.$error.required">You must agree to the terms</span>
+        <input type="checkbox" ng-model="agreedToTerms"
+               name="agreedToTerms" id="agreedToTerms" required/>
+        <label for="agreedToTerms">I agree to the terms</label>
+        <span class="error" ng-show="mainForm.agreedToTerms.$error.required">You must agree to the terms</span>
     </div>
     <div>
-      <button type="submit">Send Form</button>
+        <button type="submit">Send Form</button>
     </div>
-  </form>
-  <h3>Viewing the status</h3>
-  <p>everything below this point is just to demonstrate what's
-  going on in the $scope with validation</p>
-  <table>
+</form>
+<h3>Viewing the status</h3>
+
+<p>everything below this point is just to demonstrate what's
+    going on in the $scope with validation</p>
+<table>
     <tr>
-      <th></th>
-      <th>$pristine</th>
-      <th>$dirty</th>
-      <th>$valid</th>
-      <th>$invalid</th>
+        <th></th>
+        <th>$pristine</th>
+        <th>$dirty</th>
+        <th>$valid</th>
+        <th>$invalid</th>
     </tr>
     <tr ng-repeat="field in ['firstName', 'lastName', 'email', 'agreedToTerms']">
-      <td>{{field}}</td>
-      <td ng-class="getClass(mainForm[field].$pristine)" class="pristine"></td>
-      <td ng-class="getClass(mainForm[field].$dirty)" class="dirty"></td>
-      <td ng-class="getClass(mainForm[field].$valid)" class="valid"></td>
-      <td ng-class="getClass(mainForm[field].$invalid)" class="invalid"></td>
+        <td>{{field}}</td>
+        <td ng-class="getClass(mainForm[field].$pristine)" class="pristine"></td>
+        <td ng-class="getClass(mainForm[field].$dirty)" class="dirty"></td>
+        <td ng-class="getClass(mainForm[field].$valid)" class="valid"></td>
+        <td ng-class="getClass(mainForm[field].$invalid)" class="invalid"></td>
     </tr>
     <tr>
-      <td>mainForm</td>
-      <td ng-class="getClass(mainForm.$pristine)" class="pristine"></td>
-      <td ng-class="getClass(mainForm.$dirty)" class="dirty"></td>
-      <td ng-class="getClass(mainForm.$valid)" class="valid"></td>
-      <td ng-class="getClass(mainForm.$invalid)" class="invalid"></td>
+        <td>mainForm</td>
+        <td ng-class="getClass(mainForm.$pristine)" class="pristine"></td>
+        <td ng-class="getClass(mainForm.$dirty)" class="dirty"></td>
+        <td ng-class="getClass(mainForm.$valid)" class="valid"></td>
+        <td ng-class="getClass(mainForm.$invalid)" class="invalid"></td>
     </tr>
-  </table>
+</table>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
     var app = angular.module('plunker', []);
 
-    app.controller('MainCtrl', function($scope) {
-      $scope.sendForm = function() {
-        alert('form sent');
-      };
-      $scope.getClass = function(b) {
-        return b.toString();
-      }
+    app.controller('MainCtrl', function ($scope) {
+        $scope.sendForm = function () {
+            alert('form sent');
+        };
+        $scope.getClass = function (b) {
+            return b.toString();
+        }
     });
-  </script>
+</script>
 </body>
 </html>

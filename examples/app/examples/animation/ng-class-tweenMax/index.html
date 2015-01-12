@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html ng-app="helloGreensock">
-    <head lang="en">
-        <meta charset="UTF-8">
-        <title>Hello Greensock!</title>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Hello Greensock!</title>
 
-        <link rel="stylesheet" href="greensock.css"/>
-    </head>
-    <body ng-controller="MainCtrl">
-        <ul>
-            <li menu-item ng-repeat="menuItem in menu"
-                class="menu-animation"
-                ng-class="{'highlight':active}"
-                ng-mouseenter="active = true"
-                ng-mouseleave="active = false">{{menuItem.title}}</li>
-        </ul>
-    </body>
-    <script src="/lib/jquery.min.js"></script>
-    <script src="/lib/angular-1.2/angular.min.js"></script>
-    <script src="/lib/angular-1.2/angular-animate.js"></script>
-    <script src="/lib/TweenMax.min.js"></script>
+    <link rel="stylesheet" href="greensock.css"/>
+</head>
+<body ng-controller="MainCtrl">
+<ul>
+    <li menu-item ng-repeat="menuItem in menu"
+        class="menu-animation"
+        ng-class="{'highlight':active}"
+        ng-mouseenter="active = true"
+        ng-mouseleave="active = false">{{menuItem.title}}
+    </li>
+</ul>
+</body>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/angular-1.2/angular.min.js"></script>
+<script src="/lib/angular-1.2/angular-animate.js"></script>
+<script src="/lib/TweenMax.min.js"></script>
 
-    <script src="greensock.hello.js"></script>
+<script src="greensock.hello.js"></script>
 </html>

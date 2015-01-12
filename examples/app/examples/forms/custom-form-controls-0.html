@@ -1,63 +1,64 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <style type="text/css">
-    div[contentEditable] {
-      cursor: pointer;
-      background-color: #D0D0D0;
-    }
-  </style>
+    <style type="text/css">
+        div[contentEditable] {
+            cursor: pointer;
+            background-color: #D0D0D0;
+        }
+    </style>
 </head>
 <body>
-  <p>
-  This is example is taken from here  <br>
-  https://docs.angularjs.org/guide/forms#implementing-custom-form-controls_source
-  </p>
-  <div contentEditable="true" ng-model="content" title="Click to edit"></div>
-  <pre>model = {{content}}</pre>
+<p>
+    This is example is taken from here <br>
+    https://docs.angularjs.org/guide/forms#implementing-custom-form-controls_source
+</p>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
-  // implement $render method, which is responsible for rendering the data after
-  // it passed the NgModelController#$formatters, call $setViewValue method,
-  // whenever the user interacts with the control and model needs to be updated.
-  // This is usually done inside a DOM Event listener.
+<div contentEditable="true" ng-model="content" title="Click to edit"></div>
+<pre>model = {{content}}</pre>
+
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+    // implement $render method, which is responsible for rendering the data after
+    // it passed the NgModelController#$formatters, call $setViewValue method,
+    // whenever the user interacts with the control and model needs to be updated.
+    // This is usually done inside a DOM Event listener.
     angular.module('app', [])
-    .directive('contenteditable', function($timeout) {
-      return {
-        require: 'ngModel',
-        link: function(scope, elm, attrs, ngModelCtrl) {
-          // view -> model
-          // this is setting the value from the view onto the scope using the ngModel controller
-           elm.on('blur', function() {
-             scope.$apply(function() {
-               ngModelCtrl.$setViewValue(elm.html());
-             });
-           });
+            .directive('contenteditable', function ($timeout) {
+                return {
+                    require: 'ngModel',
+                    link: function (scope, elm, attrs, ngModelCtrl) {
+                        // view -> model
+                        // this is setting the value from the view onto the scope using the ngModel controller
+                        elm.on('blur', function () {
+                            scope.$apply(function () {
+                                ngModelCtrl.$setViewValue(elm.html());
+                            });
+                        });
 
-           // model -> view
-           // ngModelCtrl.$render is invoked when model value changes i.e.  scope.content = 'NICK';
-           ngModelCtrl.$render = function() {
-              elm.html(ngModelCtrl.$viewValue);
-              console.log(3, '$render');
-              console.log(4, ngModelCtrl);
-           };
+                        // model -> view
+                        // ngModelCtrl.$render is invoked when model value changes i.e.  scope.content = 'NICK';
+                        ngModelCtrl.$render = function () {
+                            elm.html(ngModelCtrl.$viewValue);
+                            console.log(3, '$render');
+                            console.log(4, ngModelCtrl);
+                        };
 
-          // after 1 sec we update the scope. the $timeout then calls the $digest
-          // which notices the value has changed and updates ngModel and the
-          // $render method is called
-          $timeout(function () {
-            scope.content = 'NICK';
-            console.log(1, '$scope.content = NICK');
-            // this is the same as ngModelCtrl
-            console.log(2, elm.controller('ngModel'))
-          },1000)
+                        // after 1 sec we update the scope. the $timeout then calls the $digest
+                        // which notices the value has changed and updates ngModel and the
+                        // $render method is called
+                        $timeout(function () {
+                            scope.content = 'NICK';
+                            console.log(1, '$scope.content = NICK');
+                            // this is the same as ngModelCtrl
+                            console.log(2, elm.controller('ngModel'))
+                        }, 1000)
 
-             // load init value from DOM
-            ngModelCtrl.$setViewValue(elm.html());
-           }
-         };
-      });
-  </script>
+                        // load init value from DOM
+                        ngModelCtrl.$setViewValue(elm.html());
+                    }
+                };
+            });
+</script>
 </body>
 </html>

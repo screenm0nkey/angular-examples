@@ -1,39 +1,39 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <title></title>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <title></title>
 </head>
 <body ng-controller="MainCtrl">
 
- <button ng-click="dummyClickFoo()">Submit</button>
- <button ng-click="dummyClickBar()">Cancel</button>
+<button ng-click="dummyClickFoo()">Submit</button>
+<button ng-click="dummyClickBar()">Cancel</button>
 
- <script>
- // http://www.thinkster.io/pick/IgQdYAAt9V/angularjs-directives-talking-to-controllers
+<script>
+    // http://www.thinkster.io/pick/IgQdYAAt9V/angularjs-directives-talking-to-controllers
 
- // http://angular-tips.com/blog/2013/08/tip-directives-with-the-same-name/
+    // http://angular-tips.com/blog/2013/08/tip-directives-with-the-same-name/
 
- app = angular.module('app', []);
+    app = angular.module('app', []);
 
- app.controller('MainCtrl', function($scope) {
-  $scope.dummyClickFoo = function(event) {
-    console.log(1, arguments);
-  };
-  $scope.dummyClickBar = function(event) {
-    console.log(2, arguments);
-  };
-});
-// this directive still gets called event though is had the same name as ng-click
-app.directive('ngClick', function($log) {
-  return function link (scope, element, attrs) {
-    element.bind('click', function() {
-      scope.$apply(function() {
-        $log.log("logging-click clicked");
-      });
+    app.controller('MainCtrl', function ($scope) {
+        $scope.dummyClickFoo = function (event) {
+            console.log(1, arguments);
+        };
+        $scope.dummyClickBar = function (event) {
+            console.log(2, arguments);
+        };
     });
-  };
-});
- </script>
+    // this directive still gets called event though is had the same name as ng-click
+    app.directive('ngClick', function ($log) {
+        return function link(scope, element, attrs) {
+            element.bind('click', function () {
+                scope.$apply(function () {
+                    $log.log("logging-click clicked");
+                });
+            });
+        };
+    });
+</script>
 </body>
 </html>

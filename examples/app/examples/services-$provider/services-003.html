@@ -1,51 +1,51 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <title>http://angular-tips.com/blog/2013/08/understanding-service-types/</title>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <title>http://angular-tips.com/blog/2013/08/understanding-service-types/</title>
 </head>
 <body ng-controller="MainCtrl">
-  public variable: {{foo.variable}}
-  <br />
-  private variable (through getter): {{foo.getPrivate()}}
-  <br />
-  greet: {{foo.greet()}}
+public variable: {{foo.variable}}
+<br/>
+private variable (through getter): {{foo.getPrivate()}}
+<br/>
+greet: {{foo.greet()}}
 
 
-  <script>
-  // in this example we decorate the service inside the app.config
+<script>
+    // in this example we decorate the service inside the app.config
 
 
-  app = angular.module("app", []);
+    app = angular.module("app", []);
 
-  app.controller('MainCtrl', function($scope, foo) {
-    $scope.foo = foo;
-  });
-
-  app.factory('foo', function() {
-    var thisIsPrivate = "Private";
-
-    function getPrivate() {
-      return thisIsPrivate;
-    }
-
-    return {
-      variable: "This is public",
-      getPrivate: getPrivate
-    };
-  });
-
-  app.config(function($provide) {
-    // $delegate is the object returned from the foo factory call. this is a good
-    // way of decorating 3rd party services
-    $provide.decorator('foo', function($delegate) {
-      $delegate.greet = function() {
-        return "Hello, I am a new function of 'foo'";
-      };
-
-      return $delegate;
+    app.controller('MainCtrl', function ($scope, foo) {
+        $scope.foo = foo;
     });
-  });
-  </script>
+
+    app.factory('foo', function () {
+        var thisIsPrivate = "Private";
+
+        function getPrivate() {
+            return thisIsPrivate;
+        }
+
+        return {
+            variable: "This is public",
+            getPrivate: getPrivate
+        };
+    });
+
+    app.config(function ($provide) {
+        // $delegate is the object returned from the foo factory call. this is a good
+        // way of decorating 3rd party services
+        $provide.decorator('foo', function ($delegate) {
+            $delegate.greet = function () {
+                return "Hello, I am a new function of 'foo'";
+            };
+
+            return $delegate;
+        });
+    });
+</script>
 </body>
 </html>

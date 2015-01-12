@@ -1,29 +1,29 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/jquery.min.js"></script>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-controller="MainCtrl">
-  Compiling interpolated text
+Compiling interpolated text
 
-  Add anything there
-  <input type="text" ng-model="name">
+Add anything there
+<input type="text" ng-model="name">
 <br>
-  Put markup here i.e. {{name}}
-  <input type="text" ng-model="markup">
-  <button ng-click="addit(markup)">Add</button>
+Put markup here i.e. {{name}}
+<input type="text" ng-model="markup">
+<button ng-click="addit(markup)">Add</button>
 
-  <script>
-  var app = angular.module('app', []);
+<script>
+    var app = angular.module('app', []);
 
-  app.controller('MainCtrl', function($scope, $compile) {
-    $scope.addit = function (markup) {
-      $compile(markup)($scope).appendTo(angular.element('body'))
-    }
-  });
+    app.controller('MainCtrl', function ($scope, $compile) {
+        $scope.addit = function (markup) {
+            $compile(markup)($scope).appendTo(angular.element('body'))
+        }
+    });
 
 
-  </script>
+</script>
 </body>
 </html>

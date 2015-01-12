@@ -2,92 +2,94 @@
 <html>
 <head>
 
-  <script src="/lib/underscore.js"></script>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/underscore.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-app="app" ng-controller="AppCtrl">
 
-  <input type="text" ng-model="city" placeholder="Enter a city" />
-  <div ng-sparkline place="{{city}}"></div>
-  <div ng-repeat="high in highs">{{high.min}}/{{high.max}}F - {{high.desc}}</div>
+<input type="text" ng-model="city" placeholder="Enter a city"/>
+
+<div ng-sparkline place="{{city}}"></div>
+<div ng-repeat="high in highs">{{high.min}}/{{high.max}}F - {{high.desc}}</div>
 
 
-  <script>
-  // this example shows two way binding
-  var app = angular.module("app", []);
+<script>
+    // this example shows two way binding
+    var app = angular.module("app", []);
 
-  app.service('ConvertSvc', function () {
-    return {
-      FtoC : function (val) {
-        return Math.round((((val-32)*5)/9));
-      }
-    }
-  });
-
-  app.constant('UrlSvc', {
-    weather : "http://api.openweathermap.org/data/2.5/forecast/daily?mode=json&units=imperial&cnt=14&callback=JSON_CALLBACK&q="
-  })
-
-  app.controller('AppCtrl', function ($scope) {});
-
-  app.directive('ngSparkline', function($rootScope, ConvertSvc, UrlSvc) {
-    return {
-      restrict: 'A',
-      replace : true,
-      scope: {
-        city: '='
-      },
-      template: '<div class="sparkline"><h4>{{city}}</h4></div>',
-      // the controller is called before the link function
-      controller: function($scope, $http) {
-        $scope.getTemp = function(city) {
-          $http({
-            method: 'JSONP',
-            url: UrlSvc.weather + city
-          }).success(function(data) {
-            var weather = [];
-            angular.forEach(data.list, function(value){
-              weather.push(value);
-            });
-            if (weather.length) {
-              $scope.weather = weather;
+    app.service('ConvertSvc', function () {
+        return {
+            FtoC: function (val) {
+                return Math.round((((val - 32) * 5) / 9));
             }
-          }).error(function (data, status, headers, config) {
-            console.log(config);
-          })
         }
-      },
+    });
 
-      link: function(scope, iElement, iAttrs, ctrl) {
-        // limit the amount of times it makes a request otherwise it will happen
-        // on every keypress
-        var func = _.debounce(scope.getTemp, 300);
+    app.constant('UrlSvc', {
+        weather: "http://api.openweathermap.org/data/2.5/forecast/daily?mode=json&units=imperial&cnt=14&callback=JSON_CALLBACK&q="
+    })
 
-        iAttrs.$observe('place', function (value) {
-          if (value) {
-            func(value);
-          }
-        });
+    app.controller('AppCtrl', function ($scope) {
+    });
 
-        scope.$watch('weather', function(newVal) {
-         if (newVal) {
-           $rootScope.highs = [],
-           width   = 200,
-           height  = 80;
+    app.directive('ngSparkline', function ($rootScope, ConvertSvc, UrlSvc) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                city: '='
+            },
+            template: '<div class="sparkline"><h4>{{city}}</h4></div>',
+            // the controller is called before the link function
+            controller: function ($scope, $http) {
+                $scope.getTemp = function (city) {
+                    $http({
+                        method: 'JSONP',
+                        url: UrlSvc.weather + city
+                    }).success(function (data) {
+                        var weather = [];
+                        angular.forEach(data.list, function (value) {
+                            weather.push(value);
+                        });
+                        if (weather.length) {
+                            $scope.weather = weather;
+                        }
+                    }).error(function (data, status, headers, config) {
+                        console.log(config);
+                    })
+                }
+            },
 
-           angular.forEach(scope.weather, function(value){
-            // C to F = Deduct 32, then multiply by 5, then divide by 9
-             $rootScope.highs.push({
-                min : ConvertSvc.FtoC(value.temp.min),
-                max : ConvertSvc.FtoC(value.temp.max),
-                desc :value.weather[0].description
-             });
-           });
-         }
-        });
-      }
-    }
-  });
+            link: function (scope, iElement, iAttrs, ctrl) {
+                // limit the amount of times it makes a request otherwise it will happen
+                // on every keypress
+                var func = _.debounce(scope.getTemp, 300);
+
+                iAttrs.$observe('place', function (value) {
+                    if (value) {
+                        func(value);
+                    }
+                });
+
+                scope.$watch('weather', function (newVal) {
+                    if (newVal) {
+                        $rootScope.highs = [],
+                                width = 200,
+                                height = 80;
+
+                        angular.forEach(scope.weather, function (value) {
+                            // C to F = Deduct 32, then multiply by 5, then divide by 9
+                            $rootScope.highs.push({
+                                min: ConvertSvc.FtoC(value.temp.min),
+                                max: ConvertSvc.FtoC(value.temp.max),
+                                desc: value.weather[0].description
+                            });
+                        });
+                    }
+                });
+            }
+        }
+    });
 
 </script>
 </body>

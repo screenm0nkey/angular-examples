@@ -1,24 +1,25 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <style>
-  .odd {
-    color: red;
-  }
-  .even {
-    color: blue;
-  }
-  </style>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <style>
+        .odd {
+            color: red;
+        }
+
+        .even {
+            color: blue;
+        }
+    </style>
 </head>
 <body ng-app="App">
-  <ol ng-init="names=['John', 'Mary', 'Cate', 'Suz']">
+<ol ng-init="names=['John', 'Mary', 'Cate', 'Suz']">
     <li ng-repeat="name in names">
      <span ng-class-odd="'odd'" ng-class-even="'even'">
        {{name}} &nbsp; &nbsp; &nbsp;
      </span>
-   </li>
- </ol>
+    </li>
+</ol>
 <script>angular.module('App', []);</script>
- </body>
- </html>
+</body>
+</html>

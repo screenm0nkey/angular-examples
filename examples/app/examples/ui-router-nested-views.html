@@ -4,48 +4,48 @@
 
 </head>
 <body>
-  <div ui-view ></div>
+<div ui-view></div>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="/lib/angular-1.2/angular-route.js"></script>
-  <script src="/lib/angular-ui-router.min.js"></script>
-  <script>
+<script src="/lib/angular-1.2/angular.js"></script>
+<script src="/lib/angular-1.2/angular-route.js"></script>
+<script src="/lib/angular-ui-router.min.js"></script>
+<script>
 
-  var app = angular.module('App', ['ngRoute', 'ui.router'])
+    var app = angular.module('App', ['ngRoute', 'ui.router'])
 
-  .config(function ($urlRouterProvider, $stateProvider) {
-    $urlRouterProvider.otherwise('/signin');
+            .config(function ($urlRouterProvider, $stateProvider) {
+                $urlRouterProvider.otherwise('/signin');
 
-    $stateProvider
-    .state('signin',{
-      url:'/signin',
-      template: 'Cool Sign In Page with a form <a ui-sref="clients.list">Go to Users list</a>',
-      controller: function($scope, $stateParams) {
-        console.log('SIGNIN', $stateParams);
-      }
+                $stateProvider
+                        .state('signin', {
+                            url: '/signin',
+                            template: 'Cool Sign In Page with a form <a ui-sref="clients.list">Go to Users list</a>',
+                            controller: function ($scope, $stateParams) {
+                                console.log('SIGNIN', $stateParams);
+                            }
 
-    })
-    .state('clients', {
-      url:"/clients",
-      abstract:true,
-      template: '<div>HEADER:<a ui-sref="clients.list">Users</a>   <a ui-sref="signin">SignIn</a></div> <div ui-view ></div>  <div>FOOTER</div>',
-      controller: function($scope, $stateParams) {
-        console.log('CLIENTS', $stateParams);
-      }
-    })
-    .state('clients.list', {
-     url:"/list",
-     template: 'LIST <a ui-sref="clients.details({id: \'john\'})">John</a> ---- <a ui-sref="clients.details({id: \'matt\'})">Matt</a>'
-   })
-    .state('clients.details', {
-      url:"/:id",
-      template: 'DEATILS: User {{id}}',
-      controller: function($scope, $stateParams) {
-        console.log('DETAILS', $stateParams);
-        $scope.id = $stateParams.id;
-      }
-    });
-  });
+                        })
+                        .state('clients', {
+                            url: "/clients",
+                            abstract: true,
+                            template: '<div>HEADER:<a ui-sref="clients.list">Users</a>   <a ui-sref="signin">SignIn</a></div> <div ui-view ></div>  <div>FOOTER</div>',
+                            controller: function ($scope, $stateParams) {
+                                console.log('CLIENTS', $stateParams);
+                            }
+                        })
+                        .state('clients.list', {
+                            url: "/list",
+                            template: 'LIST <a ui-sref="clients.details({id: \'john\'})">John</a> ---- <a ui-sref="clients.details({id: \'matt\'})">Matt</a>'
+                        })
+                        .state('clients.details', {
+                            url: "/:id",
+                            template: 'DEATILS: User {{id}}',
+                            controller: function ($scope, $stateParams) {
+                                console.log('DETAILS', $stateParams);
+                                $scope.id = $stateParams.id;
+                            }
+                        });
+            });
 </script>
 </body>
 </html>

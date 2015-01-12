@@ -48,7 +48,7 @@
 
 .article-left-content {
     border-bottom: solid 1px rgba(0, 0, 0, 0.08);
-    box-shadow: 0 1px rgba(255,255,255,.8);
+    box-shadow: 0 1px rgba(255, 255, 255, .8);
     min-height: 100px;
     padding: 20px;
 }
@@ -80,16 +80,19 @@ span[data-ng-show] {
     margin: 10px;
     background-color: #DBDBDB;
 }
+
 .thumbnail .caption {
     text-align: center;
     padding-top: 20px;
     font-family: 'Comic Sans MS';
 }
+
 .voting-button {
     cursor: pointer;
     border: none;
     background: none;
 }
+
 .right {
     clear: right;
     float: right;

@@ -1,65 +1,65 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
 
-  <parent>
+<parent>
     <child></child>
-  </parent>
+</parent>
 
-  <script>
-  // testParent Controller
-  // testParent preLink
-  // testChild  Controller
-  // testChild  preLink
-  // testChild  postLink
-  // testParent postLink
-  var app = angular.module('app', [])
+<script>
+    // testParent Controller
+    // testParent preLink
+    // testChild  Controller
+    // testChild  preLink
+    // testChild  postLink
+    // testParent postLink
+    var app = angular.module('app', [])
 
-  app.directive('parent', function() {
-   return {
-     restrict: 'E',
-     controller: function(){
-      console.log("testParent controller");
-      },
-      compile: function(tElement, tAttrs){
-        console.log('testChild compile')
+    app.directive('parent', function () {
         return {
-          pre: function (scope, element, attrs){
-            console.log("testParent preLink");
-          },
-          // 'post' and 'link' methods are the same
-          post: function (scope, element, attrs){
-            console.log("testParent postLink");
-          }
+            restrict: 'E',
+            controller: function () {
+                console.log("testParent controller");
+            },
+            compile: function (tElement, tAttrs) {
+                console.log('testChild compile')
+                return {
+                    pre: function (scope, element, attrs) {
+                        console.log("testParent preLink");
+                    },
+                    // 'post' and 'link' methods are the same
+                    post: function (scope, element, attrs) {
+                        console.log("testParent postLink");
+                    }
+                }
+            }
         }
-      }
-    }
-  });
+    });
 
-  app.directive('child', function() {
-   return {
-     restrict: 'E',
-     controller: function(){
-      console.log("testChild controller");
-      },
-      compile: function(tElement, tAttrs){
-        console.log('testChild compile')
+    app.directive('child', function () {
         return {
-          pre: function (scope, element, attrs){
-            console.log("testChild preLink");
-          },
-          // 'post' and 'link' methods are the same
-          post: function (scope, element, attrs){
-            console.log("testChild postLink");
-          }
+            restrict: 'E',
+            controller: function () {
+                console.log("testChild controller");
+            },
+            compile: function (tElement, tAttrs) {
+                console.log('testChild compile')
+                return {
+                    pre: function (scope, element, attrs) {
+                        console.log("testChild preLink");
+                    },
+                    // 'post' and 'link' methods are the same
+                    post: function (scope, element, attrs) {
+                        console.log("testChild postLink");
+                    }
+                }
+            }
         }
-      }
-    }
-  });
+    });
 
-  </script>
+</script>
 </body>
 </html>

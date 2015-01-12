@@ -4,44 +4,44 @@
 </head>
 <body>
 
-  <testlist/>
+<testlist/>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
-  var app = angular.module('app', []);
-  // angualr version 1.2 needs this for deferreds to work with ng repeat
-  app.config(function ($parseProvider) {
-    $parseProvider.unwrapPromises(true);
-  });
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+    var app = angular.module('app', []);
+    // angualr version 1.2 needs this for deferreds to work with ng repeat
+    app.config(function ($parseProvider) {
+        $parseProvider.unwrapPromises(true);
+    });
 
-  app.factory('dataService', function ($q) {
-   return {
-     getData : function () {
-       var deferred = $q.defer();
-       setTimeout(function () {
-         deferred.resolve([{id:1},{id:2},{id:3},{id:4}]);
-       },2000);
-       return deferred.promise;
-     }
-   };
- });
+    app.factory('dataService', function ($q) {
+        return {
+            getData: function () {
+                var deferred = $q.defer();
+                setTimeout(function () {
+                    deferred.resolve([{id: 1}, {id: 2}, {id: 3}, {id: 4}]);
+                }, 2000);
+                return deferred.promise;
+            }
+        };
+    });
 
 
-  app.directive('testlist', function(dataService) {
-   return {
-    restrict: 'E',
-    replace: true,
-    scope : {},
-    template: '<div ng-repeat="data in objects">{{ inspect(data) }}{{ data.$$hashKey }}</div>',
-    controller: function($scope) {
-      $scope.objects = dataService.getData();
-      $scope.inspect = function (obj) {
-        console.log(obj);
-      };
-    }
-  };
-});
+    app.directive('testlist', function (dataService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: {},
+            template: '<div ng-repeat="data in objects">{{ inspect(data) }}{{ data.$$hashKey }}</div>',
+            controller: function ($scope) {
+                $scope.objects = dataService.getData();
+                $scope.inspect = function (obj) {
+                    console.log(obj);
+                };
+            }
+        };
+    });
 
-  </script>
+</script>
 </body>
 </html>

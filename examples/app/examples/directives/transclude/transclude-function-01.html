@@ -1,36 +1,36 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-app="myapp">
 
-  <p badger><a href="#">This text has been transcluded!</a></p>
+<p badger><a href="#">This text has been transcluded!</a></p>
 
-  <script>
-   var app = angular.module('myapp', []);
+<script>
+    var app = angular.module('myapp', []);
 
-   app.directive('badger', function() {
-     return {
-       template: '<h3><span ng-transclude></span>This Test</h3>',
-       transclude: 'element',
-       restrict: 'AE',
-       replace: true,
-       link: function(scope, elem, attrs, ctrl, transclude) {
-          // scope here is $id:002
-          transclude(function(clone, scope) {
-          // scope here is $id:004
-          console.log(2, scope);
-          // clone is copy of the transcluded element, even though the example
-          // has already been translcuded
-          console.log(clone[0]);
-          clone.css('background-color', 'yellow');
-          clone.text('shot');
-          elem.after(clone);
-        });
-    },
-  };
-});
+    app.directive('badger', function () {
+        return {
+            template: '<h3><span ng-transclude></span>This Test</h3>',
+            transclude: 'element',
+            restrict: 'AE',
+            replace: true,
+            link: function (scope, elem, attrs, ctrl, transclude) {
+                // scope here is $id:002
+                transclude(function (clone, scope) {
+                    // scope here is $id:004
+                    console.log(2, scope);
+                    // clone is copy of the transcluded element, even though the example
+                    // has already been translcuded
+                    console.log(clone[0]);
+                    clone.css('background-color', 'yellow');
+                    clone.text('shot');
+                    elem.after(clone);
+                });
+            }
+        };
+    });
 </script>
 
 </body>

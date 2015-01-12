@@ -4,30 +4,30 @@
 </head>
 <body ng-controller="MainCtrl">
 
-  <input type="text" my-blur="myFunc()"/>
+<input type="text" my-blur="myFunc()"/>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
-   var app = angular.module('app',[]);
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+    var app = angular.module('app', []);
 
-   app.controller('MainCtrl', function ($scope) {
-      $scope.myFunc = function(){
-       alert("hello!!");
-     }
-   });
+    app.controller('MainCtrl', function ($scope) {
+        $scope.myFunc = function () {
+            alert("hello!!");
+        }
+    });
 
-   app.directive('myBlur', function($parse) {
-     return function(scope, element, attr) {
-       var fn = $parse(attr['myBlur']);
+    app.directive('myBlur', function ($parse) {
+        return function (scope, element, attr) {
+            var fn = $parse(attr['myBlur']);
 
-       element.bind('blur', function(event) {
-         scope.$apply(function() {
-           fn(scope, {$event:event});
-         });
-       });
-     }
-   });
+            element.bind('blur', function (event) {
+                scope.$apply(function () {
+                    fn(scope, {$event: event});
+                });
+            });
+        }
+    });
 
-  </script>
+</script>
 </body>
 </html>

@@ -1,112 +1,114 @@
-
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
 
 <head>
-  <style>
-  /*img {width: 100px; height:100px; float:left;}*/
-  </style>
+    <style>
+        /*img {width: 100px; height:100px; float:left;}*/
+    </style>
 </head>
 
 <body ng-cloak>
-  <h3>http://djds4rce.wordpress.com/2013/08/13/understanding-angular-http-interceptors/</h3>
-  <div ng-controller="MyController">
+<h3>http://djds4rce.wordpress.com/2013/08/13/understanding-angular-http-interceptors/</h3>
+
+<div ng-controller="MyController">
     <input type="text" ng-model="tagsrch">
 
     <h3>{{title}}</h3>
+
     <div>
-      <a ng-repeat="item in items" ng-href="{{item.link}}" target="_blank"><img ng-src="{{item.media.m}}" alt="{{item.author}}"  /></a>
+        <a ng-repeat="item in items" ng-href="{{item.link}}" target="_blank"><img ng-src="{{item.media.m}}"
+                                                                                  alt="{{item.author}}"/></a>
     </div>
-  </div>
+</div>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="/lib/angular-1.2/angular-resource.js"></script>
-  <script src="/lib/angular-1.2/angular-cookies.js"></script>
+<script src="/lib/angular-1.2/angular.js"></script>
+<script src="/lib/angular-1.2/angular-resource.js"></script>
+<script src="/lib/angular-1.2/angular-cookies.js"></script>
 
-  <script>
+<script>
 
-  var app =  angular.module("app", ['ngCookies', 'ngResource']);
+    var app = angular.module("app", ['ngCookies', 'ngResource']);
 
-  // Intercepting HTTP calls with AngularJS.
-  app.config(function ($provide, $httpProvider) {
+    // Intercepting HTTP calls with AngularJS.
+    app.config(function ($provide, $httpProvider) {
 
-  // Intercept http calls.
-  $provide.factory('MyHttpInterceptor', function ($q, $cookieStore) {
-    return {
-      // On request success
-      request: function (config) {
-        // Contains the data about the request before it is sent.
-        console.log(1, config);
-        var token = $cookieStore.get("auth");
-        config.headers._auth_token = 'apikey="apikey1" accessToken="1234"';
-        // Return the config or wrap it in a promise if blank.
-        return config || $q.when(config);
-      },
+        // Intercept http calls.
+        $provide.factory('MyHttpInterceptor', function ($q, $cookieStore) {
+            return {
+                // On request success
+                request: function (config) {
+                    // Contains the data about the request before it is sent.
+                    console.log(1, config);
+                    var token = $cookieStore.get("auth");
+                    config.headers._auth_token = 'apikey="apikey1" accessToken="1234"';
+                    // Return the config or wrap it in a promise if blank.
+                    return config || $q.when(config);
+                },
 
-      // On request failure
-      requestError: function (rejection) {
-        console.log(2, rejection); // Contains the data about the error on the request.
-        // Return the promise rejection.
-        return $q.reject(rejection);
-      },
+                // On request failure
+                requestError: function (rejection) {
+                    console.log(2, rejection); // Contains the data about the error on the request.
+                    // Return the promise rejection.
+                    return $q.reject(rejection);
+                },
 
-      // On response success
-      response: function (response) {
-        console.log(3, response); // Contains the data from the response.
-        // Return the response or promise.
-        return response || $q.when(response);
-      },
+                // On response success
+                response: function (response) {
+                    console.log(3, response); // Contains the data from the response.
+                    // Return the response or promise.
+                    return response || $q.when(response);
+                },
 
-      // On response failture
-      responseError: function (rejection) {
-        console.log(4, rejection); // Contains the data about the error.
-        if(rejection.status === 401){
-          $location.path('/signin');
+                // On response failture
+                responseError: function (rejection) {
+                    console.log(4, rejection); // Contains the data about the error.
+                    if (rejection.status === 401) {
+                        $location.path('/signin');
+                    }
+                    // Return the promise rejection.
+                    return $q.reject(rejection);
+                }
+            };
+        });
+
+        // Add the interceptor to the $httpProvider.
+        $httpProvider.interceptors.push('MyHttpInterceptor');
+    });
+
+
+    // var xhr = $http.jsonp("http://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json&per_page=10&jsoncallback=JSON_CALLBACK");
+
+    app.controller("MyController", function ($scope, $resource, $q, $log) {
+        var fetchPopular = function (tag) {
+            var deferred = $q.defer();
+            var api = $resource('http://www.flickr.com/services/feeds/photos_public.gne', {
+                tags: tag,
+                format: 'json',
+                per_page: 10,
+                jsoncallback: 'JSON_CALLBACK'
+            }, {
+                fetch: {method: 'JSONP'}
+            });
+
+            api.fetch(function (res) {
+                deferred.resolve(res);
+            });
+
+            return deferred.promise;
         }
-        // Return the promise rejection.
-        return $q.reject(rejection);
-      }
-    };
-  });
 
-  // Add the interceptor to the $httpProvider.
-  $httpProvider.interceptors.push('MyHttpInterceptor');
-});
+        $scope.$watch('tagsrch', function (newVal) {
+            fetchPopular(newVal).then(function (res) {
+                angular.extend($scope, res)
+                $log.log($scope)
+            })
+        })
 
-
-// var xhr = $http.jsonp("http://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json&per_page=10&jsoncallback=JSON_CALLBACK");
-
-app.controller("MyController", function($scope, $resource, $q, $log) {
-  var fetchPopular = function(tag){
-    var deferred = $q.defer();
-    var api = $resource('http://www.flickr.com/services/feeds/photos_public.gne', {
-      tags         : tag,
-      format       : 'json',
-      per_page     : 10,
-      jsoncallback : 'JSON_CALLBACK'
-    },{
-      fetch:{method:'JSONP'}
+        fetchPopular('dogs').then(function (res) {
+            angular.extend($scope, res)
+            $log.log($scope)
+        })
     });
-
-    api.fetch(function(res){
-      deferred.resolve(res);
-    });
-
-    return deferred.promise;
-  }
-
-  $scope.$watch('tagsrch', function (newVal) {
-    fetchPopular(newVal).then(function (res) {
-      angular.extend($scope, res)
-      $log.log($scope)
-    })
-  })
-
-  fetchPopular('dogs').then(function (res) {
-    angular.extend($scope, res)
-    $log.log($scope)
-  })
-});
 </script>
 
 </body>

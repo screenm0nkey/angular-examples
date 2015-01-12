@@ -1,59 +1,59 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <style>
-  ul.navigation li.active {
-    background-color: red;
-  }
-  </style>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <style>
+        ul.navigation li.active {
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
-  <div ng-controller="NavigationController">
+<div ng-controller="NavigationController">
     <navigation>
-      <navigation-item ng-repeat="item in items">Itemx: {{item.title}}</navigation-item>
+        <navigation-item ng-repeat="item in items">Itemx: {{item.title}}</navigation-item>
     </navigation>
-  </div>
+</div>
 
-  <script>
-  var app = angular.module('app', []);
+<script>
+    var app = angular.module('app', []);
 
-  app.controller('NavigationController', function($scope){
-    $scope.uid = "NAVIGATIONCONTROLLER";
-    $scope.items = [
-      {id: 'item1', title: 'Item 1'},
-      {id: 'item2', title: 'Item 2'},
-      {id: 'item3', title: 'Item 3'}];
-  });
+    app.controller('NavigationController', function ($scope) {
+        $scope.uid = "NAVIGATIONCONTROLLER";
+        $scope.items = [
+            {id: 'item1', title: 'Item 1'},
+            {id: 'item2', title: 'Item 2'},
+            {id: 'item3', title: 'Item 3'}];
+    });
 
-  app.directive('navigation', function() {
-    return {
-      // so the transclude here is saying to move all content that's inside
-      // <navigation over="items"> to the position of the ng-transclude in the
-      // template
-      template : '<ul class="navigation" ng-transclude></ul>',
-      replace : true,
-      restrict : 'E',
-      transclude : true,
-      link: function($scope, $element, attrs, controller){
-        // the $scope is the NAVIGATIONCONTROLLER's scope
-        $scope.states = {};
-        $scope.states.activeItem = 'item1';
-     }
-   };
- });
+    app.directive('navigation', function () {
+        return {
+            // so the transclude here is saying to move all content that's inside
+            // <navigation over="items"> to the position of the ng-transclude in the
+            // template
+            template: '<ul class="navigation" ng-transclude></ul>',
+            replace: true,
+            restrict: 'E',
+            transclude: true,
+            link: function ($scope, $element, attrs, controller) {
+                // the $scope is the NAVIGATIONCONTROLLER's scope
+                $scope.states = {};
+                $scope.states.activeItem = 'item1';
+            }
+        };
+    });
 
-  app.directive('navigationItem', function(){
-    return {
-      // this transclude is saying move anying in the <navigation-item>, which
-      // is 'Item: {{item.title}}', to the position of the transclude
-      template: '<li class="item" ng-class="{active: item.id === states.activeItem}" ng-click="states.activeItem=item.id" ng-transclude></li>',
-      restrict: 'E',
-      replace: true,
-      transclude: true
-    };
-  });
-  </script>
+    app.directive('navigationItem', function () {
+        return {
+            // this transclude is saying move anying in the <navigation-item>, which
+            // is 'Item: {{item.title}}', to the position of the transclude
+            template: '<li class="item" ng-class="{active: item.id === states.activeItem}" ng-click="states.activeItem=item.id" ng-transclude></li>',
+            restrict: 'E',
+            replace: true,
+            transclude: true
+        };
+    });
+</script>
 
 
 </body>

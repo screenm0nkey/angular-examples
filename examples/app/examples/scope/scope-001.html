@@ -1,68 +1,68 @@
 <!doctype html>
 <html ng-app="myModule">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/jquery.min.js"></script>
 </head>
 
 CTRLPARENT - SCOPE 003
 <body ng-controller="ControllerParent">
-  <p>
+<p>
     So scope 002 is where the app module is delared. in this case "myModule"
     in the html element
-  </p>
+</p>
 
-  CTRLPARENT - SCOPE 003
-  <input ng-model="message" >
+CTRLPARENT - SCOPE 003
+<input ng-model="message">
 
-  <div ng-controller="ControllerZero">
+<div ng-controller="ControllerZero">
     CTRL0 - SCOPE 004 <input ng-model="message">
-  </div>
+</div>
 
-  <div ng-controller="ControllerOne">
+<div ng-controller="ControllerOne">
     CTRL1 - SCOPE 005
-    <input ng-model="message" >
-  </div>
+    <input ng-model="message">
+</div>
 
-  <div ng-controller="ControllerTwo">
-    CTRL2  - SCOPE 006
-    <input ng-model="message" >
-  </div>
+<div ng-controller="ControllerTwo">
+    CTRL2 - SCOPE 006
+    <input ng-model="message">
+</div>
 
-  <my-component></my-component>
+<my-component></my-component>
 
 
-  <script>
-  var myModule = angular.module('myModule', []);
+<script>
+    var myModule = angular.module('myModule', []);
 
-  myModule.directive('myComponent', function() {
-    // the directives controller would share the $scope in which is declared
-    // so in this case ControllerParent's $scope. to stop the sharing you can
-    // use an isolate scope
-    return {
-      restrict: 'E',
-      replace: true,
-      template: '<div>DIRECTIVE - SCOPE - 003<input ng-model="message"></div>',
-      controller: function($scope, $attrs ) {
-        $scope.directive = true;
-      }
-    };
-  });
+    myModule.directive('myComponent', function () {
+        // the directives controller would share the $scope in which is declared
+        // so in this case ControllerParent's $scope. to stop the sharing you can
+        // use an isolate scope
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div>DIRECTIVE - SCOPE - 003<input ng-model="message"></div>',
+            controller: function ($scope, $attrs) {
+                $scope.directive = true;
+            }
+        };
+    });
 
-  function ControllerParent($scope) {
-    $scope.controllerParent = true;
-  }
-  function ControllerZero($scope) {
-    $scope.controllerZero = true;
-  }
-  function ControllerOne($scope) {
-    $scope.controllerOne = true;
-  }
-  function ControllerTwo($scope) {
-    $scope.controllerTwo = true;
-  }
+    function ControllerParent($scope) {
+        $scope.controllerParent = true;
+    }
+    function ControllerZero($scope) {
+        $scope.controllerZero = true;
+    }
+    function ControllerOne($scope) {
+        $scope.controllerOne = true;
+    }
+    function ControllerTwo($scope) {
+        $scope.controllerTwo = true;
+    }
 
-  </script>
+</script>
 
 </body>
 </html>

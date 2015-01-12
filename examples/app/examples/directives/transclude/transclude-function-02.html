@@ -1,45 +1,45 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-controller="DemoCtrl">
 
 
-  scope.name = {{ name }}
-  <div data-my-directive>this is original content ({{ name }})</div>
+scope.name = {{ name }}
+<div data-my-directive>this is original content ({{ name }})</div>
 
 
-  <script>
-  var app = angular.module('app', []);
+<script>
+    var app = angular.module('app', []);
 
-  app.controller('DemoCtrl', function($scope) {
-    console.log(1, $scope); // $id = 003
-    $scope.name = 'world';
-  });
+    app.controller('DemoCtrl', function ($scope) {
+        console.log(1, $scope); // $id = 003
+        $scope.name = 'world';
+    });
 
-  app.directive('myDirective', function($parse) {
-    return {
-      restrict: 'A',
-      transclude: true,
-      template: '<div>transcluded: </div>',
-      //  notice that we injecting $transclude into the controller
-      controller: function($element, $attrs, $transclude, $scope) {
-        // at this point the $scope is still 003 as we dont use isolate scope
-        console.log(2, $scope);
+    app.directive('myDirective', function ($parse) {
+        return {
+            restrict: 'A',
+            transclude: true,
+            template: '<div>transcluded: </div>',
+            //  notice that we injecting $transclude into the controller
+            controller: function ($element, $attrs, $transclude, $scope) {
+                // at this point the $scope is still 003 as we dont use isolate scope
+                console.log(2, $scope);
 
-        $transclude(function(clone, scope) {
-          // the scope passed into the clone is a child of the parent scope
-          console.log(3, scope); // $id = 004
-          // as the scope is dfferent we can change the
-          scope.name = 'AngularJS';
-          console.log(clone[0]);
-          var transcluded = angular.element('<span style="color:red"></span>').append(clone);
-          $element.children().append(transcluded);
-        });
-      }
-    };
-  });
-  </script>
+                $transclude(function (clone, scope) {
+                    // the scope passed into the clone is a child of the parent scope
+                    console.log(3, scope); // $id = 004
+                    // as the scope is dfferent we can change the
+                    scope.name = 'AngularJS';
+                    console.log(clone[0]);
+                    var transcluded = angular.element('<span style="color:red"></span>').append(clone);
+                    $element.children().append(transcluded);
+                });
+            }
+        };
+    });
+</script>
 </body>
 </html>

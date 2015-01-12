@@ -1,33 +1,33 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-app="app" ng-controller="AppCtrl">
-  {{gtitle}}
+{{gtitle}}
 
-  <script>
-  var app = angular.module("app", []);
+<script>
+    var app = angular.module("app", []);
 
-  app.factory("game", function () {
-    return { title: "StarCraft" };
-  });
-
-  // here we're using the injector to inject the service. it needs a module
-  // note. this will not work if service has dependencies as we're injecting app
-  angular.injector(["app"]).invoke(function (game) {
-    console.log(1, game.title);
-  });
-
-  app.controller("AppCtrl", function ($scope, $injector) {
-    // here we're injecting the $injector. does the same as above but we dont
-    // need to supply a module
-    $injector.invoke(function (game) {
-      $scope.title = game.title;
-      console.log(2, $scope.title);
+    app.factory("game", function () {
+        return {title: "StarCraft"};
     });
-  });
 
-  </script>
+    // here we're using the injector to inject the service. it needs a module
+    // note. this will not work if service has dependencies as we're injecting app
+    angular.injector(["app"]).invoke(function (game) {
+        console.log(1, game.title);
+    });
+
+    app.controller("AppCtrl", function ($scope, $injector) {
+        // here we're injecting the $injector. does the same as above but we dont
+        // need to supply a module
+        $injector.invoke(function (game) {
+            $scope.title = game.title;
+            console.log(2, $scope.title);
+        });
+    });
+
+</script>
 </body>
 </html>

@@ -1,113 +1,113 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="/lib/angular-1.2/angular-resource.js"></script>
-  <script src="/lib/angular-1.2/angular-mocks.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular-resource.js"></script>
+    <script src="/lib/angular-1.2/angular-mocks.js"></script>
 </head>
-<body >
+<body>
 
-  <div ng-app="myApp">
-    <span  ng-controller="UserCtrl">
+<div ng-app="myApp">
+    <span ng-controller="UserCtrl">
       <ul>
-        <li ng-repeat="user in users">{{user}}</li>
-        <button ng-click="addUser()">Add user (HTTP PUT)</button>
+          <li ng-repeat="user in users">{{user}}</li>
+          <button ng-click="addUser()">Add user (HTTP PUT)</button>
       </ul>
     </span>
-  </div>
+</div>
 
 
-  <script>
-  'use strict';
+<script>
+    'use strict';
 
-// *************************************************
-// MOCK BACKEND
+    // *************************************************
+    // MOCK BACKEND
 
-var myApp = angular.module('myApp', ['ngResource', 'ngMockE2E']);
+    var myApp = angular.module('myApp', ['ngResource', 'ngMockE2E']);
 
-// You can also just use provide to blanket replace $httpBackend
-// with the mock
-// Mark urls that match regexp as a match,
-// you can pass this as the url argument to $httpBackend.[when|expect]
-angular.module('myApp')
-.run(function($httpBackend, $timeout) {
-  var regexpUrl = function(regexp) {
-    return {
-      test: function(url) {
-        this.matches = url.match(regexp);
-        return this.matches && this.matches.length > 0;
-      }
-    };
-  };
+    // You can also just use provide to blanket replace $httpBackend
+    // with the mock
+    // Mark urls that match regexp as a match,
+    // you can pass this as the url argument to $httpBackend.[when|expect]
+    angular.module('myApp')
+            .run(function ($httpBackend, $timeout) {
+                var regexpUrl = function (regexp) {
+                    return {
+                        test: function (url) {
+                            this.matches = url.match(regexp);
+                            return this.matches && this.matches.length > 0;
+                        }
+                    };
+                };
 
-  //*******************************************
-  // Allow JSONP to pass to external services (ie Solr)
-  $httpBackend.when('JSONP', regexpUrl(/http:\/\/.*/)).passThrough();
+                //*******************************************
+                // Allow JSONP to pass to external services (ie Solr)
+                $httpBackend.when('JSONP', regexpUrl(/http:\/\/.*/)).passThrough();
 
-  // Some statefullness
-  var users = {};
-  var userId = 0;
+                // Some statefullness
+                var users = {};
+                var userId = 0;
 
-  $httpBackend.when('PUT', '/users')
-  .respond(function(method, url, data) {
-    data = angular.fromJson(data);
-    data = { userName: data.userName, userId: userId};
-    users[userId] = data;
-    userId++;
-    return [200, users[data.userId]];
-  });
+                $httpBackend.when('PUT', '/users')
+                        .respond(function (method, url, data) {
+                            data = angular.fromJson(data);
+                            data = {userName: data.userName, userId: userId};
+                            users[userId] = data;
+                            userId++;
+                            return [200, users[data.userId]];
+                        });
 
-  $httpBackend.when('GET', regexpUrl(/users\/(\d+)/))
-  .respond(function(method, url, data) {
-    data = angular.fromJson(data);
-    return [200, users[data.userId]];
-  });
+                $httpBackend.when('GET', regexpUrl(/users\/(\d+)/))
+                        .respond(function (method, url, data) {
+                            data = angular.fromJson(data);
+                            return [200, users[data.userId]];
+                        });
 
-  $httpBackend.when('GET', '/users')
-  .respond(function(method, url, data) {
-    return [200, users];
-  });
+                $httpBackend.when('GET', '/users')
+                        .respond(function (method, url, data) {
+                            return [200, users];
+                        });
 
-  // A "run loop" of sorts to get httpBackend to
-  // issue responses and trigger the client code's callbacks
-  var flushBackend = function() {
-    try {
-      $httpBackend.flush();
-    } catch (err) {
-      // ignore that there's nothing to flush
-    }
-    $timeout(flushBackend, 500);
-  };
-  $timeout(flushBackend, 500);
-});
+                // A "run loop" of sorts to get httpBackend to
+                // issue responses and trigger the client code's callbacks
+                var flushBackend = function () {
+                    try {
+                        $httpBackend.flush();
+                    } catch (err) {
+                        // ignore that there's nothing to flush
+                    }
+                    $timeout(flushBackend, 500);
+                };
+                $timeout(flushBackend, 500);
+            });
 
 
-// *************************************************
-// *************************************************
-// ACTUAL APP
-// An actual angular app you might write using
-// good olde $http service
-myApp
-.controller("UserCtrl", function($scope, $http) {
-  $scope.users = {}
-  var addedUsers = 0;
+    // *************************************************
+    // *************************************************
+    // ACTUAL APP
+    // An actual angular app you might write using
+    // good olde $http service
+    myApp
+            .controller("UserCtrl", function ($scope, $http) {
+                $scope.users = {}
+                var addedUsers = 0;
 
-    // Add a user
-    $scope.addUser = function() {
-      var names = ["Doug", "Scott", "Eric", "John", "Patricia", "Daniel",
-      "JohnB", "Kate", "Matt"];
-      var sentData = {userName: names[addedUsers++ % 9]};
-      $http.put('/users', sentData).success(function(data) {
-        $scope.users[data.userId] = data.userName;
-      });
-    };
+                // Add a user
+                $scope.addUser = function () {
+                    var names = ["Doug", "Scott", "Eric", "John", "Patricia", "Daniel",
+                        "JohnB", "Kate", "Matt"];
+                    var sentData = {userName: names[addedUsers++ % 9]};
+                    $http.put('/users', sentData).success(function (data) {
+                        $scope.users[data.userId] = data.userName;
+                    });
+                };
 
-    // Get a list of all the users
-    $http.get('/users').success(function(data) {
-      console.log("GOT: " + data);
-      $scope.users = data;
-    });
-  });
+                // Get a list of all the users
+                $http.get('/users').success(function (data) {
+                    console.log("GOT: " + data);
+                    $scope.users = data;
+                });
+            });
 
 </script>
 </body>

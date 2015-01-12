@@ -1,34 +1,42 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
 <a href="http://docs.angularjs.org/guide/module">Look here</a>
 
-  <script>
-  // There are some convenience methods on the module which are equivalent to
-  // the config block. These all doing the same thing.
+<script>
+    // There are some convenience methods on the module which are equivalent to
+    // the config block. These all doing the same thing.
 
-  // configuration blocks
+    // configuration blocks
 
-   angular.module('app', [])
-     .value('a', 123)
-     .factory('a', function() { return 123; })
-     .directive('directiveName', function () {})
-     .filter('filterName', function () {});
+    angular.module('app', [])
+            .value('a', 123)
+            .factory('a', function () {
+                return 123;
+            })
+            .directive('directiveName', function () {
+            })
+            .filter('filterName', function () {
+            });
 
 
-   angular.module('app', []).
-     config(function($provide, $compileProvider, $filterProvider, $rootScopeProvider) {
-       $provide.value('a', 123);
-       $provide.factory('a', function() { return 123; });
-       $compileProvider.directive('directiveName', function () {});
-       $filterProvider.register('filterName', function () {});
-     });
+    angular.module('app', []).
+            config(function ($provide, $compileProvider, $filterProvider, $rootScopeProvider) {
+                $provide.value('a', 123);
+                $provide.factory('a', function () {
+                    return 123;
+                });
+                $compileProvider.directive('directiveName', function () {
+                });
+                $filterProvider.register('filterName', function () {
+                });
+            });
 
-     angular.module('app', [], function($provide, $compileProvider, $filterProvider, $rootScopeProvider)
+    angular.module('app', [], function ($provide, $compileProvider, $filterProvider, $rootScopeProvider)
 
-  </script>
+</script>
 </body>
 </html>

@@ -4,43 +4,43 @@
 </head>
 <body ng-controller="MainCtrl">
 
-  <dirone>
+<dirone>
     <dirtwo></dirtwo>
-  </dirone>
+</dirone>
 
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="/lib/jquery.min.js"></script>
-  <script>
-  var app = angular.module('app', []);
+<script src="/lib/angular-1.2/angular.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script>
+    var app = angular.module('app', []);
 
-  function MainCtrl($scope) {
-    console.log('MainCtrl', $scope.$id); // MainCtrl 003
-  }
-
-
-  app.directive('dirone', function() {
-    return {
-      restrict: 'E',
-      scope : true,
-      controller: function($scope) {
-        console.log('dirone', $scope.$id); //dirtwo 005
-      }
-    };
-  });
+    function MainCtrl($scope) {
+        console.log('MainCtrl', $scope.$id); // MainCtrl 003
+    }
 
 
-  app.directive('dirtwo', function() {
-    return {
-      restrict: 'E',
-      scope : true,
-      controller: function($scope) {
-        console.log('dirtwo', $scope.$id); //dirtwo 005
-      }
-    };
-  });
+    app.directive('dirone', function () {
+        return {
+            restrict: 'E',
+            scope: true,
+            controller: function ($scope) {
+                console.log('dirone', $scope.$id); //dirtwo 005
+            }
+        };
+    });
 
 
-  </script>
+    app.directive('dirtwo', function () {
+        return {
+            restrict: 'E',
+            scope: true,
+            controller: function ($scope) {
+                console.log('dirtwo', $scope.$id); //dirtwo 005
+            }
+        };
+    });
+
+
+</script>
 </body>
 </html>

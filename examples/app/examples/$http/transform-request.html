@@ -4,84 +4,85 @@
 </head>
 <body ng-app="twitterapi">
 
-  <div ng-controller="controller.View">
+<div ng-controller="controller.View">
     <form name="form">
-      Type tweet in here. <br>
-      <textarea ng-model="request.tweet" required></textarea>
-      <hr>
-      Type any words that appear in tweet that you want to appear as hash tags
-      <input type="text" ng-model="request.commaSeparatedAutoTags">
-      <button ng-click="onTweet($event, form.$valid)">Tweet</button>
+        Type tweet in here. <br>
+        <textarea ng-model="request.tweet" required></textarea>
+        <hr>
+        Type any words that appear in tweet that you want to appear as hash tags
+        <input type="text" ng-model="request.commaSeparatedAutoTags">
+        <button ng-click="onTweet($event, form.$valid)">Tweet</button>
     </form>
 
     <hr>
-    These reponses are coming from the server <pre>{{ tweets | json }}</pre>
-  </div>
+    These reponses are coming from the server
+    <pre>{{ tweets | json }}</pre>
+</div>
 
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
 
-  angular.module('twitterapi', [
-    'twitterapi.transformers',
-    'twitterapi.controllers',
-    'twitterapi.services'
+    angular.module('twitterapi', [
+        'twitterapi.transformers',
+        'twitterapi.controllers',
+        'twitterapi.services'
     ]);
 
 
-  angular.module('twitterapi.controllers', [])
-  .controller('controller.View', ['$scope','services.Api', function ($scope, api) {
-    $scope.request = {};
-    $scope.tweets = [];
+    angular.module('twitterapi.controllers', [])
+            .controller('controller.View', ['$scope', 'services.Api', function ($scope, api) {
+                $scope.request = {};
+                $scope.tweets = [];
 
-    $scope.onTweet = function (event, valid) {
-      event.preventDefault();
-      if (valid) {
-        api.tweet($scope.request).then(function (result) {
-          $scope.request.tweet = "";
-          $scope.tweets.push(result);
-        });
-      }
-    }
-  }]);
+                $scope.onTweet = function (event, valid) {
+                    event.preventDefault();
+                    if (valid) {
+                        api.tweet($scope.request).then(function (result) {
+                            $scope.request.tweet = "";
+                            $scope.tweets.push(result);
+                        });
+                    }
+                }
+            }]);
 
 
-  angular.module('twitterapi.services', [])
-  .factory('services.Api', ['$q', '$http', 'services.transformer.ApiRequest',
-    function($q, $http, apiRequestTranformer) {
-      return {
-        tweet : function (tweet) {
-          var deferred = $q.defer();
-          $http({
-            method : 'POST',
-            url : '/twitter',
-            headers: {'Content-Type': 'application/json'},
-            data:tweet,
-            transformRequest : apiRequestTranformer
-          }).success(function (data) {
-            deferred.resolve(angular.fromJson(data));
-          })
-          return deferred.promise;
-        }
-      }
-    }
-    ])
+    angular.module('twitterapi.services', [])
+            .factory('services.Api', ['$q', '$http', 'services.transformer.ApiRequest',
+                function ($q, $http, apiRequestTranformer) {
+                    return {
+                        tweet: function (tweet) {
+                            var deferred = $q.defer();
+                            $http({
+                                method: 'POST',
+                                url: '/twitter',
+                                headers: {'Content-Type': 'application/json'},
+                                data: tweet,
+                                transformRequest: apiRequestTranformer
+                            }).success(function (data) {
+                                deferred.resolve(angular.fromJson(data));
+                            })
+                            return deferred.promise;
+                        }
+                    }
+                }
+            ])
 
-  angular.module('twitterapi.transformers', [])
-  .factory('services.transformer.ApiRequest', function () {
-    return function (data) {
-      if (data.commaSeparatedAutoTags) {
-        var ar = data.commaSeparatedAutoTags.split(/\s+/);
+    angular.module('twitterapi.transformers', [])
+            .factory('services.transformer.ApiRequest', function () {
+                return function (data) {
+                    if (data.commaSeparatedAutoTags) {
+                        var ar = data.commaSeparatedAutoTags.split(/\s+/);
 
-        for (var i = 0; i < ar.length; i++) {
-          var tag = ar[i];
-          data.tweet = data.tweet.replace(tag, "#" + tag);
-        }
-      }
-      return angular.toJson({status: data.tweet});
-    };
-  });
-  </script>
+                        for (var i = 0; i < ar.length; i++) {
+                            var tag = ar[i];
+                            data.tweet = data.tweet.replace(tag, "#" + tag);
+                        }
+                    }
+                    return angular.toJson({status: data.tweet});
+                };
+            });
+</script>
 
 </body>
 

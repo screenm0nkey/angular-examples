@@ -1,8 +1,7 @@
-
-  // this is taken from the angular lib. these are the default providers
-  $provide.provider({
+// this is taken from the angular lib. these are the default providers
+$provide.provider({
     // $compile is used for directives
-    $compile : $compileProvider,
+    $compile: $compileProvider,
     $anchorScroll: $AnchorScrollProvider,
     $animate: $AnimateProvider,
     $browser: $BrowserProvider,
@@ -26,4 +25,4 @@
     $templateCache: $TemplateCacheProvider,
     $timeout: $TimeoutProvider,
     $window: $WindowProvider
-  });
+});

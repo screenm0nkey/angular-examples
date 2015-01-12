@@ -1,40 +1,40 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <style>
-    ul.navigation li.active {
-      background-color: red;
-    }
-  </style>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <style>
+        ul.navigation li.active {
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
-  <ul class="navigation" ng:controller="NavigationController">
+<ul class="navigation" ng:controller="NavigationController">
     <li>Active: {{states.activeItem}}, Change here:
-      <input ng-model="states.activeItem" /></li>
+        <input ng-model="states.activeItem"/></li>
     <li ng-repeat="item in items" class="item"
-    ng-class="{'active': item.id == states.activeItem}" ng-click="states.activeItem=item.id">
-      {{item.title}}
-      {{item.id == states.activeItem}}
+        ng-class="{'active': item.id == states.activeItem}" ng-click="states.activeItem=item.id">
+        {{item.title}}
+        {{item.id == states.activeItem}}
     </li>
-  </ul>
+</ul>
 
-  <script>
-  var app = angular.module('app', []);
+<script>
+    var app = angular.module('app', []);
 
-  app.controller('NavigationController', function($scope){
-      // Have to use a wrapper object, otherwise "activeItem" won't work! Just try it!
-      $scope.states = {};
-      $scope.states.activeItem = 'item1';
-      $scope.items = [{
-        id: 'item1', title: 'Item 1'
-      }, {
-        id: 'item2', title: 'Item 2'
-      }, {
-        id: 'item3', title: 'Item 3'
-      }];
+    app.controller('NavigationController', function ($scope) {
+        // Have to use a wrapper object, otherwise "activeItem" won't work! Just try it!
+        $scope.states = {};
+        $scope.states.activeItem = 'item1';
+        $scope.items = [{
+            id: 'item1', title: 'Item 1'
+        }, {
+            id: 'item2', title: 'Item 2'
+        }, {
+            id: 'item3', title: 'Item 3'
+        }];
     });
-  </script>
+</script>
 
 
 </body>

@@ -1,48 +1,49 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
 
-  <div ng-app="drinkApp">
+<div ng-app="drinkApp">
     <div ng-controller="AppCtrl">
-      <input type="text" ng-model="ctrlFlavor">
-      <div drink flavor="{{ctrlFlavor}}"></div>
+        <input type="text" ng-model="ctrlFlavor">
+
+        <div drink flavor="{{ctrlFlavor}}"></div>
     </div>
 
     <div eat flavor="lemon" mavor="terry"></div>
-  </div>
+</div>
 
 
-  <script>
-  // '@' example shows how to map a string form the controller to a directive
-  // '@' using the isolate scope
-  var app = angular.module("drinkApp", []);
+<script>
+    // '@' example shows how to map a string form the controller to a directive
+    // '@' using the isolate scope
+    var app = angular.module("drinkApp", []);
 
-  app.controller("AppCtrl", function ($scope) {
-    $scope.ctrlFlavor = "blackberry";
-  });
+    app.controller("AppCtrl", function ($scope) {
+        $scope.ctrlFlavor = "blackberry";
+    });
 
-  app.directive("drink", function () {
-    return {
-      scope: {
-        flavor:"@"
-      },
-      template: '<div>directive {{ flavor }}</div>'
-    };
-  });
+    app.directive("drink", function () {
+        return {
+            scope: {
+                flavor: "@"
+            },
+            template: '<div>directive {{ flavor }}</div>'
+        };
+    });
 
-  app.directive("eat", function () {
-    return {
-      scope: {flavor:"@"},
-      template: '<div>{{ flavor + mavor }}</div>',
-      link: function (scope, element, attrs) {
-        scope.mavor = attrs.mavor;
-      }
-    };
-  });
+    app.directive("eat", function () {
+        return {
+            scope: {flavor: "@"},
+            template: '<div>{{ flavor + mavor }}</div>',
+            link: function (scope, element, attrs) {
+                scope.mavor = attrs.mavor;
+            }
+        };
+    });
 
-  </script>
+</script>
 </body>
 </html>

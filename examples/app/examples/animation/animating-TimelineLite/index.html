@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html ng-app="website">
-    <head>
-        <meta charset="utf-8">
-        <title>Egghead.io - Greensock TimelineLite</title>
+<head>
+    <meta charset="utf-8">
+    <title>Egghead.io - Greensock TimelineLite</title>
 
-        <link href="assets/css/bootstrap.css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/css/timeline.greensock.css">
-    </head>
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/timeline.greensock.css">
+</head>
 
-    <body ng-controller="MainCtrl">
+<body ng-controller="MainCtrl">
 
-        <div class="slider">
-            <div ng-repeat="slide in slides"
-                 ng-hide="!isCurrentSlideIndex($index)"
-                 class="slide slide-animation">
-                <img class="nonDraggableImage" ng-src="{{slide.bg}}">
-                <img class="nonDraggableImage avatar" ng-src="{{slide.avatar}}">
-                <h1 class="title"><span>{{slide.title}}</span></h1>
-                <h3 class="subtitle"><span>{{slide.subtitle}}</span></h3>
-            </div>
-        </div>
+<div class="slider">
+    <div ng-repeat="slide in slides"
+         ng-hide="!isCurrentSlideIndex($index)"
+         class="slide slide-animation">
+        <img class="nonDraggableImage" ng-src="{{slide.bg}}">
+        <img class="nonDraggableImage avatar" ng-src="{{slide.avatar}}">
 
-        <div class="nav">
-            <div ng-repeat="slide in slides"
-                 ng-class="{'active':isCurrentSlideIndex($index)}"
-                 ng-click="setCurrentSlideIndex($index)">
-                <h3>{{slide.title}}</h3>
-            </div>
-        </div>
+        <h1 class="title"><span>{{slide.title}}</span></h1>
 
-        <script src="/lib/jquery.min.js"></script>
-        <script src="/lib/angular-1.2/angular.min.js"></script>
-        <script src="/lib/angular-1.2/angular-animate.js"></script>
-        <script src="/lib/TweenMax.min.js"></script>
+        <h3 class="subtitle"><span>{{slide.subtitle}}</span></h3>
+    </div>
+</div>
 
-        <script src="js/timeline.greensock.js"></script>
+<div class="nav">
+    <div ng-repeat="slide in slides"
+         ng-class="{'active':isCurrentSlideIndex($index)}"
+         ng-click="setCurrentSlideIndex($index)">
+        <h3>{{slide.title}}</h3>
+    </div>
+</div>
 
-    </body>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/angular-1.2/angular.min.js"></script>
+<script src="/lib/angular-1.2/angular-animate.js"></script>
+<script src="/lib/TweenMax.min.js"></script>
+
+<script src="js/timeline.greensock.js"></script>
+
+</body>
 </html>

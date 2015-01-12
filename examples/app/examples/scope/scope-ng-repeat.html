@@ -1,36 +1,34 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-controller="MainCtrl">
 
-  <ul>
+<ul>
     <li ng-repeat="num in myArrayOfPrimitives">
-      {{$log.log(1, this)}}
-     <input ng-model="num">
-   </li>
- </ul>
- <ul>
-  <li ng-repeat="obj in myArrayOfObjects">
-    {{$log.log(2, this)}}
-   <input ng-model="obj.num">
- </li>
+        {{$log.log(1, this)}}
+        <input ng-model="num">
+    </li>
+</ul>
+<ul>
+    <li ng-repeat="obj in myArrayOfObjects">
+        {{$log.log(2, this)}}
+        <input ng-model="obj.num">
+    </li>
 </ul>
 
 <script>
-var app = angular.module('app', []).run(function ($rootScope, $log) {
-  $rootScope.$log = $log;
-})
+    var app = angular.module('app', []).run(function ($rootScope, $log) {
+        $rootScope.$log = $log;
+    })
 
-app.controller('MainCtrl', function($scope) {
-  $scope.myArrayOfPrimitives = [ 11, 22 ];
-  // the scope created in the ng-repeat will contain a reference to each of the
-  // objects on the array i.e. $scope.num === $scope.myArrayOfObjects[0 || 1]
-  $scope.myArrayOfObjects    = [{num: 101}, {num: 202}]
-});
-
-
+    app.controller('MainCtrl', function ($scope) {
+        $scope.myArrayOfPrimitives = [11, 22];
+        // the scope created in the ng-repeat will contain a reference to each of the
+        // objects on the array i.e. $scope.num === $scope.myArrayOfObjects[0 || 1]
+        $scope.myArrayOfObjects = [{num: 101}, {num: 202}]
+    });
 
 
 </script>

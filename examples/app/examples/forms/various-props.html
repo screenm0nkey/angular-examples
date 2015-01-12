@@ -1,17 +1,17 @@
 <!-- when null then it won't be checked -->
-<input type="checkbox" data-ng-checked="value" />
+<input type="checkbox" data-ng-checked="value"/>
 
 
 <!-- when null then it won't be selected -->
-<input type="radio" data-ng-selected="value" />
+<input type="radio" data-ng-selected="value"/>
 
 
 <!-- when null then it won't be disabled -->
-<input type="radio" data-ng-disabled="value" />
+<input type="radio" data-ng-disabled="value"/>
 
 
 <!-- this will fire the $scope.onChange() method when changed (make sure you set the model) -->
-<input type="input" data-ng-change="onChange()" data-ng-model="name" />
+<input type="input" data-ng-change="onChange()" data-ng-model="name"/>
 
 
 <!--
@@ -20,12 +20,12 @@
   method is defined as apart of your scope ($scope.is_selected()).
 -->
 <select>
-  <option data-ng-selected="is_selected(option.value)" data-ng-repeat="option in options"></option>
+    <option data-ng-selected="is_selected(option.value)" data-ng-repeat="option in options"></option>
 </select>
 
 
- <button ng-disabled="newEventForm.$invalid" ng-click="showInfo(formName)">
-  Show info
+<button ng-disabled="newEventForm.$invalid" ng-click="showInfo(formName)">
+    Show info
 </button>
 
 <input required ng-pattern="/^[-A-Za-z0-9]{2,20}$/">
@@ -38,4 +38,4 @@
        ng-maxlength="{ number }"
        ng-pattern="{ string }"
        ng-change="{ string }">
-  </input>
+</input>

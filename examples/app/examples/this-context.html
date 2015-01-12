@@ -3,28 +3,29 @@
 <head>
 </head>
 <body>
-  <div ng-controller="ParentCtrl">
-     <a ng-click="logThisAndScope()">
-      click this. it will log "this" and $scope</a> - parent scope
+<div ng-controller="ParentCtrl">
+    <a ng-click="logThisAndScope()">
+        click this. it will log "this" and $scope</a> - parent scope
 
-     <div ng-controller="ChildCtrl">
+    <div ng-controller="ChildCtrl">
         <a ng-click="logThisAndScope()">log "this" and $scope</a> - child scope
-     </div>
-  </div>
+    </div>
+</div>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
-   var myApp = angular.module('myApp', []);
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+    var myApp = angular.module('myApp', []);
 
-   function ParentCtrl($scope) {
-      $scope.logThisAndScope = function() {
-        console.log('this', this);
-        console.log('$scope', $scope);
-        console.log(this === $scope);
-      };
-   }
-   function ChildCtrl($scope) {}
+    function ParentCtrl($scope) {
+        $scope.logThisAndScope = function () {
+            console.log('this', this);
+            console.log('$scope', $scope);
+            console.log(this === $scope);
+        };
+    }
+    function ChildCtrl($scope) {
+    }
 
-  </script>
+</script>
 </body>
 </html>

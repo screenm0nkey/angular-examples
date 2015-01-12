@@ -1,57 +1,57 @@
 <!doctype html>
 <html ng-app="myApp">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
 
-  <greeting ng-transclude>
-      <div finnish hindi>Click me</div>
-  </greeting>
+<greeting ng-transclude>
+    <div finnish hindi>Click me</div>
+</greeting>
 
-  <script>
-  var myApp = angular.module('myApp', []);
+<script>
+    var myApp = angular.module('myApp', []);
 
-  myApp.directive('greeting', function() {
-    return {
-      restrict: 'E',
-      replace: true,
-      transclude : true,
-      template: "<button class='btn' ng-click='sayHello()'>Say Hello</button>",
-      controller: function($scope) {
-        var greetings = ['hello'];
+    myApp.directive('greeting', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            template: "<button class='btn' ng-click='sayHello()'>Say Hello</button>",
+            controller: function ($scope) {
+                var greetings = ['hello'];
 
-        $scope.sayHello = function() {
-          alert(greetings.join());
+                $scope.sayHello = function () {
+                    alert(greetings.join());
+                };
+                this.addGreeting = function (greeting) {
+                    greetings.push(greeting);
+                };
+            }
         };
-        this.addGreeting = function(greeting) {
-          greetings.push(greeting);
+    });
+
+    myApp.directive('finnish', function () {
+        return {
+            restrict: 'A',
+            // the carot property tells this directive to traverse up through the dom
+            // until it finds the 'greeting' directive
+            require: '^greeting',
+            link: function (scope, element, attrs, controller) {
+                controller.addGreeting('finnish');
+            }
         };
-      }
-    };
-  });
+    });
 
-  myApp.directive('finnish', function() {
-    return {
-      restrict: 'A',
-      // the carot property tells this directive to traverse up through the dom
-      // until it finds the 'greeting' directive
-      require: '^greeting',
-      link: function(scope, element, attrs, controller) {
-        controller.addGreeting('finnish');
-      }
-    };
-  });
-
-  myApp.directive('hindi', function() {
-    return {
-      restrict: 'A',
-      require: '^greeting',
-      link: function(scope, element, attrs, controller) {
-        controller.addGreeting('hindi');
-      }
-    }
-  });
-  </script>
+    myApp.directive('hindi', function () {
+        return {
+            restrict: 'A',
+            require: '^greeting',
+            link: function (scope, element, attrs, controller) {
+                controller.addGreeting('hindi');
+            }
+        }
+    });
+</script>
 </body>
 </html>

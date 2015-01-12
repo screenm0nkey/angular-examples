@@ -1,23 +1,24 @@
 <!doctype html>
 <html>
 <head>
-  <title>http://henriquat.re/directives/advanced-directives-combining-angular-with-existing-components-and-jquery/angularAndJquery.html</title>
-  <link rel="stylesheet" href="/lib/jquery-ui-darkness/css/jquery-ui-1.10.3.custom.min.css">
+    <title>
+        http://henriquat.re/directives/advanced-directives-combining-angular-with-existing-components-and-jquery/angularAndJquery.html</title>
+    <link rel="stylesheet" href="/lib/jquery-ui-darkness/css/jquery-ui-1.10.3.custom.min.css">
 </head>
 <body>
 
-  <!-- Embedded Fragment - maindiv -->
-  <div ng-app="demo" ng-controller="DemoController">
-    <my-datepicker type="text" ng-model="user.dateOfBirth" id="datepick" />
+<!-- Embedded Fragment - maindiv -->
+<div ng-app="demo" ng-controller="DemoController">
+    <my-datepicker type="text" ng-model="user.dateOfBirth" id="datepick"/>
     <br>
     Current user's date of birth:
     <span id="dateOfBirthDisplay">{{user.dateOfBirth}}</span>
-  </div>
-  <!-- Fragment End - maindiv -->
+</div>
+<!-- Fragment End - maindiv -->
 
-  <script src="/lib/jquery.min.js"></script>
-  <script src="/lib/jquery-ui-darkness/js/jquery-ui-1.10.3.custom.js"></script>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="demo.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/jquery-ui-darkness/js/jquery-ui-1.10.3.custom.js"></script>
+<script src="/lib/angular-1.2/angular.js"></script>
+<script src="demo.js"></script>
 </body>
 </html>

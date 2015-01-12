@@ -1,39 +1,38 @@
-
 <html>
 <head>
 
 </head>
 
-<body  ng-app="app" ng-controller="myController" ng-cloak>
- <li ng-repeat="task in tasks">{{$index}}1</li>
+<body ng-app="app" ng-controller="myController" ng-cloak>
+<li ng-repeat="task in tasks">{{$index}}1</li>
 
- <script src="/lib/angular-1.2/angular.js"></script>
- <script>
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
 
- var app = angular.module('app', []);
+    var app = angular.module('app', []);
 
- // angualr version 1.2 needs this for deferreds to work with ng repeat
- app.config(function ($parseProvider) {
-   $parseProvider.unwrapPromises(true);
- })
+    // angualr version 1.2 needs this for deferreds to work with ng repeat
+    app.config(function ($parseProvider) {
+        $parseProvider.unwrapPromises(true);
+    })
 
- app.controller('myController', function ($scope, myService) {
-  $scope.tasks = myService.getstuff();
- });
+    app.controller('myController', function ($scope, myService) {
+        $scope.tasks = myService.getstuff();
+    });
 
- app.factory('myService', function ($http, $q) {
-  return {
-    getstuff : function () {
-      var deferred = $q.defer();
-      $http.get('/getarray').success(function (data) {
-        deferred.resolve(data);
-      });
-      return deferred.promise;
-    }
-  }
- })
+    app.factory('myService', function ($http, $q) {
+        return {
+            getstuff: function () {
+                var deferred = $q.defer();
+                $http.get('/getarray').success(function (data) {
+                    deferred.resolve(data);
+                });
+                return deferred.promise;
+            }
+        }
+    })
 
 
- </script>
+</script>
 </body>
 </html>

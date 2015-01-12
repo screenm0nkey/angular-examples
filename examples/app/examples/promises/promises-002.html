@@ -4,51 +4,51 @@
 </head>
 <body>
 
-  <h1 ng-show="show">waiting</h1>
-  <testlist/>
+<h1 ng-show="show">waiting</h1>
+<testlist/>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script>
-  var app = angular.module('app', []);
-  // angualr version 1.2 needs this for deferreds to work with ng repeat
-  app.config(function ($parseProvider) {
-    $parseProvider.unwrapPromises(true);
-  });
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+    var app = angular.module('app', []);
+    // angualr version 1.2 needs this for deferreds to work with ng repeat
+    app.config(function ($parseProvider) {
+        $parseProvider.unwrapPromises(true);
+    });
 
-  app.factory('dataService', function ($q) {
-   return {
-     getData : function () {
-       var deferred = $q.defer();
-       setTimeout(function () {
-         deferred.resolve([{id:1},{id:2},{id:3},{id:4}]);
-       },1000);
-       return deferred.promise;
-     }
-   };
- });
+    app.factory('dataService', function ($q) {
+        return {
+            getData: function () {
+                var deferred = $q.defer();
+                setTimeout(function () {
+                    deferred.resolve([{id: 1}, {id: 2}, {id: 3}, {id: 4}]);
+                }, 1000);
+                return deferred.promise;
+            }
+        };
+    });
 
 
-  app.directive('testlist', ['dataService', function(dataService) {
-   return {
-    restrict: 'E',
-    replace: true,
-    scope : {},
-    template: '<div ng-repeat="data in objects">{{inspect(data)}}{{data.id}}</div>',
-    // you shouldnt use rootscope for this but it's here for the example
-    controller: function($scope, $rootScope) {
-      $rootScope.show = true;
-      // add the promise directly to the $scope
-      $scope.objects = dataService.getData();
-      $scope.objects.then(function (aParam) {
-        $rootScope.show = false;
-      });
-      $scope.inspect = function (obj) {
-        console.log(obj);
-      };
-    }
-  };
-}]);
+    app.directive('testlist', ['dataService', function (dataService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: {},
+            template: '<div ng-repeat="data in objects">{{inspect(data)}}{{data.id}}</div>',
+            // you shouldnt use rootscope for this but it's here for the example
+            controller: function ($scope, $rootScope) {
+                $rootScope.show = true;
+                // add the promise directly to the $scope
+                $scope.objects = dataService.getData();
+                $scope.objects.then(function (aParam) {
+                    $rootScope.show = false;
+                });
+                $scope.inspect = function (obj) {
+                    console.log(obj);
+                };
+            }
+        };
+    }]);
 
-  </script>
+</script>
 </body>
 </html>

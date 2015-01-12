@@ -1,38 +1,39 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="/lib/angular-1.2/angular-sanitize.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular-sanitize.js"></script>
 </head>
 <body ng-controller="MainCtrl">
 
-   <p ng-bind="myHTML"></p>
-   <p ng-bind-html="myHTML"></p>
+<p ng-bind="myHTML"></p>
 
-   <!-- angular removed html-unsafe in v1.2 -->
-   <p ng-bind-html="myHTML | unsafe"></p>
+<p ng-bind-html="myHTML"></p>
 
-  <script type="text/ng-template" id="hello.html">
-  I am<code>HTML</code>string with <a href="#">links!</a> and <em>stuff</em>
-  </script>
+<!-- angular removed html-unsafe in v1.2 -->
+<p ng-bind-html="myHTML | unsafe"></p>
 
-  <script>
-  var app = angular.module('app',['ngSanitize']);
+<script type="text/ng-template" id="hello.html">
+    I am<code>HTML</code>string with <a href="#">links!</a> and <em>stuff</em>
+</script>
 
-  app.controller('MainCtrl', function ($scope, $templateCache) {
-    $scope.myHTML = $templateCache.get('hello.html');
-  });
+<script>
+    var app = angular.module('app', ['ngSanitize']);
 
-  // http://stackoverflow.com/questions/18340872/how-do-you-use-sce-trustashtmlstring-to-replicate-ng-bind-html-unsafe-in-angu
-  app.filter('unsafe', function($sce) {
-    return function(val) {
-      var rval = $sce.trustAsHtml(val);
-      console.log(val);
-      console.log(rval);
-      return rval;
-    };
-  });
+    app.controller('MainCtrl', function ($scope, $templateCache) {
+        $scope.myHTML = $templateCache.get('hello.html');
+    });
 
-  </script>
+    // http://stackoverflow.com/questions/18340872/how-do-you-use-sce-trustashtmlstring-to-replicate-ng-bind-html-unsafe-in-angu
+    app.filter('unsafe', function ($sce) {
+        return function (val) {
+            var rval = $sce.trustAsHtml(val);
+            console.log(val);
+            console.log(rval);
+            return rval;
+        };
+    });
+
+</script>
 </body>
 </html>

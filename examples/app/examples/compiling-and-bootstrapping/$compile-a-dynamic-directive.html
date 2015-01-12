@@ -35,7 +35,7 @@
     // are called and registered
     app.directive('hello', function () {
         return {
-            restrict : 'E',
+            restrict: 'E',
             template: '<h4>Hello There</h4>',
             replace: true,
             compile: function () {
@@ -54,7 +54,7 @@
                 scope.addType = function (type) {
                     // you can't $compile an element which contains a directive, without
                     // supplying a scope object
-                    var linkFn = $compile('<' + type + '></'+ type+'>');
+                    var linkFn = $compile('<' + type + '></' + type + '>');
                     var $el = linkFn(scope)
                     $('body').append($el);
 

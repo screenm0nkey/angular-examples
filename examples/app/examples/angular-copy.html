@@ -1,68 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  <meta charset="utf-8">
-  <title>Egghead Videos</title>
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <title>Egghead Videos</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body ng-app="app" ng-controller="AppCtrl as app">
 
-  <form>
-    <input type="text" ng-model="app.contactCopy.firstName" />
+<form>
+    <input type="text" ng-model="app.contactCopy.firstName"/>
     <button ng-click="app.saveContact()">Save</button>
-  </form>
+</form>
 
-  <div class="div" style="margin-top: 40px;"></div>
+<div class="div" style="margin-top: 40px;"></div>
 
-  <table class="table table-striped">
+<table class="table table-striped">
     <thead>
-      <tr>
+    <tr>
         <td>First</td>
         <td>Last</td>
         <td>Phone</td>
-      </tr>
+    </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="contact in app.contacts" ng-click="app.selectContact(contact)">
+    <tr ng-repeat="contact in app.contacts" ng-click="app.selectContact(contact)">
         <td>{{contact.firstName}}</td>
         <td>{{contact.lastName}}</td>
         <td>{{contact.phone}}</td>
-      </tr>
+    </tr>
     </tbody>
-  </table>
+</table>
 
-  <script type="text/javascript" src="/lib/angular-1.2/angular.js"></script>
-  <script type="text/javascript" src="/lib/angular-1.2/angular-animate.js"></script>
-  <script type="text/javascript">
-  var app = angular.module("app", ["ngAnimate"]);
+<script type="text/javascript" src="/lib/angular-1.2/angular.js"></script>
+<script type="text/javascript" src="/lib/angular-1.2/angular-animate.js"></script>
+<script type="text/javascript">
+    var app = angular.module("app", ["ngAnimate"]);
 
-  app.factory("contacts", function() {
-    return [
-    {"firstName": "Angelica", "lastName": "Britt", "phone": "513-0955"},
-    {"firstName": "Amery", "lastName": "Compton", "phone": "1-417-395-4214"},
-    {"firstName": "Wendy", "lastName": "Morrow", "phone": "294-8234"},
-    {"firstName": "Mercedes", "lastName": "Merrill", "phone": "1-206-670-0109"},
-    {"firstName": "Porter", "lastName": "Anderson", "phone": "817-4745"},
-    {"firstName": "Leah", "lastName": "Melendez", "phone": "406-3746"},
-    {"firstName": "Olga", "lastName": "Mcgowan", "phone": "1-567-304-7633"},
-    ];
-  });
+    app.factory("contacts", function () {
+        return [
+            {"firstName": "Angelica", "lastName": "Britt", "phone": "513-0955"},
+            {"firstName": "Amery", "lastName": "Compton", "phone": "1-417-395-4214"},
+            {"firstName": "Wendy", "lastName": "Morrow", "phone": "294-8234"},
+            {"firstName": "Mercedes", "lastName": "Merrill", "phone": "1-206-670-0109"},
+            {"firstName": "Porter", "lastName": "Anderson", "phone": "817-4745"},
+            {"firstName": "Leah", "lastName": "Melendez", "phone": "406-3746"},
+            {"firstName": "Olga", "lastName": "Mcgowan", "phone": "1-567-304-7633"},
+        ];
+    });
 
-  app.controller("AppCtrl", function(contacts) {
-    this.contacts = contacts;
-    this.selectedContact = null;
-    this.contactCopy = null;
+    app.controller("AppCtrl", function (contacts) {
+        this.contacts = contacts;
+        this.selectedContact = null;
+        this.contactCopy = null;
 
-    this.selectContact = function(contact) {
-      this.selectedContact = contact;
-      this.contactCopy = angular.copy(contact);
-    }
+        this.selectContact = function (contact) {
+            this.selectedContact = contact;
+            this.contactCopy = angular.copy(contact);
+        }
 
-    this.saveContact = function() {
-      this.selectedContact.firstName = this.contactCopy.firstName;
-    }
-  });
+        this.saveContact = function () {
+            this.selectedContact.firstName = this.contactCopy.firstName;
+        }
+    });
 
-  </script>
+</script>
 </body>
 </html>

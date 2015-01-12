@@ -1,49 +1,49 @@
 <html lang="en">
 <head>
 
-  <title></title>
+    <title></title>
 </head>
 
 <body>
-  <div id="container1">
+<div id="container1">
     <div ng-controller="MainCtrl" hello>{{random * 100}}</div>
-  </div>
+</div>
 
-  <div id="container2">
+<div id="container2">
     <div ng-controller="MainCtrl" hello>{{random * 100}}</div>
-  </div>
+</div>
 
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script type="text/javascript">
+<script src="/lib/angular-1.2/angular.js"></script>
+<script type="text/javascript">
 
-  var app = angular.module('app', []);
+    var app = angular.module('app', []);
 
-  app.controller('MainCtrl', function ($scope) {
-    console.log('MainCtrl', $scope.$id)
-  });
+    app.controller('MainCtrl', function ($scope) {
+        console.log('MainCtrl', $scope.$id)
+    });
 
-  app.run(function($rootScope){
-    $rootScope.random =Math.random()
-  });
+    app.run(function ($rootScope) {
+        $rootScope.random = Math.random()
+    });
 
-  app.directive('hello', function() {
-    return {
-      controller : function ($scope) {
-        console.log('Controller hello', $scope.$id);
-      },
-      compile : function (tEl, tAttr) {
-        console.log('Compile hello');
-        return function link (scope) {
-          console.log('Link hello', scope.$id);
-        }
-      }
-    };
-  });
+    app.directive('hello', function () {
+        return {
+            controller: function ($scope) {
+                console.log('Controller hello', $scope.$id);
+            },
+            compile: function (tEl, tAttr) {
+                console.log('Compile hello');
+                return function link(scope) {
+                    console.log('Link hello', scope.$id);
+                }
+            }
+        };
+    });
 
-  angular.bootstrap(document.getElementById('container1'), ['app']);
-  angular.bootstrap(document.getElementById('container2'), ['app']);
+    angular.bootstrap(document.getElementById('container1'), ['app']);
+    angular.bootstrap(document.getElementById('container2'), ['app']);
 
-  </script>
+</script>
 </body>
 </html>
 

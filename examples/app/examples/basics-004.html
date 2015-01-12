@@ -1,85 +1,86 @@
 <!doctype html>
 <html ng-app="invoice3">
-  <head>
-      <script src="/lib/angular-1.2/angular.js"></script>
-  </head>
-  <body>
-    <div ng-controller="InvoiceController as invoice">
-      <b>Invoice:</b>
-      <div>
-        Quantity: <input type="number" ng-model="invoice.qty" required >
-      </div>
-      <div>
-        Costs: <input type="number" ng-model="invoice.cost" required >
+<head>
+    <script src="/lib/angular-1.2/angular.js"></script>
+</head>
+<body>
+<div ng-controller="InvoiceController as invoice">
+    <b>Invoice:</b>
+
+    <div>
+        Quantity: <input type="number" ng-model="invoice.qty" required>
+    </div>
+    <div>
+        Costs: <input type="number" ng-model="invoice.cost" required>
         <select ng-model="invoice.inCurr">
-          <option ng-repeat="c in invoice.currencies">{{c}}</option>
+            <option ng-repeat="c in invoice.currencies">{{c}}</option>
         </select>
-      </div>
-      <div>
+    </div>
+    <div>
         <b>Total:</b>
         <span ng-repeat="c in invoice.currencies">
           {{invoice.total(c) | currency:c}}
         </span>
         <button class="btn" ng-click="invoice.pay()">Pay</button>
-      </div>
     </div>
+</div>
 
-    <script>
-      window.invoice3app = angular.module('invoice3', ['finance3']);
+<script>
+    window.invoice3app = angular.module('invoice3', ['finance3']);
 
-      invoice3app.controller('InvoiceController', ['$scope','currencyConverter',
+    invoice3app.controller('InvoiceController', ['$scope', 'currencyConverter',
         function ($scope, currencyConverter) {
-          $scope.$watch(function() {
-            console.log('digest listener fired');
-          });
+            $scope.$watch(function () {
+                console.log('digest listener fired');
+            });
 
-          this.qty = 1;
-          this.cost = 2;
-          this.inCurr = 'EUR';
-          this.currencies = currencyConverter.currencies;
+            this.qty = 1;
+            this.cost = 2;
+            this.inCurr = 'EUR';
+            this.currencies = currencyConverter.currencies;
 
-          this.total = function total(outCurr) {
-            return currencyConverter.convert(this.qty * this.cost, this.inCurr, outCurr);
-          };
-          this.pay = function pay () {
-            window.alert("Thanks!");
-          };
-      }]);
+            this.total = function total(outCurr) {
+                return currencyConverter.convert(this.qty * this.cost, this.inCurr, outCurr);
+            };
+            this.pay = function pay() {
+                window.alert("Thanks!");
+            };
+        }]);
 
-        // were using a seperate module and service
-        window.finance3module = angular.module('finance3', []);
-        // Service
-        finance3module.factory('currencyConverter', ['$http', function ($http) {
-          var YAHOO_FINANCE_URL_PATTERN = 'http://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.xchange where pair in ("PAIRS")&format=json&env=store://datatables.org/alltableswithkeys&callback=JSON_CALLBACK',
-              currencies = ['USD', 'EUR', 'CNY'],
-              usdToForeignRates = {};
+    // were using a seperate module and service
+    window.finance3module = angular.module('finance3', []);
+    // Service
+    finance3module.factory('currencyConverter', ['$http', function ($http) {
+        var YAHOO_FINANCE_URL_PATTERN = 'http://query.yahooapis.com/v1/public/yql?q=select * from yahoo.finance.xchange where pair in ("PAIRS")&format=json&env=store://datatables.org/alltableswithkeys&callback=JSON_CALLBACK',
+                currencies = ['USD', 'EUR', 'CNY'],
+                usdToForeignRates = {};
 
 
-          function convert(amount, inCurr, outCurr) {
+        function convert(amount, inCurr, outCurr) {
             return amount * usdToForeignRates[outCurr] * 1 / usdToForeignRates[inCurr];
-          }
+        }
 
-          (function() {
+        (function () {
             var url = YAHOO_FINANCE_URL_PATTERN.replace('PAIRS', 'USD' + currencies.join('","USD'));
             console.log(url);
 
-            return $http.jsonp(url).success(function(data) {
-              // the digest will now be called.
-              var newUsdToForeignRates = {};
+            return $http.jsonp(url).success(function (data) {
+                // the digest will now be called.
+                var newUsdToForeignRates = {};
 
-              angular.forEach(data.query.results.rate, function(rate) {
-                var currency = rate.id.substring(3,6);
-                newUsdToForeignRates[currency] = window.parseFloat(rate.Rate);
-              });
-              usdToForeignRates = newUsdToForeignRates;
+                angular.forEach(data.query.results.rate, function (rate) {
+                    var currency = rate.id.substring(3, 6);
+                    newUsdToForeignRates[currency] = window.parseFloat(rate.Rate);
+                });
+                usdToForeignRates = newUsdToForeignRates;
             });
-          }())
-          return {
+        }())
+        return {
             currencies: currencies,
             convert: convert
-          };
-        }]);
-    </script>
+        };
+    }]);
+</script>
 
-  </body>
+</body>
 </html>

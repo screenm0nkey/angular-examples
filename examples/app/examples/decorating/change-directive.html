@@ -1,34 +1,35 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <title></title>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <title></title>
 </head>
 <body ng-controller="MainCtrl">
-  <div foo></div>
+<div foo></div>
 
-  <script>
-  // http://angular-tips.com/blog/2013/09/experiment-decorating-directives
-  var app = angular.module('app',[]);
-  app.controller('MainCtrl', function ($scope) {});
-
-  app.directive("foo", function() {
-    return {
-      replace: true,
-      template: '<div>This is foo directive</div>'
-    };
-  });
-
-  // A service decorator intercepts the creation of a service, allowing it to
-  // override or modify the behaviour of the service.
-  app.config(function($provide) {
-    $provide.decorator('fooDirective', function($delegate) {
-      var directive = $delegate[0];
-      console.log(directive);
-      directive.restrict = "AM";
-      return $delegate;
+<script>
+    // http://angular-tips.com/blog/2013/09/experiment-decorating-directives
+    var app = angular.module('app', []);
+    app.controller('MainCtrl', function ($scope) {
     });
-  });
-  </script>
+
+    app.directive("foo", function () {
+        return {
+            replace: true,
+            template: '<div>This is foo directive</div>'
+        };
+    });
+
+    // A service decorator intercepts the creation of a service, allowing it to
+    // override or modify the behaviour of the service.
+    app.config(function ($provide) {
+        $provide.decorator('fooDirective', function ($delegate) {
+            var directive = $delegate[0];
+            console.log(directive);
+            directive.restrict = "AM";
+            return $delegate;
+        });
+    });
+</script>
 </body>
 </html>

@@ -1,46 +1,46 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
-  <div ng-app="app">
+<div ng-app="app">
     <div ng-controller="FooCtrl">
-      <button class="button"
-      ng-repeat="item in 'somewords'.split('') track by $id($index)"
-      ng-click="ev = $event">
-      {{ $index + 1 }}. {{ item }}
-      {{ ev.pageX }}
-    </button>
+        <button class="button"
+                ng-repeat="item in 'somewords'.split('') track by $id($index)"
+                ng-click="ev = $event">
+            {{ $index + 1 }}. {{ item }}
+            {{ ev.pageX }}
+        </button>
 
-    <!-- <button
-            ng-repeat="item in 'somewords'.split('')"
-            ng-click="ev = $event">-->
+        <!-- <button
+                ng-repeat="item in 'somewords'.split('')"
+                ng-click="ev = $event">-->
 
-<!--       <div  class="button"
-            ng-repeat="item in 'somewords'.split('')"
-            ng -click="$log.warn($event)"> -->
-            <!-- log, warn, info, error, debug are all available console logging methods -->
+        <!--       <div  class="button"
+                    ng-repeat="item in 'somewords'.split('')"
+                    ng -click="$log.warn($event)"> -->
+        <!-- log, warn, info, error, debug are all available console logging methods -->
 
-  </div>
+    </div>
 </div>
 
 <script>
-var app = angular.module("app", []);
+    var app = angular.module("app", []);
 
-app.config(function ($logProvider) {
- $logProvider.debugEnabled(true);
-});
+    app.config(function ($logProvider) {
+        $logProvider.debugEnabled(true);
+    });
 
-app.run(function ($rootScope, $log) {
- $rootScope.$log = $log;
-});
+    app.run(function ($rootScope, $log) {
+        $rootScope.$log = $log;
+    });
 
-app.controller("FooCtrl", function($scope) {
- $scope.myFunc = function (ev) {
-   console.warn(ev);
- };
-});
+    app.controller("FooCtrl", function ($scope) {
+        $scope.myFunc = function (ev) {
+            console.warn(ev);
+        };
+    });
 
 
 </script>
@@ -55,4 +55,4 @@ app.controller("FooCtrl", function($scope) {
 <!--       <div  class="button"
             ng-repeat="item in 'somewords'.split('')"
             ng -click="$log.warn($event)"> -->
-            <!-- log, warn, info, error, debug are all available console logging methods -->
+<!-- log, warn, info, error, debug are all available console logging methods -->

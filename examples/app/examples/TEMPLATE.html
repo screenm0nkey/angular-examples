@@ -4,31 +4,31 @@
 
 </head>
 <body>
-  <form action="" str="formy">
+<form action="" str="formy">
     <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
     <a href="#" id="fileSelect">Select some files</a>
-  </form>
+</form>
 
-  <script>
+<script>
     var newFileName = '230 nick';
     var str = /^\d+\s\w/.exec(newFileName)[0].toUpperCase()
     newFileName = str + (newFileName.slice(str.length))
     console.log(newFileName)
 
 
-    window.handleFiles= function(files) {
-      console.log(files);
+    window.handleFiles = function (files) {
+        console.log(files);
     };
 
     var fileSelect = document.getElementById("fileSelect"),
-    fileElem = document.getElementById("fileElem");
+            fileElem = document.getElementById("fileElem");
 
     fileSelect.addEventListener("click", function (e) {
-      if (fileElem) {
-        fileElem.click();
-      }
-  e.preventDefault(); // prevent navigation to "#"
-}, false);
+        if (fileElem) {
+            fileElem.click();
+        }
+        e.preventDefault(); // prevent navigation to "#"
+    }, false);
 </script>
 
 </body>

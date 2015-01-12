@@ -1,75 +1,75 @@
 <!doctype html>
 <html ng-app="plunker">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="/lib/angular-1.2/angular-resource.js"></script>
-  <script src="/lib/angular-1.2/angular-mocks.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular-resource.js"></script>
+    <script src="/lib/angular-1.2/angular-mocks.js"></script>
 </head>
 <body ng-controller="MainCtrl">
-  <pre>
+<pre>
   <ul>
-    <li>privileges - {{privileges}}</li>
-    <li>Roles - {{privileges.Roles}}</li>
-    <li>SubRoles - {{privileges.SubRoles}}</li>
+      <li>privileges - {{privileges}}</li>
+      <li>Roles - {{privileges.Roles}}</li>
+      <li>SubRoles - {{privileges.SubRoles}}</li>
   </ul>
   </pre>
 
-  <script>
-  var app = angular.module('plunker', ['privilegeService']);
+<script>
+    var app = angular.module('plunker', ['privilegeService']);
 
-  angular.module('privilegeService', ['ngResource', 'ngMockE2E']).
-  factory('Privilege', function ($resource) {
-    return $resource(
-      'api/users/:userId/privileges',
-      {userId: '@id'},
-      {'query':  {method:'GET', isArray:false}});
-  });
+    angular.module('privilegeService', ['ngResource', 'ngMockE2E']).
+            factory('Privilege', function ($resource) {
+                return $resource(
+                        'api/users/:userId/privileges',
+                        {userId: '@id'},
+                        {'query': {method: 'GET', isArray: false}});
+            });
 
-  app.controller('MainCtrl', function($scope, Privilege) {
-    $scope.privileges = Privilege.query({userId:2});
-  });
-
-  app.run(function($httpBackend) {
-    $httpBackend.whenJSONP('/nick').passThrough();
-
-    $httpBackend.whenGET('api/users/2/privileges').respond({
-      "Roles": [{
-        "Active": true,
-        "Name": "Role 1",
-        "RoleId": 1
-      },
-      {
-        "Active": true,
-        "Name": "Role 2",
-        "RoleId": 2
-      },
-      {
-        "Active": false,
-        "Name": "Role 3",
-        "RoleId": 3
-      }
-      ],
-      "SubRoles": [
-      {
-        "Active": true,
-        "Name": "SubRole 1",
-        "RoleId": 1,
-        "SubRoleId": 1
-      },
-      {
-        "Active": true,
-        "Name": "SubRole 2",
-        "RoleId": 1,
-        "SubRoleId": 2
-      },
-      {
-        "Active": false,
-        "Name": "SubRole 3",
-        "RoleId": 1,
-        "SubRoleId": 3
-      }]
+    app.controller('MainCtrl', function ($scope, Privilege) {
+        $scope.privileges = Privilege.query({userId: 2});
     });
-  });
-  </script>
+
+    app.run(function ($httpBackend) {
+        $httpBackend.whenJSONP('/nick').passThrough();
+
+        $httpBackend.whenGET('api/users/2/privileges').respond({
+            "Roles": [{
+                "Active": true,
+                "Name": "Role 1",
+                "RoleId": 1
+            },
+                {
+                    "Active": true,
+                    "Name": "Role 2",
+                    "RoleId": 2
+                },
+                {
+                    "Active": false,
+                    "Name": "Role 3",
+                    "RoleId": 3
+                }
+            ],
+            "SubRoles": [
+                {
+                    "Active": true,
+                    "Name": "SubRole 1",
+                    "RoleId": 1,
+                    "SubRoleId": 1
+                },
+                {
+                    "Active": true,
+                    "Name": "SubRole 2",
+                    "RoleId": 1,
+                    "SubRoleId": 2
+                },
+                {
+                    "Active": false,
+                    "Name": "SubRole 3",
+                    "RoleId": 1,
+                    "SubRoleId": 3
+                }]
+        });
+    });
+</script>
 </body>
 </html>

@@ -1,68 +1,68 @@
 <!doctype html>
 <html ng-app="invoice2">
 <head>
-  <script src="/lib/angular-1.2/angular.min.js"></script>
+    <script src="/lib/angular-1.2/angular.min.js"></script>
 </head>
 <body>
-  <div ng-controller="InvoiceController as invoice">
+<div ng-controller="InvoiceController as invoice">
     <b>Invoice:</b>
+
     <div>
-      Quantity: <input type="number" ng-model="invoice.qty" required >
+        Quantity: <input type="number" ng-model="invoice.qty" required>
     </div>
     <div>
-      Costs: <input type="number" ng-model="invoice.cost" required >
-      <select ng-model="invoice.inCurr">
-        <option ng-repeat="c in invoice.currencies">{{c}}</option>
-      </select>
+        Costs: <input type="number" ng-model="invoice.cost" required>
+        <select ng-model="invoice.inCurr">
+            <option ng-repeat="c in invoice.currencies">{{c}}</option>
+        </select>
     </div>
     <div>
-      <b>Total:</b>
+        <b>Total:</b>
       <span ng-repeat="c in invoice.currencies">
         {{invoice.total(c) | currency:c}}
       </span>
-      <button class="btn" ng-click="invoice.pay()">Pay</button>
+        <button class="btn" ng-click="invoice.pay()">Pay</button>
     </div>
-  </div>
+</div>
 
-  <script>
-  // Service. register the 'currencyConverter' service with the app
-  angular.module('finance2', [])
-  //service
-  .factory('currencyConverter', function() {
-    var currencies = ['USD', 'EUR', 'CNY'],
-    usdToForeignRates = {
-      USD: 1,
-      EUR: 0.74,
-      CNY: 6.09
-    };
-    return {
-      currencies: currencies,
-      convert: convert
-    };
+<script>
+    // Service. register the 'currencyConverter' service with the app
+    angular.module('finance2', [])
+        //service
+            .factory('currencyConverter', function () {
+                var currencies = ['USD', 'EUR', 'CNY'],
+                        usdToForeignRates = {
+                            USD: 1,
+                            EUR: 0.74,
+                            CNY: 6.09
+                        };
+                return {
+                    currencies: currencies,
+                    convert: convert
+                };
 
-    function convert(amount, inCurr, outCurr) {
-      return amount * usdToForeignRates[outCurr] * 1 / usdToForeignRates[inCurr];
-    }
-  });
+                function convert(amount, inCurr, outCurr) {
+                    return amount * usdToForeignRates[outCurr] * 1 / usdToForeignRates[inCurr];
+                }
+            });
 
 
+    window.app = angular.module('invoice2', ['finance2']);
+    // Controller
+    // this doesn't work when minifying the code. see basics-003
+    app.controller('InvoiceController', function ($scope, currencyConverter) {
+        this.qty = 1;
+        this.cost = 2;
+        this.inCurr = 'EUR';
+        this.currencies = currencyConverter.currencies;
 
-  window.app = angular.module('invoice2', ['finance2']);
-  // Controller
-  // this doesn't work when minifying the code. see basics-003
-  app.controller('InvoiceController', function ($scope, currencyConverter) {
-    this.qty = 1;
-    this.cost = 2;
-    this.inCurr = 'EUR';
-    this.currencies = currencyConverter.currencies;
-
-    this.total = function total(outCurr) {
-      return currencyConverter.convert(this.qty * this.cost, this.inCurr, outCurr);
-    };
-    this.pay = function pay() {
-      window.alert("Thanks!");
-    };
-  });
-  </script>
+        this.total = function total(outCurr) {
+            return currencyConverter.convert(this.qty * this.cost, this.inCurr, outCurr);
+        };
+        this.pay = function pay() {
+            window.alert("Thanks!");
+        };
+    });
+</script>
 </body>
 </html>

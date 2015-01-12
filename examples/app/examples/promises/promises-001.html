@@ -1,42 +1,42 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
-  <div ng-controller="AppCtrl"></div>
+<div ng-controller="AppCtrl"></div>
 
-  <script>
-  var app = angular.module("app", []);
+<script>
+    var app = angular.module("app", []);
 
-  app.controller("AppCtrl", function ($scope, $q) {
-    var defer = $q.defer(),
+    app.controller("AppCtrl", function ($scope, $q) {
+        var defer = $q.defer(),
 
-    // get sword
-    func1 = function(weapon) {
-      console.log('You can have my ' + weapon); //sword
-      return "bow";
-    }
+        // get sword
+                func1 = function (weapon) {
+                    console.log('You can have my ' + weapon); //sword
+                    return "bow";
+                }
 
-    func2 = function(weapon) {
-      console.log('You can have my ' + weapon); // bow
-      var defer = $q.defer();
+        func2 = function (weapon) {
+            console.log('You can have my ' + weapon); // bow
+            var defer = $q.defer();
 
-      setTimeout(function () {
-        defer.resolve('axe');
-      }, 500);
+            setTimeout(function () {
+                defer.resolve('axe');
+            }, 500);
 
-      return defer.promise;
-    }
+            return defer.promise;
+        }
 
-    func3 = function(weapon) {
-      console.log('And my ' + weapon); //axe
-    }
+        func3 = function (weapon) {
+            console.log('And my ' + weapon); //axe
+        }
 
-    defer.promise.then(func1).then(func2).then(func3);
+        defer.promise.then(func1).then(func2).then(func3);
 
-    defer.resolve('sword');
-  });
-  </script>
+        defer.resolve('sword');
+    });
+</script>
 </body>
 </html>

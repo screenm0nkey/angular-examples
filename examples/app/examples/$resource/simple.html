@@ -2,39 +2,40 @@
 <html lang="en" ng-app="app">
 
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
-  <script src="/lib/angular-1.2/angular-resource.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular-resource.js"></script>
 
 </head>
 
 <body ng-controller="MainCtrl">
-  <p>
+<p>
     There is a one second delay after submitting this form.
     it's to show that the object returned from a resource is a Resource object
     which will act like a promise but isn't a promise. So it can be assigned
     directly to the scope and the view will be updated when the value is returned
-  </p>
-  <form name="myForm" ng-submit="show()">
+</p>
+
+<form name="myForm" ng-submit="show()">
     <input type="text" ng-model="user.name" required>
     <button type="submit" ng-disabled="myForm.$invalid">Submit</button>
-  </form>
+</form>
 
-  data 1 {{data1.name}} <br>
+data 1 {{data1.name}} <br>
 
-  <script>
-  var app = angular.module('app', ['ngResource']);
+<script>
+    var app = angular.module('app', ['ngResource']);
 
-  app.factory('Event', function ($resource, $q) {
-    return $resource('/data/event/:id', {id: '@id'});
-  });
+    app.factory('Event', function ($resource, $q) {
+        return $resource('/data/event/:id', {id: '@id'});
+    });
 
-  app.controller('MainCtrl', function ($scope, Event) {
-    $scope.show = function () {
-      $scope.data1 = Event.get({id: $scope.user.name });
-    }
-  });
+    app.controller('MainCtrl', function ($scope, Event) {
+        $scope.show = function () {
+            $scope.data1 = Event.get({id: $scope.user.name});
+        }
+    });
 
-  </script>
+</script>
 
 </body>
 

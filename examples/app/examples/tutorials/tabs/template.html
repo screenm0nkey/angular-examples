@@ -1,10 +1,11 @@
 <ul class="nav nav-tabs">
-  <li ng-class="{active: item.active}" ng-repeat="item in ngModel">
-    <a href="#{{contentBaseId}}-{{$index}}" ng-click="toggleActive($index)">{{item.title}}</a>
-  </li>
+    <li ng-class="{active: item.active}" ng-repeat="item in ngModel">
+        <a href="#{{contentBaseId}}-{{$index}}" ng-click="toggleActive($index)">{{item.title}}</a>
+    </li>
 </ul>
 <div class="tab-content">
-  <div class="tab-pane" ng-class="{active: item.active}" id="{{contentBaseId}}-{{$index}}" ng-repeat="item in ngModel">
-    {{item.content}}
-  </div>
+    <div class="tab-pane" ng-class="{active: item.active}" id="{{contentBaseId}}-{{$index}}"
+         ng-repeat="item in ngModel">
+        {{item.content}}
+    </div>
 </div>

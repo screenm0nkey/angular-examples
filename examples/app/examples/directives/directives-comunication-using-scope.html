@@ -1,70 +1,71 @@
 <!doctype html>
 <html ng-app="myApp">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
-  <h4><a href="http://stackoverflow.com/questions/15622863/angularjs-directive-controllers-requiring-parent-directive-controllers">stack</a></h4>
-  <h4><a href="http://jsfiddle.net/mrajcok/bVWbN/">Fiddle</a></h4>
+<h4>
+    <a href="http://stackoverflow.com/questions/15622863/angularjs-directive-controllers-requiring-parent-directive-controllers">stack</a>
+</h4>
+<h4><a href="http://jsfiddle.net/mrajcok/bVWbN/">Fiddle</a></h4>
 
 
-  <div ng-controller="MyCtrl">
+<div ng-controller="MyCtrl">
     <div screen>
-      <div component>
-        <div widget>
-          <button ng-click="widgetIt()">Woo Hoo</button>
+        <div component>
+            <div widget>
+                <button ng-click="widgetIt()">Woo Hoo</button>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
-  <script>
-// this example shows communication betweek directives using inheritance based
-// on their nested postion in the dom. see v2 for the correct way to do this
+<script>
+    // this example shows communication betweek directives using inheritance based
+    // on their nested postion in the dom. see v2 for the correct way to do this
 
-  var myApp = angular.module('myApp',[])
+    var myApp = angular.module('myApp', [])
 
-  .directive('screen', function() {
-    return {
-      scope: true,
-      controller: function($scope) {
-        $scope.doSomethingScreeny = function() {
-          alert("screeny!");
-        }
-      }
+            .directive('screen', function () {
+                return {
+                    scope: true,
+                    controller: function ($scope) {
+                        $scope.doSomethingScreeny = function () {
+                            alert("screeny!");
+                        }
+                    }
+                }
+            })
+
+            .directive('component', function () {
+                return {
+                    scope: true,
+                    controller: function ($scope) {
+                        $scope.componentFunction = function () {
+                            $scope.doSomethingScreeny();
+                        }
+                    },
+                }
+            })
+
+            .directive('widget', function () {
+                return {
+                    scope: true,
+                    link: function (scope, element, attrs, componentCtrl) {
+                        scope.widgetIt = function () {
+                            // it can access these on the prototype chain as it is nested inside
+                            // in the markup
+                            scope.componentFunction();
+                            scope.doSomethingScreeny();
+                        };
+                    }
+                }
+            })
+
+
+    function MyCtrl($scope) {
+        $scope.name = 'Superhero';
     }
-  })
-
-  .directive('component', function() {
-    return {
-      scope: true,
-      controller: function($scope) {
-        $scope.componentFunction = function() {
-          $scope.doSomethingScreeny();
-        }
-      },
-    }
-  })
-
-  .directive('widget', function() {
-    return {
-      scope: true,
-      link: function(scope, element, attrs, componentCtrl) {
-        scope.widgetIt = function() {
-          // it can access these on the prototype chain as it is nested inside
-          // in the markup
-          scope.componentFunction();
-          scope.doSomethingScreeny();
-        };
-      }
-    }
-  })
-
-
-
-  function MyCtrl($scope) {
-    $scope.name = 'Superhero';
-  }
-  </script>
+</script>
 </body>
 </html>

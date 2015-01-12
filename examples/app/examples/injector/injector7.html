@@ -1,39 +1,38 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
 
 
-  <script>
+<script>
 
-  // Provide the wiring information in a module
-  var app = angular.module('myModule', [])
+    // Provide the wiring information in a module
+    var app = angular.module('myModule', [])
 
-    // Teach the injector how to build a 'greeter'
-    // Notice that greeter itself is dependent on '$window'
-    .factory('greeter', function($window) {
-      // This is a factory function, and is responsible for
-      // creating the 'greet' service.
-      return {
-        greet: function(text) {
-          $window.alert(text);
-        }
-      };
-    });
-
-
-  // New injector is created from the module.
-  // (This is usually done automatically by angular bootstrap)
-  var injector = angular.injector(['myModule', 'ng']);
-
-  // Request any dependency from the injector
-  var greeter = injector.get('greeter');
-  greeter.greet('wow')
+        // Teach the injector how to build a 'greeter'
+        // Notice that greeter itself is dependent on '$window'
+            .factory('greeter', function ($window) {
+                // This is a factory function, and is responsible for
+                // creating the 'greet' service.
+                return {
+                    greet: function (text) {
+                        $window.alert(text);
+                    }
+                };
+            });
 
 
+    // New injector is created from the module.
+    // (This is usually done automatically by angular bootstrap)
+    var injector = angular.injector(['myModule', 'ng']);
 
-  </script>
+    // Request any dependency from the injector
+    var greeter = injector.get('greeter');
+    greeter.greet('wow')
+
+
+</script>
 </body>
 </html>

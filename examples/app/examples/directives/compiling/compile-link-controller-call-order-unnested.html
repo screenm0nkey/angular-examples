@@ -1,11 +1,11 @@
 <!doctype html>
 <html ng-app="myApp">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
 
-  <div ng-controller="MyCtrl">
+<div ng-controller="MyCtrl">
 
     d1 compile
     d2 compile
@@ -19,60 +19,59 @@
     <div d1></div>
     <div d2></div>
     <div d3></div>
-  </div>
+</div>
 
-  <script>
-  // this exmaple shows when the linking and controllers are called
-    var myApp = angular.module('myApp',[]);
+<script>
+    // this exmaple shows when the linking and controllers are called
+    var myApp = angular.module('myApp', []);
 
-    function MyCtrl($scope) {}
+    function MyCtrl($scope) {
+    }
 
 
-    myApp.directive('d1', function() {
-     return {
-      compile : function () {
-        console.log('d1 compile');
-        return function link () {
-          console.log('d1 link');
+    myApp.directive('d1', function () {
+        return {
+            compile: function () {
+                console.log('d1 compile');
+                return function link() {
+                    console.log('d1 link');
+                }
+            },
+            controller: function ($scope) {
+                console.log('d1 ctrl');
+            },
         }
-      },
-      controller: function($scope) {
-       console.log('d1 ctrl');
-     },
-   }
- });
+    });
 
-    myApp.directive('d2', function() {
-     return {
-      compile : function () {
-        console.log('d2 compile');
-        return function link () {
-          console.log('d2 link');
+    myApp.directive('d2', function () {
+        return {
+            compile: function () {
+                console.log('d2 compile');
+                return function link() {
+                    console.log('d2 link');
+                }
+            },
+            controller: function ($scope) {
+                console.log('d2 ctrl');
+            },
         }
-      },
-      controller: function($scope) {
-       console.log('d2 ctrl');
-     },
-   }
- });
+    });
 
-    myApp.directive('d3', function() {
-     return {
-      compile : function () {
-        console.log('d3 compile');
-        return function link () {
-          console.log('d3 link');
+    myApp.directive('d3', function () {
+        return {
+            compile: function () {
+                console.log('d3 compile');
+                return function link() {
+                    console.log('d3 link');
+                }
+            },
+            controller: function ($scope) {
+                console.log('d3 ctrl');
+            },
         }
-      },
-      controller: function($scope) {
-       console.log('d3 ctrl');
-     },
-   }
- });
+    });
 
 
-
-
-    </script>
-  </body>
-  </html>
+</script>
+</body>
+</html>

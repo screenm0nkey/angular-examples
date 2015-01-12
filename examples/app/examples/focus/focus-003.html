@@ -2,52 +2,52 @@
 <html ng-app="app">
 
 <head>
-	<meta charset="utf-8"/>
-	<title>Learn AngularJS - Inline Editor</title>
-	<link href="style.css" rel="stylesheet" />
+    <meta charset="utf-8"/>
+    <title>Learn AngularJS - Inline Editor</title>
+    <link href="style.css" rel="stylesheet"/>
 </head>
 
 <body ng-controller="MainCtrl">
 
-	<div id="main" ng-click="hideTooltip()">
-		<div class="tooltip" ng-click="$event.stopPropagation()" ng-show="showtooltip">
-			<input type="text" ng-model="value" focus-on />
-		</div>
+<div id="main" ng-click="hideTooltip()">
+    <div class="tooltip" ng-click="$event.stopPropagation()" ng-show="showtooltip">
+        <input type="text" ng-model="value" focus-on/>
+    </div>
 
-		<p ng-click="toggleTooltip($event)">{{value}}</p>
-	</div>
+    <p ng-click="toggleTooltip($event)">{{value}}</p>
+</div>
 
-	<!-- Include AngularJS from Google's CDN -->
-	<script src="/lib/angular-1.2/angular.js"></script>
-	<script>
-	var app = angular.module('app', []);
+<!-- Include AngularJS from Google's CDN -->
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+    var app = angular.module('app', []);
 
-	app.controller('MainCtrl', function ($scope, $timeout, $rootScope) {
-		$scope.showtooltip = false;
-		$scope.value = 'Edit me.';
+    app.controller('MainCtrl', function ($scope, $timeout, $rootScope) {
+        $scope.showtooltip = false;
+        $scope.value = 'Edit me.';
 
-		$scope.hideTooltip = function(){
-		  $scope.showtooltip = false;
-		}
+        $scope.hideTooltip = function () {
+            $scope.showtooltip = false;
+        }
 
-		$scope.toggleTooltip = function(e){
-		  e.stopPropagation();
-		  $scope.showtooltip = !$scope.showtooltip;
-		  $timeout(function (){
-		    $rootScope.$broadcast('focusOn', name);
-		  });
-		}
-	});
+        $scope.toggleTooltip = function (e) {
+            e.stopPropagation();
+            $scope.showtooltip = !$scope.showtooltip;
+            $timeout(function () {
+                $rootScope.$broadcast('focusOn', name);
+            });
+        }
+    });
 
-	app.directive('focusOn', function() {
-		return function(scope, elem, attr) {
-			scope.$on('focusOn', function(e, name) {
-				elem[0].focus();
-				elem[0].select();
-			});
-		};
-	});
+    app.directive('focusOn', function () {
+        return function (scope, elem, attr) {
+            scope.$on('focusOn', function (e, name) {
+                elem[0].focus();
+                elem[0].select();
+            });
+        };
+    });
 
-	</script>
+</script>
 </body>
 </html>

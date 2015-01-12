@@ -1,42 +1,43 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-controller="MainCtrl">
-  <h2>Using the observe method</h2>
+<h2>Using the observe method</h2>
 
-  <input type="text" ng-model="compiletext">
-  <nick mtext="{{compiletext}}"></nick>
+<input type="text" ng-model="compiletext">
+<nick mtext="{{compiletext}}"></nick>
 
-  <p>
+<p>
     what's interesting to here is even though the nick element is replaced
     the 'mtext' attribute is added to the replaced element, so mtext="" will still work
-  </p>
+</p>
 
-  <script>
-  var app = angular.module('app', []);
+<script>
+    var app = angular.module('app', []);
 
-  app.controller('MainCtrl', function ($scope) {});
+    app.controller('MainCtrl', function ($scope) {
+    });
 
-  app.directive('nick', function () {
-    return {
-      restrict: 'E',
-      replace : true,
-      template: '<h2>{{compiletext}}</h2>',
-      link : function(scope, element, attributes) {
-        attributes.$observe('mtext', function(newValue) {
-          console.log(newValue);
-          if (newValue === 'hello') {
-            element.css('color', 'red');
-          } else {
-            element.removeAttr('style');
-          }
-        });
-      }
-    }
-  })
+    app.directive('nick', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<h2>{{compiletext}}</h2>',
+            link: function (scope, element, attributes) {
+                attributes.$observe('mtext', function (newValue) {
+                    console.log(newValue);
+                    if (newValue === 'hello') {
+                        element.css('color', 'red');
+                    } else {
+                        element.removeAttr('style');
+                    }
+                });
+            }
+        }
+    })
 
-  </script>
+</script>
 </body>
 </html>

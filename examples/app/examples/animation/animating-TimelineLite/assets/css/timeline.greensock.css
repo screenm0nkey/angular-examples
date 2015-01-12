@@ -60,17 +60,17 @@ NAV
 }
 
 .nav div {
-    display:table-cell;
+    display: table-cell;
     background-color: #FFFFFF;
     height: 48px;
     width: 33%;
     background-color: #D3D3D3;
     cursor: pointer;
-    box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    -webkit-box-sizing:border-box;
-    border-top:1px solid #000000;
-    border-right:1px solid #000000;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-top: 1px solid #000000;
+    border-right: 1px solid #000000;
 }
 
 .nav div:first-child {
@@ -78,11 +78,11 @@ NAV
 }
 
 .nav div:last-child {
-    border-right:1px solid #D3D3D3;
+    border-right: 1px solid #D3D3D3;
 }
 
 .nav .active div:last-child {
-    border-right:1px solid #FFFFFF;
+    border-right: 1px solid #FFFFFF;
 }
 
 .nav h3 {
@@ -91,6 +91,6 @@ NAV
 }
 
 .nav .active {
-    border-top:1px solid #FFFFFF;
+    border-top: 1px solid #FFFFFF;
     background-color: #FFFFFF;
 }

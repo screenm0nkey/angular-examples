@@ -1,30 +1,30 @@
 <!doctype html>
 <html>
 <head>
-  <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body>
 
 
-  <script>
-  // use the injector to kick off your application
-  // use the type inference to auto inject arguments, or use implicit injection
-  angular.injector(['ng']).invoke(function($rootScope, $compile, $document){
+<script>
+    // use the injector to kick off your application
+    // use the type inference to auto inject arguments, or use implicit injection
+    angular.injector(['ng']).invoke(function ($rootScope, $compile, $document) {
 
-    $rootScope.name = "click mssse"
+        $rootScope.name = "click mssse"
 
-    $rootScope.someFunctionOnRootScope = function(){
-      alert("Hello there!");
-    }
+        $rootScope.someFunctionOnRootScope = function () {
+            alert("Hello there!");
+        }
 
-    var elm = $compile('<a href="" ng-click="someFunctionOnRootScope()">{{name}}</a>')($rootScope);
+        var elm = $compile('<a href="" ng-click="someFunctionOnRootScope()">{{name}}</a>')($rootScope);
 
-    angular.element(document.body).append(elm);
-    $compile($document)($rootScope);
-    $rootScope.$digest();
-  });
+        angular.element(document.body).append(elm);
+        $compile($document)($rootScope);
+        $rootScope.$digest();
+    });
 
 
-  </script>
+</script>
 </body>
 </html>
