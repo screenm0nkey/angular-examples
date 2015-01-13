@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <script src="/lib/angular-1.3/angular.js"></script>
     <script src="/lib/ng-stats.js"></script>
+
     <style type="text/css">
         .item.hovering {
             background-color: #ccc;
         }
     </style>
-    <title>Angular 1.3 Bindonce</title>
+    <title>Angular 1.3 Stateless filter</title>
 </head>
 
 <body ng-app="app" ng-controller="MainCtrl as vm">
@@ -41,8 +43,8 @@
 <br/>
 <br/>
 
-<!-- vm.hovering[item] creates a watch -->
-<!-- {{item}} creates a watch -->
+<!-- {'hovering': vm.hovering[item]} creates a watch -->
+<!-- {{item | waitFilter:vm.timer.wait}} creates a watch -->
 <div ng-repeat="item in vm.totalItems"
      class="item"
      ng-class="{'hovering': vm.hovering[item]}"
@@ -78,12 +80,14 @@
 
     app.filter('waitFilter', function () {
         var waitFilter = function waitFilter(input, wait) {
+            console.log(input, wait)
             var now = new Date();
             while (new Date() - now < wait) {
-                // console.log(new Date() - now);
             }
             return 'Item ' + input + ' waited ' + (new Date() - now) + 'ms';
         };
+
+        waitFilter.$stateful = false;
         return waitFilter;
     });
 </script>
