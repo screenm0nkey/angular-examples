@@ -9,7 +9,7 @@ define([
 
 	var version;
 
-	ddescribe('service', function() {
+	describe('service', function() {
 		beforeEach(mocks.module('myApp.services'));
 
 		beforeEach(inject(function (_version_) {
