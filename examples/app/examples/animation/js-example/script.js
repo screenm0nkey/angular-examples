@@ -15,11 +15,10 @@ app.config(function ($routeProvider) {
 
 });
 
-app.factory('coursesDataSvc', function ($http) {
-
+app.service('coursesDataSvc', function ($http) {
     var courses;
 
-    function getAllCourses() {
+    this.getAllCourses = function() {
         var prom = $http.get('courses.json');
         prom.success(function (resp) {
             courses = resp;
@@ -27,18 +26,12 @@ app.factory('coursesDataSvc', function ($http) {
         return prom;
     }
 
-
-    function getCourse(id) {
+    this.getCourse = function (id) {
         var filtered = _.filter(courses, function (c) {
             return c.id === id;
         });
         return filtered[0];
     }
-
-    return {
-        getAllCourses: getAllCourses,
-        getCourse: getCourse
-    };
 });
 
 app.controller('HomeCtrl', function ($scope, coursesDataSvc) {

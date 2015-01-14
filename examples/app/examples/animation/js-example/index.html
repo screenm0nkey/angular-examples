@@ -4,11 +4,7 @@
 <head>
     <link data-require="bootstrap-css@3.x" data-semver="3.1.1" rel="stylesheet"
           href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
-    <script src="/lib/jquery.min.js"></script>
-    <script src="/lib/angular-1.2/angular.min.js"></script>
-    <script src="/lib/angular-1.2/angular-animate.js"></script>
-    <script src="/lib/angular-1.2/angular-route.js"></script>
-    <script src="/lib/underscore.js"></script>
+
     <link rel="stylesheet" href="style.css"/>
     <style>
         .det-anim.switching {
@@ -18,15 +14,11 @@
             left: -20px;
         }
     </style>
-    <script src="script.js"></script>
-    <script src="animations.js"></script>
+
 </head>
 
 <body ng-app="coursesApp">
 <div class="container">
-    <div class="row page-header">
-        <h2>Virtual Training</h2>
-    </div>
     <div data-ng-view="" id="div-view" class="view-slide-in"></div>
 </div>
 
@@ -52,6 +44,13 @@
     </div>
     <br/>
 </script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/angular-1.2/angular.min.js"></script>
+<script src="/lib/angular-1.2/angular-animate.js"></script>
+<script src="/lib/angular-1.2/angular-route.js"></script>
+<script src="/lib/underscore.js"></script>
+<script src="script.js"></script>
+<script src="animations.js"></script>
 </body>
 
 </html>

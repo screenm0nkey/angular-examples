@@ -3,9 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>Egghead.io - Greensock TimelineLite</title>
-
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/timeline.greensock.css">
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/timeline.greensock.css">
 </head>
 
 <body ng-controller="MainCtrl">
@@ -14,11 +13,11 @@
     <div ng-repeat="slide in slides"
          ng-hide="!isCurrentSlideIndex($index)"
          class="slide slide-animation">
+
         <img class="nonDraggableImage" ng-src="{{slide.bg}}">
         <img class="nonDraggableImage avatar" ng-src="{{slide.avatar}}">
 
         <h1 class="title"><span>{{slide.title}}</span></h1>
-
         <h3 class="subtitle"><span>{{slide.subtitle}}</span></h3>
     </div>
 </div>

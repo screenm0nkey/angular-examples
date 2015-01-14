@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="website">
+<head>
+    <meta charset="utf-8">
+    <title>Greensock TimelineLite</title>
+    <style>
+        .box {
+            border-left: 2px solid #ccc;
+            background-color: lightblue;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top : 50px;
+            left : 0;
+        }
+    </style>
+</head>
+
+<body ng-controller="MainCtrl">
+
+<button ng-click="MainCtrl.tl.restart()">Restart</button>
+<button ng-click="MainCtrl.tl.pause()">Pause</button>
+<button ng-click="MainCtrl.tl.resume()">Resume</button>
+
+<mr-box class="box" data-timeline="MainCtrl.tl"></mr-box>
+
+
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/angular-1.2/angular.min.js"></script>
+<script src="/lib/TweenMax.min.js"></script>
+<script>
+    var app = angular.module('website', [])
+    app.controller('MainCtrl', function ($scope, $window) {
+        var twl = $window.TweenLite;
+        var self = {};
+        $scope.MainCtrl = self;
+        self.tl = new $window.TimelineLite();
+    });
+
+    app.directive('mrBox', ['$window', function ($window) {
+        return {
+            restrict : 'E',
+            scope : {
+                tl : '=timeline'
+            },
+            link : function (scope, mc) {
+                var twl = $window.TweenLite;
+
+                mc.on('click', function(){
+                    scope.tl.stop();
+
+                    if (scope.tl.reversed()) {
+                        scope.tl.play();
+                    } else {
+                        scope.tl.reverse();
+                    }
+                });
+
+                scope.tl.add( twl.to(mc, 1, {
+                    delay : 0.2,
+                    x:100,
+                    backgroundColor : '#dedede',
+                    borderLeft: '20px solid #89CD25',
+                    ease: Bounce.easeOut
+                }));
+
+                scope.tl.add( twl.to(mc, 1, {
+                    y:150,
+                    borderLeft: '5px solid #ff3300',
+                    delay: 0.5
+                }));
+
+                scope.tl.add( twl.to(mc, 1, {
+                    alpha : 0.2
+                }));
+
+            }
+        }
+    }])
+</script>
+
+
+</body>
+</html>

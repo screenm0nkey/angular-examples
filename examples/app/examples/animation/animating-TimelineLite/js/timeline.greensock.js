@@ -28,22 +28,26 @@ angular.module('website', ['ngAnimate'])
 
                     if (scope.direction !== 'right') finishPoint = -finishPoint;
 
-                    TweenLite.to(element, 0.5, {left: finishPoint, ease: Ease.easeInOut, onComplete: done});
+                    TweenLite.to(element, 0.5, {
+                        left: finishPoint,
+                        ease: Ease.easeInOut, onComplete: done
+                    });
                 }
                 else {
                     done();
                 }
             },
-            // new slide will be come in and be disaplyed
+            // new slide will be come in and be displayed
             removeClass: function (element, className, done) {
                 if (className == 'ng-hide') {
                     var scope = element.scope(),
                         startPoint = element.parent().width(),
-                        tl = new TimelineLite();
+                        timeline = new TimelineLite();
 
                     if (scope.direction === 'right') startPoint = -startPoint;
 
-                    tl.fromTo(element, 0.5, {left: startPoint}, {left: 0, ease: Ease.easeInOut, onComplete: done})
+                    timeline
+                        .fromTo(element, 0.5, {left: startPoint}, {left: 0, ease: Ease.easeInOut, onComplete: done})
                         .fromTo(element.find('.title'), 0.5, {left: -200, alpha: 0}, {
                             left: 0,
                             alpha: 1,

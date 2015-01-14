@@ -3,8 +3,7 @@
 <head>
     <style>
         .my-toggle-animation {
-            -webkit-transition: 10s linear all;
-            transition: 10s linear all;
+            transition: 0.5s linear all;
             position: absolute;
             left: 0;
             background: white;
@@ -16,7 +15,7 @@
         .my-toggle-animation.disabled {
             background: grey;
             color: #555;
-            border-color: #555;
+            border: 5px solid red;
         }
     </style>
 </head>
@@ -24,7 +23,8 @@
 <div ng-init="disabled=false">
     <button ng-click="disabled=!disabled">Open/Close</button>
     <div ng-class="{disabled:disabled}" class="my-toggle-animation">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+        So we're using jquery to animate it left and css to animate the background and border color.
+        The css also controls the the speed of the animation.
     </div>
 </div>
 
@@ -39,7 +39,7 @@
             beforeAddClass: function (element, className, done) {
                 if (className == 'disabled') {
                     jQuery(element).animate({
-                        left: 100
+                        left: 200
                     }, done);
                 }
                 else {

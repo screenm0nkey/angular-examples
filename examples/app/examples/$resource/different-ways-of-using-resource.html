@@ -4,7 +4,6 @@
 <head>
     <script src="/lib/angular-1.2/angular.js"></script>
     <script src="/lib/angular-1.2/angular-resource.js"></script>
-
 </head>
 
 <body ng-controller="MainCtrl">
@@ -13,9 +12,9 @@
     There is a one second delay after submitting this form. it's to show that
     the object returned from a resource is a Resource object which will act like
     a promise but isn't a promise. to use a promise directly you would need to
-    use the $parseProvider.unwrapPromises(true). So the Resouce object can be
+    use the $parseProvider.unwrapPromises(true). So the Resource object can be
     assigned directly to the scope and the view will be updated when the value
-    is returned
+    is returned.
 </p>
 
 <form name="myForm" ng-submit="show()">

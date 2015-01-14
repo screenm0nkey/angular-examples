@@ -1,28 +1,28 @@
 var courseAppAnimations = angular.module('courseAnimations', ['ngAnimate']);
 
+/* this controls the animation for ng-view or loading views */
 courseAppAnimations.animation('.view-slide-in', function () {
     return {
         enter: function (element, done) {
-
+            console.log(".view-slide-in entering...", element);
             element.css({
-                opacity: 0.5,
+                opacity: 0.2,
                 position: "relative",
-                top: "10px",
-                left: "20px"
-            })
-                .animate({
-                    top: 0,
-                    left: 0,
-                    opacity: 1
-                }, 1000, done);
+                top: $(window).height(),
+            }).animate({
+                top: 0,
+                left: 0,
+                opacity: 1
+            }, 1000, done);
         }
     };
 });
 
+/* ng-repeat. leave and enter are triggered when filtering. move triggered when ordering list */
 courseAppAnimations.animation('.repeat-animation', function () {
     return {
         enter: function (element, done) {
-            console.log("entering...");
+            console.log(".repeat-animation entering...", element);
             var width = element.width();
             element.css({
                 position: 'relative',
@@ -36,7 +36,7 @@ courseAppAnimations.animation('.repeat-animation', function () {
         },
 
         leave: function (element, done) {
-            console.log("leave...");
+            console.log(".repeat-animation leave...", element);
             element.css({
                 position: 'relative',
                 left: 0,
@@ -49,7 +49,7 @@ courseAppAnimations.animation('.repeat-animation', function () {
         },
 
         move: function (element, done) {
-            console.log("move...");
+            console.log(".repeat-animation move...", element);
             try {
                 element.css({
                     left: "2px",
@@ -67,9 +67,11 @@ courseAppAnimations.animation('.repeat-animation', function () {
     };
 });
 
+/* ng-hide */
 courseAppAnimations.animation('.hide-animation', function () {
     return {
         beforeAddClass: function (element, className, done) {
+            console.log(".hide-animation beforeAddClass...", element);
             if (className == 'ng-hide') {
                 element.animate({
                     opacity: 0
@@ -80,6 +82,7 @@ courseAppAnimations.animation('.hide-animation', function () {
             }
         },
         removeClass: function (element, className, done) {
+            console.log(".hide-animation removeClass...", element);
             if (className == 'ng-hide') {
                 element.css('opacity', 0);
                 element.animate({
@@ -93,10 +96,11 @@ courseAppAnimations.animation('.hide-animation', function () {
     };
 });
 
-
+/* ng-class animations */
 courseAppAnimations.animation('.det-anim-js', function () {
     return {
         beforeAddClass: function (element, className, done) {
+            console.log('.det-anim-js beforeAddClass', element)
             if (className == 'switching') {
                 element.animate({
                     opacity: 0
@@ -113,6 +117,7 @@ courseAppAnimations.animation('.det-anim-js', function () {
             }
         },
         removeClass: function (element, className, done) {
+            console.log('.det-anim-js removeClass', element)
             element.find('.thumbnail').css({
                 backgroundColor: '#DBDBDB'
             });

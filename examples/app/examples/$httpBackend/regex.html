@@ -41,10 +41,10 @@
                 };
 
                 //*******************************************
-                // Allow JSONP to pass to external services (ie Solr)
+                // Allow JSONP to pass to external services (i.e. Solr)
                 $httpBackend.when('JSONP', regexpUrl(/http:\/\/.*/)).passThrough();
 
-                // Some statefullness
+                // Some statefulness
                 var users = {};
                 var userId = 0;
 
@@ -94,8 +94,7 @@
 
                 // Add a user
                 $scope.addUser = function () {
-                    var names = ["Doug", "Scott", "Eric", "John", "Patricia", "Daniel",
-                        "JohnB", "Kate", "Matt"];
+                    var names = ["Doug", "Scott", "Eric", "John", "Patricia", "Daniel", "JohnB", "Kate", "Matt"];
                     var sentData = {userName: names[addedUsers++ % 9]};
                     $http.put('/users', sentData).success(function (data) {
                         $scope.users[data.userId] = data.userName;
