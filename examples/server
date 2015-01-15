@@ -2,17 +2,17 @@
 "use strict";
 var PORT = 1970;
 
-var express     = require('express'),
-    fs          = require('fs'),
-    staticDir   = express['static'],
-    path        = require('path'),
-    _          = require('underscore');
+var express = require('express'),
+    fs = require('fs'),
+    staticDir = express['static'],
+    path = require('path'),
+    _ = require('underscore');
 
-var staticDirs = ['css','lib', 'data'],
+var staticDirs = ['css', 'lib', 'data'],
     PATH = path.join(__dirname, 'app/examples'),
     app = express();
 
-app.use(express.directory(PATH, {icons:true}));
+app.use(express.directory(PATH, {icons: true}));
 app.use(express.static(PATH));
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -22,73 +22,80 @@ app.use(app.router);
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.configure(function () {
-  staticDirs.forEach(function (item) {
-    app.use('/'+item, express.static(path.join(__dirname, 'app/'+item)));
-  });
-  app.use(express.methodOverride());
-  app.use(express.multipart());
-  // app.use(express.bodyParser());
+    staticDirs.forEach(function (item) {
+        app.use('/' + item, express.static(path.join(__dirname, 'app/' + item)));
+    });
+    app.use(express.methodOverride());
+    app.use(express.multipart());
+    // app.use(express.bodyParser());
 });
 
+app.get("/password-error", function (req, res) {
+    if (req.query.u && req.query.u === 'goodone') {
+        res.status(200).send('Great');
+    } else {
+        res.status(404).send('Not found');
+    }
+});
 
 app.post("/upload/image", function (req, res) {
-  console.log(req);
-  res.send('ok');
+    console.log(req);
+    res.send('ok');
 });
 
 //  read a json file from the system and return it
 app.get("/data/cache", function (req, res) {
-  var pathx = path.join(__dirname, 'app/data/cache.json');
-  var arr = JSON.parse(fs.readFileSync(pathx, 'utf8'));
-  res.json(arr);
-  res.end();
+    var pathx = path.join(__dirname, 'app/data/cache.json');
+    var arr = JSON.parse(fs.readFileSync(pathx, 'utf8'));
+    res.json(arr);
+    res.end();
 });
 
 app.get("/data/event/:num", function (req, res) {
-  setTimeout(function() {
-    res.json({"name":"you typed in your name as "+req.params.num});
-    res.end();
-  }, 1000);
+    setTimeout(function () {
+        res.json({"name": "you typed in your name as " + req.params.num});
+        res.end();
+    }, 1000);
 });
 
 app.get("/someurl", function (req, res) {
-  res.json({"link" : "http://nicklowman.co.uk"});
-  res.end();
+    res.json({"link": "http://nicklowman.co.uk"});
+    res.end();
 });
 
 app.post("/twitter", function (req, res) {
-  res.json(req.body);
-  res.end();
+    res.json(req.body);
+    res.end();
 });
 
 app.get("/getarray", function (req, res) {
-  res.json([{"id":1}, {"id":2}, {"id":3}]);
-  res.end();
+    res.json([{"id": 1}, {"id": 2}, {"id": 3}]);
+    res.end();
 });
 
 app.post("/forms", function (req, res) {
-  var b = req.body;
+    var b = req.body;
 
-  if (!b.name || !b.superheroAlias) {
-    b.message = 'The request is bad';
-    b.success = false;
-    b.errors = {};
+    if (!b.name || !b.superheroAlias) {
+        b.message = 'The request is bad';
+        b.success = false;
+        b.errors = {};
 
-    if (!b.name) {
-      b.errors.name = 'Missing name';
+        if (!b.name) {
+            b.errors.name = 'Missing name';
+        }
+
+        if (!b.superheroAlias) {
+            b.errors.superheroAlias = 'Fill out superher sucker!';
+        }
+
+    } else {
+        b.message = 'The request is good';
+        b.success = true;
     }
 
-    if (!b.superheroAlias) {
-      b.errors.superheroAlias = 'Fill out superher sucker!';
-    }
-
-  } else {
-    b.message = 'The request is good';
-    b.success = true;
-  }
-
-  res.json(b);
-  res.end();
+    res.json(b);
+    res.end();
 });
 
 

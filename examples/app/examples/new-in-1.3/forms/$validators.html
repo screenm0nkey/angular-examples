@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css"></style>
+    <title></title>
+</head>
+
+<body ng-app="app">
+
+<form name="myForm">
+    <div class="label">
+        <input name="myPassword" type="text" ng-model="data.password" validate-password-characters required />
+        <div ng-if="myForm.myPassword.$error.required">
+            You did not enter a password
+        </div>
+        <div ng-if="myForm.myPassword.$error.passwordCharacters">
+            Your password must contain a numeric, uppercase and lowercase as well as special characters
+        </div>
+    </div>
+</form>
+
+<ng-include src="'/lib/ng-stat.html'"></ng-include>
+
+
+<script src="/lib/angular-1.3/angular.js"></script>
+<script src="/lib/ng-stats.js"></script>
+<script type="text/javascript">
+    var app = angular.module('app', ['angularStats']);
+
+    app.directive('validatePasswordCharacters', function() {
+
+        var REQUIRED_PATTERNS = [
+            /\d+/,    //numeric values
+            /[a-z]+/, //lowercase values
+            /[A-Z]+/, //uppercase values
+            /\W+/,    //special characters
+            /^\S+$/   //no whitespace allowed
+        ];
+
+        return {
+            require : 'ngModel',
+            link : function($scope, element, attrs, ngModel) {
+                ngModel.$validators.passwordCharacters = function(value) {
+                    var status = true;
+                    angular.forEach(REQUIRED_PATTERNS, function(pattern) {
+                        status = status && pattern.test(value);
+                    });
+                    return status;
+                };
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>

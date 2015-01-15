@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css"></style>
+    <title></title>
+    <style>
+        input.ng-invalid-username-available {
+            border : red solid 2px
+        }
+        input.ng-valid-username-available {
+            border : green solid 2px
+        }
+    </style>
+</head>
+
+<body ng-app="app">
+
+<form name="myForm">
+    type 'goodone' and the username will validate.
+    <input type="text"
+           class="input"
+           name="username"
+           minlength="4"
+           maxlength="15"
+           ng-model="form.data.username"
+           pattern="^[-\w]+$"
+           username-available-validator
+           placeholder="Choose a username for yourself"
+           required />
+</form>
+
+<ng-include src="'/lib/ng-stat.html'"></ng-include>
+
+<script src="/lib/angular-1.3/angular.js"></script>
+<script src="/lib/ng-stats.js"></script>
+<script type="text/javascript">
+    var app = angular.module('app', ['angularStats']);
+
+    app.directive('usernameAvailableValidator', ['$http', '$q', function($http, $q) {
+        return {
+            require : 'ngModel',
+            link : function($scope, element, attrs, ngModel) {
+                ngModel.$asyncValidators.usernameAvailable = function(username) {
+                    return $http.get('/password-error?u='+ username);
+                };
+            }
+        }
+    }])
+
+</script>
+
+</body>
+</html>
