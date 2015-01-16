@@ -10,13 +10,23 @@
         input.ng-valid-username-available {
             border : green solid 2px
         }
+        input.ng-pending {
+            border : darkgoldenrod solid 2px
+        }
+        .pending {
+            background-color: darkgoldenrod;
+            position: absolute;
+            top: 10px;
+            left: 189px;
+        }
+
     </style>
 </head>
 
 <body ng-app="app">
 
 <form name="myForm">
-    type 'goodone' and the username will validate.
+    $asyncValidators example. type 'goodone' and the username will validate. <br/>
     <input type="text"
            class="input"
            name="username"
@@ -27,6 +37,8 @@
            username-available-validator
            placeholder="Choose a username for yourself"
            required />
+
+    <p ng-if="myForm.$pending.usernameAvailable && $scope.myForm.username.$dirty" class="pending">Checking username</p>
 </form>
 
 <ng-include src="'/lib/ng-stat.html'"></ng-include>
@@ -41,6 +53,8 @@
             require : 'ngModel',
             link : function($scope, element, attrs, ngModel) {
                 ngModel.$asyncValidators.usernameAvailable = function(username) {
+                    // NOTE that this will not be called if the other validators are invalid
+                    // so it won't be invoked if the username is less than 4 or more than 15
                     return $http.get('/password-error?u='+ username);
                 };
             }

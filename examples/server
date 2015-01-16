@@ -32,7 +32,10 @@ app.configure(function () {
 
 app.get("/password-error", function (req, res) {
     if (req.query.u && req.query.u === 'goodone') {
-        res.status(200).send('Great');
+        setTimeout(function () {
+            // the delay make angular form element go into pending state
+            res.status(200).send('Great');
+        }, 500)
     } else {
         res.status(404).send('Not found');
     }
