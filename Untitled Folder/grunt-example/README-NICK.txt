@@ -1,1 +1,0 @@
-Take a look at the grunt-contrib-clean clean.js for a nice example of how to implement a grunt plugin
