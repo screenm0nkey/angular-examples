@@ -19,11 +19,11 @@ li.selected {
 }
 
 div[ui-view=header] {
-  background-color: pink;
+  background-color: lightgreen;
 }
 
 div[ui-view=footer] {
-  background-color: pink;
+  background-color: darkkhaki;
 }
 
 div[ui-view=content] {

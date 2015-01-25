@@ -9,9 +9,13 @@
 
 <h1>{{type}}</h1>
 
+<h3>{{shame}}</h3>
+
 <script>
     var app = angular.module("app", []);
 
+
+    // providers can be set like this...
     app.provider("game", function () {
         var type;
         // this return object is only available in the app.config
@@ -31,18 +35,36 @@
         };
     });
 
+    // providers can be set like this...
+    app.config(function ($provide) {
+        var title;
+
+        $provide.provider("shame", function () {
+            return {
+                setTitle: function (value) {
+                    title = value;
+                },
+                $get: function () {
+                    return {
+                        title: title || 'No title'
+                    };
+                }
+            };
+        });
+    });
+
     // see the 'game' service is referred to as gameProvider here in the config.
     // we can configure it here if the serive was generated using 'provider'
-    app.config(function (gameProvider) {
-        debugger
+    app.config(function (gameProvider, shameProvider) {
+        shameProvider.setTitle('help');
         gameProvider.setType("War");
     });
 
     // its called game here.
-    app.controller("AppCtrl", function ($scope, game) {
-        debugger
+    app.controller("AppCtrl", function ($scope, game, shame) {
         $scope.title = game.title;
         $scope.type = game.getType();
+        $scope.shame = shame.title;
     });
 </script>
 </body>

@@ -11,9 +11,8 @@ var app = angular.module('ui-router-named-views', [
 ]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
-  $stateProvider
-    .state('app', {
-      url: '/',
+  $stateProvider.state('app', {
+      url: '/home',
       views: {
         'header': {
           templateUrl: 'app/common/header.tpl.html'
@@ -31,7 +30,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       }
     });
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/home');
   });
 
 

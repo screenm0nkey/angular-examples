@@ -4,7 +4,7 @@ angular.module('ui-router-named-views.alt-two', [
   .config(function ($stateProvider) {
     $stateProvider
       .state('app.alt-two', {
-        url: 'alt-two',
+        url: '/alt-two',
         views: {
           'content@': {
             templateUrl: 'app/alt-two/alt-two.content.tpl.html'

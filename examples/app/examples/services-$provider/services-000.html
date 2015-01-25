@@ -26,6 +26,7 @@
     });
 
     app.config(function ($provide) {
+        debugger
         // this one is important as it can be used in the module config to setup
         // or the service before the app uses it.
         $provide.provider("game", function () {
