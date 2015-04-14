@@ -78,6 +78,9 @@
     });
 
 
+    // look at the console output. when $stateful = false the value is stored so the console output
+    // only happens once per item call. add a new item and the console.log will log only for that item.
+    // chance the wait time and it will run for all items items as the wait argument has changed.
     app.filter('waitFilter', function () {
         var waitFilter = function waitFilter(input, wait) {
             console.log(input, wait)
@@ -87,7 +90,7 @@
             return 'Item ' + input + ' waited ' + (new Date() - now) + 'ms';
         };
 
-        waitFilter.$stateful = false;
+        waitFilter.$stateful = true;
         return waitFilter;
     });
 </script>

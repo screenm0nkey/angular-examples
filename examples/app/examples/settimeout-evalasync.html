@@ -12,23 +12,25 @@
 <script>
     var app = angular.module('app', []);
 
+    var count = 0;
     app.controller('MainCtrl', function ($scope, $timeout) {
         $scope.$watch('nick', function () {
-            console.log('watch');
+            ++count;
+            console.log(count,'watch');
 
             // this will execute second
             $scope.$$postDigest(function () {
-                console.log('postDigest');
+                console.log(count,'postDigest');
             });
 
             // this will execute last
             $timeout(function () {
-                console.log('timeout');
-            });
+                console.log(count,'timeout');
+            },0);
 
             // this will execute first
             $scope.$evalAsync(function () {
-                console.log('evalAsync');
+                console.log(count,'evalAsync');
             });
 
 

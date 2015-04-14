@@ -35,7 +35,7 @@ app.get("/password-error", function (req, res) {
         setTimeout(function () {
             // the delay make angular form element go into pending state
             res.status(200).send('Great');
-        }, 500)
+        }, 1000)
     } else {
         res.status(404).send('Not found');
     }

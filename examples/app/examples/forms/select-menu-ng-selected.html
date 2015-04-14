@@ -1,0 +1,58 @@
+<!doctype html>
+<html ng-app="app">
+<head></head>
+<body ng-controller="MyCtrl">
+
+<pre>{{vm.colors}}</pre>
+
+<button ng-click="vm.setAmount(2)">2 list items</button>
+<button ng-click="vm.setAmount(5)">5 list items</button>
+
+<br/><br/><br/>
+<form name="myForm">
+    <select name="selecty1" ng-model="vm.selectedColour">
+        <option ng-repeat="opt in vm.colors track by $index" ng-selected="vm.selectedColour.name===opt.name">{{::opt.name}}</option>
+    </select>
+
+    <select name="selecty2" ng-model="vm.selectedColour">
+        <option ng-repeat="opt in vm.colors" ng-selected="vm.selectedColour.name===opt.name">{{::opt.name}}</option>
+    </select>
+
+    <select name="selecty3" ng-model="vm.selectedColour">
+        <option ng-repeat="opt in vm.colors" ng-selected="vm.selectedColour.name===opt.name">{{::opt.name}}</option>
+    </select>
+</form>
+
+
+
+
+<script src="/lib/angular-1.3/angular.js"></script>
+<script>
+    var app = angular.module('app', []);
+
+    app.controller('MyCtrl', ['$scope', MyCtrl]);
+
+    function MyCtrl($scope) {
+        var vm;
+        vm = $scope.vm = {};
+        
+        vm.setAmount = function (num) {
+            vm.colors = vm.colorStore.slice(0, num);
+        }
+
+        vm.colorStore = [
+            {name: 'black', shade: 'dark'},
+            {name: 'white', shade: 'light'},
+            {name: 'red', shade: 'dark'},
+            {name: 'blue', shade: 'dark'},
+            {name: 'yellow', shade: 'light'}
+        ];
+
+        vm.setAmount(5);
+        vm.selectedColour = vm.colors[2]; // red
+
+    }
+
+</script>
+</body>
+</html>

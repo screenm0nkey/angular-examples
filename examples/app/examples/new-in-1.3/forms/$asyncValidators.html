@@ -4,14 +4,17 @@
     <style type="text/css"></style>
     <title></title>
     <style>
+        input {
+            border: solid 4px;
+        }
         input.ng-invalid-username-available {
-            border : red solid 2px
+            border-color : red;
         }
         input.ng-valid-username-available {
-            border : green solid 2px
+            border-color : green;
         }
         input.ng-pending {
-            border : darkgoldenrod solid 2px
+            border-color : darkgoldenrod;
         }
         .pending {
             background-color: darkgoldenrod;
@@ -27,18 +30,19 @@
 
 <form name="myForm">
     $asyncValidators example. type 'goodone' and the username will validate. <br/>
-    <input type="text"
+
+    <input username-available-validator
+           type="text"
            class="input"
            name="username"
            minlength="4"
            maxlength="15"
            ng-model="form.data.username"
            pattern="^[-\w]+$"
-           username-available-validator
            placeholder="Choose a username for yourself"
            required />
 
-    <p ng-if="myForm.$pending.usernameAvailable && $scope.myForm.username.$dirty" class="pending">Checking username</p>
+    <p ng-if="myForm.$pending.usernameAvailable" class="pending">Checking username</p>
 </form>
 
 <ng-include src="'/lib/ng-stat.html'"></ng-include>
@@ -48,13 +52,13 @@
 <script type="text/javascript">
     var app = angular.module('app', ['angularStats']);
 
-    app.directive('usernameAvailableValidator', ['$http', '$q', function($http, $q) {
+    app.directive('usernameAvailableValidator', ['$http', '$q', function($http) {
         return {
             require : 'ngModel',
             link : function($scope, element, attrs, ngModel) {
+                // NOTE that this will not be called if the other validators are invalid
+                // so it won't be invoked if the username is less than 4 or more than 15
                 ngModel.$asyncValidators.usernameAvailable = function(username) {
-                    // NOTE that this will not be called if the other validators are invalid
-                    // so it won't be invoked if the username is less than 4 or more than 15
                     return $http.get('/password-error?u='+ username);
                 };
             }

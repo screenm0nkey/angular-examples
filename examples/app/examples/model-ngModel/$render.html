@@ -25,15 +25,24 @@
             template: '<div>Click to deposit $10</div>',
             require: 'ngModel',
             link: function (scope, element, attr, ngModel) {
+                // this is one way of formatting view data. Notice this gets data formatted
+                // from the formatted below.
+                ngModel.$formatters.push(function (text) {
+                    console.log(1, text)
+                    return text + '. That is a lot';
+                });
+
                 // $formatters  are formatting data going from Model to View
                 ngModel.$formatters.push($filter('currency', '£'));
+
+
 
                 // Called when the view needs to be updated. It is expected that the
                 // user of the ng-model directive will implement this method.
                 // ngmodel does not do a deep watch.
                 ngModel.$render = function () {
                     console.log(ngModel);
-                    element.text('you now have ' + ngModel.$viewValue);
+                    element.text('You now have ' + ngModel.$viewValue);
                 };
 
             }
