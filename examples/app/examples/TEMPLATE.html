@@ -1,35 +1,69 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>Modal 2</title>
+    <style>
+        ul { margin:0; list-style: none; padding:0;}
+        .modal {}
+        .header{background-color: #0b97c4}
+        .nav {background-color: lightpink}
+        .row-1 {background-color: orange}
+        .col-1 {background-color: goldenrod}
+        .col-2 {background-color: greenyellow}
+        .col-3 {background-color: olivedrab}
+        .col-4 {background-color: palevioletred}
+        .footer {background-color: lightcoral}
 
+        .modal, .body, .content {
+            display : flex;
+            flex-flow : row wrap;
+        }
+
+        .modal > * {flex : 1 100%;}
+        .body > * {flex : 1 100%;}
+        .content > * {flex : 1 100%;}
+
+        .nav { flex: 1 auto; }
+        .content { flex: 10 auto; }
+
+        .content .col { flex: 1 100%; }
+
+        @media all and (min-width: 600px) {
+            .content .col { flex: 1 50%; }
+        }
+
+        @media all and (min-width: 800px) {
+            .content .row-1 { flex: 1 100%; }
+            .content .col { flex: 1 auto; }
+            .content .col-3 { flex: 4 auto; }
+        }
+
+
+
+
+    </style>
 </head>
 <body>
-<form action="" str="formy">
-    <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-    <a href="#" id="fileSelect">Select some files</a>
-</form>
 
-<script>
-    var newFileName = '230 nick';
-    var str = /^\d+\s\w/.exec(newFileName)[0].toUpperCase()
-    newFileName = str + (newFileName.slice(str.length))
-    console.log(newFileName)
-
-
-    window.handleFiles = function (files) {
-        console.log(files);
-    };
-
-    var fileSelect = document.getElementById("fileSelect"),
-            fileElem = document.getElementById("fileElem");
-
-    fileSelect.addEventListener("click", function (e) {
-        if (fileElem) {
-            fileElem.click();
-        }
-        e.preventDefault(); // prevent navigation to "#"
-    }, false);
-</script>
+<div class="modal">
+    <div class="header">Header</div>
+    <div class="body">
+        <ul class="nav">
+            <li>Nav Item</li>
+            <li>Nav Item</li>
+            <li>Nav Item</li>
+        </ul>
+        <div class="content">
+            <div class="row-1">Search</div>
+            <div class="col col-1">Col 1</div>
+            <div class="col col-2">Col 2</div>
+            <div class="col col-3">Col 3 <br/>Col 3 <br/>Col 3 <br/>Col 3 <br/>Col 3 <br/></div>
+            <div class="col col-4">Col 4</div>
+            <div class="row-1 footer">Footer</div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
