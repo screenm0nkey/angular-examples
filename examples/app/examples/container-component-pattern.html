@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Arial, sans-serif;
+        }
+
+        form {
+            display: inline;
+        }
+
+        .view {
+            border-bottom: 1px dashed black;
+        }
+    </style>
+    <script src="/lib/underscore.js"></script>
+    <script type="text/javascript" src="/lib/angular-1.3/angular.js"></script>
+</head>
+<body>
+<user-greeting></user-greeting>
+<p>
+    <small>Double-click on the name above. Hit Enter to save changes.</small>
+</p>
+<script>
+    var m = angular.module('example', []);
+
+    // Fake service.
+    m.service('userService', function ($q) {
+        this.get = function () {
+            var deferred = $q.defer();
+            deferred.resolve({name: 'Bob'});
+            return deferred.promise;
+        };
+
+        this.save = function (userData) {
+            var deferred = $q.defer();
+            deferred.resolve(userData);
+            return deferred.promise;
+        };
+    });
+
+    // The container component that talks to userService.
+    m.directive('userGreeting', function () {
+        return {
+            template: '<user-greeting-message user="ctrl.user" on-save="ctrl.handleSave(user)"></user-gretting-message>',
+            controller: function (userService) {
+                this.userService = userService;
+
+                // Data fetching, same as before.
+                this.userService.get().then((function (user) {
+                    this.user = user;
+                }).bind(this));
+
+                this.handleSave = function (user) {
+                    this.userService.save(user).then((function (data) {
+                        this.user = data;
+                    }).bind(this));
+                };
+            },
+            bindToController: true,
+            controllerAs: 'ctrl'
+        };
+    });
+
+    // The UI component that renders UI based on the user data passed into it.
+    m.directive('userGreetingMessage', function () {
+        return {
+            scope: {
+                user: '=',
+                saveCallback: '&onSave'
+            },
+            template: '<p>Hello <editable-user-name user="ctrl.user" on-save="ctrl.handleSave(user)"></editable-user-name></p>',
+            controller: function () {
+                this.handleSave = function (user) {
+                    this.saveCallback({user: user});
+                }
+            },
+            bindToController: true,
+            controllerAs: 'ctrl'
+        };
+    });
+
+    m.directive('editableUserName', function () {
+        return {
+            scope: {
+                user: '=',
+                saveCallback: '&onSave'
+            },
+            template:
+            '<span>' +
+            '<span class="view" ng-dblclick="ctrl.edit()" ng-show="!ctrl.isEditing()">' +
+            '{{ ctrl.user.name }}' +
+            '</span>' +
+            '<form ng-submit="ctrl.handleSave()">' +
+            '<input ng-show="ctrl.isEditing()" ng-model="ctrl.userForm.name" ng-blur="ctrl.reset()" />' +
+            '</form>' +
+            '</span>'
+            ,
+            controller: function ($element) {
+                this.edit = function () {
+                    this.userForm = _.extend({}, this.user);
+
+                    setTimeout(function(){
+                        $element.find('input')[0].focus();
+                    }, 10);
+                };
+
+                this.reset = function () {
+                    this.userForm = null;
+                };
+
+                this.isEditing = function () {
+                    return !!this.userForm;
+                };
+
+                this.handleSave = function () {
+                    // Invoke callback from container.
+                    this.saveCallback({user: this.userForm});
+
+                    // Null out form to force use back to view mode.
+                    this.reset();
+                };
+            },
+            bindToController: true,
+            controllerAs: 'ctrl'
+        };
+    });
+
+    angular.element(document).ready(function() {
+        angular.bootstrap(document, ['example']);
+    });
+</script>
+</body>
+</html>

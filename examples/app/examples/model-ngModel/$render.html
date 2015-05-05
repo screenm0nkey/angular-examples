@@ -36,12 +36,12 @@
                 ngModel.$formatters.push($filter('currency', '£'));
 
 
-
                 // Called when the view needs to be updated. It is expected that the
                 // user of the ng-model directive will implement this method.
                 // ngmodel does not do a deep watch.
+                // http://stackoverflow.com/questions/21084088/why-ngmodels-render-is-not-called-when-the-model-changes-in-angularjs
                 ngModel.$render = function () {
-                    console.log(ngModel);
+                    console.log(2, ngModel);
                     element.text('You now have ' + ngModel.$viewValue);
                 };
 

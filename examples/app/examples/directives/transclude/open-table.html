@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+    <script src="/lib/angular-1.3/angular.js"></script>
+</head>
+<body ng-app="myapp">
+
+<ot-site>
+    <div transclude-to="head">
+        I render in head.
+    </div>
+    <div transclude-to="menu">
+        I render in menu.
+    </div>
+    <div transclude-to="body">
+        I render in body.
+    </div>
+</ot-site>
+
+<script type="text/ng-template" id="template.html">
+    <div class="ot-site">
+        <header class="ot-site--head" transclude-id="head">
+            <img class="ot-site--logo" src="//guestcenter.opentable.com/Content/img/icons/icon/2x/ot-logo-2x.png">
+        </header>
+        <menu class="ot-site--menu" transclude-id="menu">
+        </menu>
+        <main class="ot-site--body" transclude-id="body">
+        </main>
+        <footer class="ot-site--foot">
+            &copy; 2015 OpenTable, Inc.
+        </footer>
+    </div>
+</script>
+
+<script>
+    var app = angular.module('myapp', []);
+
+    app.directive('otSite', function () {
+        return {
+            scope: {},
+            templateUrl: 'template.html',
+            transclude: true,
+            restrict: 'E',
+            link: function (scope, elem, attrs, ctrl, transclude) {
+                transclude(function (clone, scope) {
+                    angular.forEach(clone, function (cloneEl) {
+                        if (!cloneEl.attributes) {
+                            cloneEl.remove();
+                            return;
+                        }
+
+                        var destinationId = cloneEl.attributes["transclude-to"].value;
+                        var destination = elem.find('[transclude-id="' + destinationId + '"]');
+                        debugger
+                        console.log(1, destination);
+
+                        if (destination.length) {
+                            destination.append(cloneEl);
+                        } else {
+                            cloneEl.remove();
+                        }
+                    });
+                });
+            }
+        };
+    });
+</script>
+
+</body>
+</html>

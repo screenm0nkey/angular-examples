@@ -38,6 +38,7 @@
 
                         // model -> view
                         // ngModelCtrl.$render is invoked when model value changes i.e.  scope.content = 'NICK';
+                        // http://stackoverflow.com/questions/21084088/why-ngmodels-render-is-not-called-when-the-model-changes-in-angularjs
                         ngModelCtrl.$render = function () {
                             elm.html(ngModelCtrl.$viewValue);
                             console.log(3, '$render');
