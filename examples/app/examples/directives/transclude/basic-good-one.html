@@ -1,0 +1,27 @@
+<!doctype html>
+<html ng-app="App">
+<head>
+    <script src="/lib/angular-1.2/angular.js"></script>
+</head>
+<body>
+
+
+
+<greeting2>
+    <a href="#">Greeting2</a>
+</greeting2>
+
+<script>
+    var app = angular.module('App', []);
+
+    app.directive('greeting2', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            template: "<button class='btn'>BAM!<span ng-transclude/></button>"
+        };
+    });
+</script>
+</body>
+</html>
