@@ -19,22 +19,52 @@ by.tagName
 by.xpath
 
 
-browser.wait - >
-return browser.isElementPresent(By.select('service')).then(el) - >
-return el
-is
-true;
+// selecting list items
+expect(element.all(by.binding('item.name')).first().getText()).toBe('Ben');
+
+expect(element(by.css('.list')).all(by.tagName('li')).get(2).getText()).toBe('Sophi');
+
+expect(element(by.repeater('item in items').row(4).column('{{ item.name }}')).getText()).toBe('Henry');
+
+element(by.css('.list')).all(by.tagName('li')).listItems.first().click();
+
+expect(element(by.css('.list')).all(by.tagName('li')).listItems.get(2).getAttribute('class').not.toMatch('selected');
+
+element.all(by.css('.dfdf')).get(4).sendKeys('foo');
+
+element(by.input('repo.name')).sendKeys('angular/angular.js\n');
+
+
+it('should have 30 issues', function() {
+    var elems = element.all(by.repeater('d in data'));
+    expect(elems.count()).toBe(30);
+});
+
+
+it('includes a user gravatar per-element', function() {
+    var elems = element.all(by.repeater('d in data'));
+
+    elems.first().then(function(elm) {
+        elm.findElement(by.tagName('img')).then(function(img) {
+            img.getAttribute('src').then(function(src) {
+                expect(src).toMatch(/gravatar\.com\/avatar/);
+            });
+        })
+    });
+});
 
 // This selects the first eleement in a list
-element.all(By.repeater('item in items')).then(items) - >
-expect(items.length).toBe(5)
-items[0].findElement(By.tagName("button")).click()
+element.all(By.repeater('item in items')).then(items) => {
+    expect(items.length).toBe(5)
+    items[0].findElement(By.tagName("button")).click()
+}
+
 
 // and this does the same as above but with slightlt differt syntax
 btns = element.all(By.repeater('item in items'))
-expect(btns.count()).toBe(5)
-btns.first().then(button) - >
-button.findElement(By.tagName("button")).click()
+    expect(btns.count()).toBe(5)
+    btns.first().then(button) =>
+        button.findElement(By.tagName("button")).click()
 
 
 element.all(by.selectedOption('dayColor.color')).then(function (arr) {
@@ -63,17 +93,13 @@ element.all(by.css('option')).then(function (optionsFromLongForm) {
 })
 
 
-it('includes a user gravatar per-element', function () {
-    var elems = element.all(by.repeater('d in data'));
-    elems.first().then(function (elm) {
-        elm.findElement(by.tagName('img')).then(function (img) {
-            img.getAttribute('src').then(function (src) {
-                expect(src).toMatch(/gravatar\.com\/avatar/);
-            });
-        })
+
+
+browser.wait(function () {
+    return browser.isElementPresent(By.select('service')).then(function (el) {
+        return el
     });
 });
-
 
 // delete all cookies
 browser.manage().deleteAllCookies();
@@ -106,9 +132,9 @@ modal = browser.findElement(by.id("login-modal"));
 
 browser.get('/angular-1.2/affiliate/9884736621?base=jl_fc&category=at_home_FCconsultation&SHID=bypass');
 browser.sleep(5000);
-browser.findElement(by.css('div.ui-view')).getText().
-    browser.getCurrentUrl()
-element.all(by.css('.dfdf')).get(4).sendKeys('foo');
+browser.findElement(by.css('div.ui-view')).getText()
+browser.getCurrentUrl()
+
 
 
 describe('angularjs homepage', function () {
