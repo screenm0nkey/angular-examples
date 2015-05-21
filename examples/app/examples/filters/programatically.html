@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+    <script src="/lib/angular-1.2/angular.js"></script>
+</head>
+<body ng-controller="nick">
+
+
+<script>
+    var app = angular.module('app', []);
+    
+    app.controller('nick', function ($scope, $filter) {
+
+        $scope.friends = [
+            { name: "Peter",   lastname: "Lowman"  },
+            { name: "Pablo",   lastname: "Light"  },
+            { name: "Linda",   lastname: "Car"  },
+            { name: "Marta",   lastname: "Mouse"  },
+            { name: "Othello", lastname: "Peter" },
+            { name: "Markus",  lastname: "Mart" }
+        ];
+
+
+        var filter = $filter('filter')($scope.friends, 'p'); // returns Peter and Pablo and Othello
+
+        var filter = $filter('filter')($scope.friends, {name:'p'}); // returns Peter and Pablo
+
+        var filter = $filter('filter')($scope.friends, {lastname:'p'}); // returns Othello
+
+
+
+
+    })
+
+
+
+</script>
+</body>
+</html>

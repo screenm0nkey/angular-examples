@@ -4,9 +4,12 @@
     <script src="/lib/angular-1.2/angular.js"></script>
 </head>
 <body ng-app="app" ng-controller="AppCtrl">
-{{gtitle}}
+{{title}}
 
 <script>
+
+
+
     var app = angular.module("app", []);
 
     app.factory("game", function () {
@@ -27,6 +30,15 @@
             console.log(2, $scope.title);
         });
     });
+
+
+    Car.$inject = ['game'];
+
+    function Car(game) {
+        debugger
+    }
+
+    app.factory("car", car);
 
 </script>
 </body>

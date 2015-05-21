@@ -9,6 +9,17 @@ afterEach(function(){})
 it("inject into spec", inject(function($rootScope) {}));
 
 
+// this...
+module('somemodule');
+module(function($provide){
+    $provide.value('someservice', {})
+});
+// ...is the same as this...
+module('somemodule', function($provide){
+    $provide.value('someservice', {})
+});
+
+
 
 describe('some', function(){
     var $rootScope;
@@ -22,6 +33,7 @@ describe('some', function(){
 
         inject(function(_$rootScope_, _$httpBackend_) {})
     }
+}
 
 
 // create directive

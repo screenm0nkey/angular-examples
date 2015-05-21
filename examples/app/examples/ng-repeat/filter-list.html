@@ -11,7 +11,7 @@
         limit
         <input type="text" ng-model="limitx">
         name
-        <input type="text" ng-model="search.name">
+        <input type="text" ng-model="search.name"> <!--set search to search.$ to search all property fields -->
         <table>
             <tr ng-repeat="actor in avengers.cast | orderBy:'name' | limitTo:limitx | filter:search">
                 <td>{{actor.name | lowercase}}</td>
