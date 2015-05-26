@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Modal 2</title>
+    <style>
+        ul {
+            margin: 0;
+            list-style: none;
+            padding: 0;
+            overflow: hidden;
+            overflow-y: auto;
+            height: 125px;
+            background-color: antiquewhite;
+            padding: 0 10px;
+        }
+
+        li {
+            background-color: #bd362f;
+            border-bottom: 1px solid antiquewhite;
+            padding: 3px;
+        }
+
+        li.active {
+            background-color: #0088CC;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<nav-component data-count="15"></nav-component>
+
+<script type="text/ng-template" id="my-template.html">
+    <ul class="nav">
+        <li ng-repeat="item in vm.items">Item {{::item}}</li>
+    </ul>
+</script>
+
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/angular-1.3/angular.js"></script>
+<script>
+
+    var app = angular.module('app', []);
+    var KEYUP = 38;
+    var KEYDOWN = 40;
+
+    app.directive('navComponent', function () {
+        return {
+            restrict: 'EA',
+            templateUrl: 'my-template.html',
+            replace: true,
+            scope: {
+                count : '@'
+            },
+            bindToController: true,
+            link : linkFunc,
+            controller: 'NavCtrl as vm'
+        }
+    });
+
+    function linkFunc (scope) {
+        var vm = scope.vm;
+        vm.items = [];
+        for(var i = 0, count = parseInt(vm.count,10); i < count; i++) {
+            vm.items.push(i);
+        }
+    }
+
+    app.controller('NavCtrl', function ($scope, $element, $timeout) {
+        $timeout(function(){
+            $element.find('li:first').addClass('active');
+        },0)
+
+
+    })
+
+
+</script>
+</body>
+</html>
