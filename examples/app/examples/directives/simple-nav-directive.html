@@ -68,12 +68,50 @@
         }
     }
 
-    app.controller('NavCtrl', function ($scope, $element, $timeout) {
+    app.controller('NavCtrl', function ($element, $document, $timeout) {
         $timeout(function(){
             $element.find('li:first').addClass('active');
-        },0)
+        },0);
 
 
+        function setScrollTop() {
+            var liHeight = $element.find('li:first').outerHeight(); // 25
+            var listHeight = $element.outerHeight() - liHeight; // 100 - 25 = 75
+            var val = ($element.find('li').index($element.find('li.active')) * liHeight) - listHeight;
+
+            if (val < 0) {
+                val = 0;
+            }
+
+            $element.animate({
+                scrollTop: val
+            }, 0)
+        }
+
+        $document.on('keyup', function (evt) {
+            if (evt.keyCode === KEYDOWN) {
+                var el = $element.find('.active').removeClass('active').next();
+
+                if (!el[0]) {
+                    el = $element.find('li:first');
+                }
+
+                el.addClass('active');
+                setScrollTop();
+            }
+
+            if (evt.keyCode === KEYUP) {
+                var el = $element.find('.active').removeClass('active').prev();
+
+                if (!el[0]) {
+                    el = $element.find('li:last');
+                }
+
+                el.addClass('active');
+                setScrollTop()
+
+            }
+        })
     })
 
 
