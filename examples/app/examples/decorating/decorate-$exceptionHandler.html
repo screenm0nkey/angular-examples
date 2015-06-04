@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+    <script src="/lib/angular-1.2/angular.js"></script>
+    <title></title>
+</head>
+<body ng-controller="MainCtrl">
+<div foo></div>
+
+<script>
+
+    var app = angular.module('app', []);
+
+    app.controller('MainCtrl', function ($scope) {
+        throw {message: 'nick error message'};
+    });
+
+
+    // http://stackoverflow.com/questions/13595469/how-to-override-exceptionhandler-implementation
+    // example here... http://jsfiddle.net/Jq8KK/30/
+
+    /*
+    // over the $exceptionHandler handler like this...
+    app.factory('$exceptionHandler', function () {
+        return function (exception, cause) {
+            alert(exception.message);
+        };
+    });
+
+    // or override it with your own service like this
+     app.provider('$exceptionHandler', {
+        $get : function(myServiceOverride) {
+        return myServiceOverride;
+        }
+     });
+    */
+
+
+    // this is the way to decorate a service but you can also just override it, like examples above
+    app.config(function ($provide) {
+        $provide.decorator('$exceptionHandler', ['$delegate', function ($delegate) {
+            return function (exception, cause) {
+                $delegate(exception, cause);// angular will log this error
+                console.log(1, exception)
+            };
+        }]);
+    });
+</script>
+</body>
+</html>

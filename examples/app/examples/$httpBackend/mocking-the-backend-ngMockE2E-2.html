@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-app="app" ng-controller="MainCtrl">
+
+<h3>Simple example of using $httpBackend mock on jsfiddle</h3>
+
+
+<a ng-click="switchTpl()" style="cursor: pointer">click here to toggle templates switch tpl</a><br/>
+notice there are no network requests for templates as we catch them with out $httpbackend
+
+<br/>(current tpl: {{template[current]}})<br />
+<ng-include src="template[current]"></ng-include>
+<hr />
+
+<button ng-click="loadPassword()">load from angularjs.org (JSONP)</button><br />
+Password: {{password}}
+
+<script src="/lib/angular-1.3/angular.js"></script>
+<script src="/lib/angular-1.3/angular-mocks.js"></script>
+<script>
+    var app = angular.module('app', []);
+
+    // we want to use $httpBackend mock
+    app.config(function($provide) {
+        $provide.decorator('$httpBackend', angular.mock.e2e.$httpBackendDecorator);
+    });
+
+    // define our fake backend
+    app.run(function($httpBackend) {
+        // do not bother server, respond with given content
+        $httpBackend.whenGET('template1.html').respond(200, '<h2>just some content</h2>', {header: 'one'});
+        // you can specify only content, it will respond with 200 status code
+        $httpBackend.whenGET('template2.html').respond('<h1>Another content</h1>');
+        // do real request
+        $httpBackend.whenJSONP().passThrough();
+    });
+
+
+    // a controller
+    app.controller('MainCtrl', function ($http, $scope) {
+
+        $scope.current = 0;
+        $scope.template = ['template1.html', 'template2.html'];
+
+        $scope.switchTpl = function() {
+            this.current = (this.current + 1) % this.template.length;
+        };
+
+
+        $scope.loadPassword = function() {
+            $http.jsonp('http://angularjs.org/generatePassword.php?callback=JSON_CALLBACK').then(function (resp) {
+                $scope.password = resp.data.password;
+            })
+        };
+    });
+</script>
+
+</body>
+</html>

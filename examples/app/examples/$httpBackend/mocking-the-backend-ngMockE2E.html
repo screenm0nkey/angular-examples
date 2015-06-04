@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-controller="AppCtrl">
+
+<button ng-click="loadPerson(1)">Luke Skywalker</button>
+<button ng-click="loadPerson(2)">C-3PO</button>
+<button ng-click="loadPerson(3)">R2-D2</button>
+
+<script src="/lib/angular-1.3/angular.js"></script>
+<script src="/lib/angular-1.3/angular-mocks.js"></script>
+<script>
+    angular.module('app', ['ngMockE2E'])
+            .controller('AppCtrl', function ($scope, $http, $httpBackend) {
+
+                $httpBackend
+                        .whenGET(function (url) {
+                            return +url.substr(-2, 1) === 1;
+                        })
+                        .respond({
+                            name: 'Buzz Lightyear'
+                        });
+
+                $httpBackend
+                        .whenGET('//swapi.co/api/people/2/')
+                        .respond({
+                            name: 'Jean-Luc Picard'
+                        });
+
+                $httpBackend
+                        .whenGET(/.*/)
+                        .passThrough();
+
+                $scope.loadPerson = function (num) {
+                    $http
+                            .get('//swapi.co/api/people/' + num + '/')
+                            .then(function (result) {
+                                console.log(result.data.name);
+                            });
+                };
+
+            });
+</script>
+
+</body>
+</html>
