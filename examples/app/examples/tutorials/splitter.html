@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Splitter</title>
+
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            overflow: hidden;
+            margin: 0;
+            background-color: #1f2229;
+            color: #ffffff;
+        }
+
+        .app-component {
+            display: flex;
+            flex-direction: column;
+            min-width: 750px;
+            width: 100%;
+            height: 100%;
+        }
+
+        [ng-click] {
+            cursor: pointer;
+        }
+
+
+        .splitter.vertical .resize-arrow .arrow {
+            width: 0;
+            height: 0;
+            border: none;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 4px solid white;
+        }
+
+        .splitter.vertical .resize-down-right .arrow {
+            width: 0;
+            height: 0;
+            border: none;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid white;
+        }
+
+        .splitter.horizontal .resize-arrow .arrow {
+            width: 0;
+            height: 0;
+            border: none;
+            border-top: 4px solid transparent;
+            border-right: 4px solid white;
+            border-bottom: 4px solid transparent;
+        }
+
+        .splitter.horizontal .resize-down-right .arrow {
+            width: 0;
+            height: 0;
+            border: none;
+            border-top: 4px solid transparent;
+            border-left: 4px solid white;
+            border-bottom: 4px solid transparent;
+        }
+
+        splitter-container-component {
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        splitter-container-component[direction="vertical"] {
+            flex-direction: column;
+            height: 100%;
+        }
+
+        splitter-container-component > *:last-child {
+            flex: 1;
+            overflow: hidden;
+            z-index: 3;
+            position: relative;
+        }
+
+        splitter-container-component .panel-body {
+            background: linear-gradient(#17191e, #181b1f);
+            margin: 0;
+            padding: 0;
+        }
+
+        splitter-container-component .panel-body .well {
+            margin: 0;
+        }
+
+        splitter-container-component .panel-body .well.left-well {
+            padding-right: 0;
+        }
+
+        splitter-container-component .panel-body .well.right-well {
+            padding-left: 0;
+        }
+
+        splitter-container-component .activity-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .splitter-container {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .splitter-container.vertical {
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .splitter-container .splitter-item:last-child {
+            flex: 1;
+        }
+
+        .splitter {
+            display: flex;
+            align-items: stretch;
+            justify-content: space-around;
+            position: relative;
+            z-index: 100;
+            background: linear-gradient(#515359, #464a52);
+        }
+
+        .splitter .resize-arrow {
+            flex: 1;
+            display: inline-block;
+            transition: opacity 0.25s;
+            opacity: 1;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            width: 10px;
+        }
+
+        .splitter .resize-arrow .grip {
+            position: absolute;
+            content: '';
+            background: transparent no-repeat left top;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAACgCAYAAACMoXt9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QUMwOTA1OTJFMUU1MTFFNDlDOUE5OTI0QzNFMTA5NzUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QUMwOTA1OTNFMUU1MTFFNDlDOUE5OTI0QzNFMTA5NzUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpBQzA5MDU5MEUxRTUxMUU0OUM5QTk5MjRDM0UxMDk3NSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpBQzA5MDU5MUUxRTUxMUU0OUM5QTk5MjRDM0UxMDk3NSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PhcJP8IAAAdZSURBVHja7J15bBVF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');
+        }
+
+        .splitter .resize-arrow .arrow {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .splitter .resize-arrow.hide {
+            visibility: hidden;
+        }
+
+        .splitter .resize-arrow.ng-hide {
+            opacity: 0;
+        }
+
+        .splitter.horizontal {
+            flex-direction: column;
+            background: linear-gradient(90deg, #515359, #464a52);
+            width: 10px;
+            height: auto;
+            cursor: ew-resize;
+        }
+
+        .splitter.horizontal .resize-arrow:hover {
+            background: linear-gradient(90deg, #0771bf, #15456c);
+        }
+
+        .splitter.horizontal .resize-arrow .grip {
+            background-position: 3px -63px;
+            height: 100px;
+            width: 10px;
+            left: 0;
+            top: 50%;
+            margin: -50px 0 0 0;
+            cursor: ew-resize;
+        }
+
+        .splitter.horizontal .resize-arrow .arrow {
+            top: 50%;
+            left: 3px;
+            margin: -3px 0 0 0;
+        }
+
+        .splitter.vertical {
+            flex-direction: row;
+            height: 10px;
+            width: auto;
+            cursor: ns-resize;
+        }
+
+        .splitter.vertical .resize-arrow:hover {
+            background: linear-gradient(#0771bf, #15456c);
+        }
+
+        .splitter.vertical .resize-arrow .grip {
+            background-position: 4px -47px;
+            width: 100px;
+            height: 10px;
+            left: 50%;
+            top: 0;
+            margin: 0 0 0 -50px;
+            cursor: ns-resize;
+        }
+
+        .splitter.vertical .resize-arrow .arrow {
+            top: 3px;
+            left: 50%;
+            margin: 0 0 0 -4px;
+        }
+    </style>
+</head>
+<body>
+<app-component class="ng-cloak"></app-component>
+
+
+<script type="text/ng-template" id="app.html">
+    <div class="app-component flex-box" ms-loading-icon ms-error-notification>
+        <div class="another-bar" style="position: relative; background: gray; height: 40px;">Somebar</div>
+
+        <splitter-container-component direction="vertical">
+            <!-- top-->
+            <splitter-container-component direction="horizontal">
+                <!--top left -->
+                <h1>top left</h1>
+
+                <splitter-component direction="horizontal" identifier="v-top"></splitter-component>
+
+                <!--top left -->
+                <h1>bottom left</h1>
+            </splitter-container-component>
+
+
+            <splitter-component direction="vertical" identifier="h-middle"></splitter-component>
+
+            <!-- bottom -->
+            <section class="activity-section">
+                <div class="another-bar" style="position: relative; background: gray; height: 40px;">Somebar</div>
+                <splitter-container-component direction="horizontal" class="panel-body flex" style="flex: 1;">
+                    <!--bottom left -->
+                    <h1>bottom left</h1>
+
+                    <splitter-component direction="horizontal" identifier="v-bottom"></splitter-component>
+                    <!--bottom right -->
+                    <h1>bottom right</h1>
+                </splitter-container-component>
+            </section>
+        </splitter-container-component>
+    </div>
+</script>
+
+
+<script type="text/ng-template" id="splitter.html">
+    <div class="splitter">
+    <span class="resize-arrow resize-up-left" ng-class="{ hide: vm.isLeft }">
+        <i class="grip"></i>
+        <i class="arrow"></i>
+    </span>
+
+    <span class="resize-arrow resize-down-right" ng-class="{ hide: vm.isRight }">
+        <i class="grip"></i>
+        <i class="arrow"></i>
+    </span>
+    </div>
+</script>
+
+
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/angular-1.3/angular.js"></script>
+<script src="/lib/lodash.js"></script>
+<script>
+    var app = angular.module('app', []);
+</script>
+
+
+<script>
+    (function () {
+        var app = angular.module('app');
+
+        app.directive('appComponent', function ($compile) {
+            return {
+                restrict: 'E',
+                templateUrl: 'app.html',
+                controller: angular.noop
+            }
+        });
+    }())
+</script>
+
+
+<script>
+    (function () {
+        'use strict';
+
+        app.directive('splitterContainerComponent', function () {
+            return {
+                restrict: 'E',
+                templateUrl: null,
+                controller: angular.noop,
+                controllerAs: 'vm',
+                bindToController: true,
+                scope: {
+                    direction: '@' // horizontal | vertical
+                }
+            }
+        });
+    })();
+</script>
+
+
+<script>
+    (function () {
+        'use strict';
+
+        var DRAG_THRESHOLD = 10;
+
+        var app = angular.module('app');
+
+        app.directive('splitterComponent', function ($timeout, $window) {
+            return {
+                restrict: 'E',
+                replace: true,
+                templateUrl: 'splitter.html',
+                controller: angular.noop,
+                link: link,
+                controllerAs: 'vm',
+                bindToController: true,
+                scope: {
+                    direction: '@', // horizontal | vertical
+                    initialAnchorSize: '='
+                }
+            };
+
+
+            function link(scope, element, attrs) {
+                console.log('lowman', scope.vm);
+                var anchorElt = element.prev(),
+                        containerElt = anchorElt.closest('.app-component'),
+                        splitterBarSize = 0,
+                        identifier = attrs.identifier,
+                        isPercentage = /%$/,
+                        vm = scope.vm;
+
+                vm.isLeft = false;
+                vm.isRight = false;
+                vm.direction = vm.direction || 'horizontal';
+                vm.horizontal = vm.direction === 'horizontal';
+                vm.vertical = vm.direction === 'vertical';
+
+
+                prepare();
+                attachEvents();
+                attachListeners();
+
+                function attachListeners() {
+                    scope.$on('$destroy', function () {
+                        element.off();
+                        angular.element($window).off('.splitter');
+                    });
+
+                    scope.$on('splitter.setInitialSize', function (event, args) {
+                        if (args.identifier === identifier) {
+                            resizeAnchorElement(args.size);
+                            adjustResizeButtons();
+                            notifyResize(args.size);
+                        }
+                    });
+                }
+
+
+                function prepare() {
+                    var splitterBar = element.addClass(vm.direction),
+                            localStorageInfo = localStorage.getItem(identifier),
+                            initialSize = convertSizeToPercentage(vm.initialAnchorSize || '50%');
+
+                    if (localStorageInfo) {
+                        localStorageInfo = JSON.parse(localStorageInfo);
+                        initialSize = localStorageInfo.anchorSize;
+                    }
+
+                    splitterBarSize = vm.vertical ? splitterBar.outerHeight() : splitterBar.outerWidth();
+
+                    if (vm.vertical) {
+                        anchorElt.css({
+                            'flex': 'initial',
+                            'height': initialSize
+                        });
+                    }
+                    else {
+                        anchorElt.css({
+                            'flex': 'initial',
+                            'width': initialSize
+                        });
+                    }
+                    adjustResizeButtons();
+                }
+
+
+                function attachEvents() {
+                    var start = null,
+                            _wasDragInProgress = false,
+                            hasClass = function (elt, className) {
+                                var jElt = angular.element(elt);
+                                return (jElt.hasClass(className) || jElt.parent().hasClass(className));
+                            };
+
+                    // Clicks on arrows are used to collapse the first/second panel
+                    element.on('click', function (event) {
+                        if (_wasDragInProgress) {
+                            // We only want to handle straight clicks
+                            return;
+                        }
+
+                        var metrics = gatherMetrics(),
+                                finalSize = null;
+
+                        if (metrics.isOnEdge) {
+                            finalSize = '50%';
+                            resizeAnchorElement('50%');
+                        }
+                        else {
+                            var collapseAnchor = hasClass(event.target, 'resize-up-left'),
+                                    expandAnchor = hasClass(event.target, 'resize-down-right');
+
+                            if (collapseAnchor) {
+                                finalSize = '0%';
+                                resizeAnchorElement('0%');
+                            }
+
+                            if (expandAnchor) {
+                                finalSize = '100%';
+                                resizeAnchorElement('100%');
+                            }
+                        }
+
+                        adjustResizeButtons();
+
+                        if (finalSize) {
+                            notifyResize(finalSize);
+                        }
+                    });
+
+
+                    angular.element($window).on('resize.splitter', _.debounce(function () {
+                        var size = null, windowResized = true;
+                        notifyResize(size, windowResized);
+                    }, 200));
+
+
+                    element.on('mousedown', function (event) {
+                        _wasDragInProgress = false;
+
+                        scope.$emit('splitter.dragStarted');
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                        start = {
+                            x: event.pageX,
+                            y: event.pageY,
+                            size: vm.vertical ? anchorElt.outerHeight() : anchorElt.outerWidth()
+                        };
+
+                        angular.element($window).one('mouseup', mouseUp);
+                        angular.element($window).on('mousemove', mouseMove);
+                    });
+
+
+                    function mouseUp(event) {
+                        if (!start) {
+                            return;
+                        }
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                        start = null;
+                        angular.element($window).off('mousemove', mouseMove);
+                        adjustResizeButtons();
+                        notifyResize();
+                    }
+
+
+                    function mouseMove(event) {
+                        var dragDelta = vm.horizontal ? Math.abs(event.pageX - start.x) : Math.abs(event.pageY - start.y);
+                        if (dragDelta > DRAG_THRESHOLD) {
+                            _wasDragInProgress = true;
+                        }
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                        var delta = { x: event.pageX - start.x, y: event.pageY - start.y },
+                                size = vm.vertical ? (start.size + delta.y) : (start.size + delta.x);
+
+                        resizeAnchorElement(size);
+                    }
+                }
+
+
+                function resizeAnchorElement(size) {
+                    size = convertSizeToPercentage(size);
+                    if (vm.vertical) {
+                        anchorElt.outerHeight(size);
+                    }
+                    else {
+                        anchorElt.outerWidth(size);
+                    }
+                }
+
+
+                function convertSizeToPx(size) {
+                    if (isPercentage.test(size)) {
+                        size = Number(size.slice(0, -1));
+
+                        if (vm.vertical) {
+                            size = Math.round((containerElt.height() / 100) * size);
+                        }
+                        else {
+                            size = Math.round((containerElt.width() / 100) * size);
+                        }
+                    }
+                    return size;
+                }
+
+
+                function convertSizeToPercentage(size) {
+                    if (!isPercentage.test(size)) {
+                        var height = size / containerElt.height();
+                        var width = size / containerElt.width();
+                        size = Math.round((vm.vertical ? height : width) * 100);
+                        size = size > 100 ? 100 : size;
+                        size = size < 0 ? 0 : size;
+                        size = size + '%';
+                    }
+                    return size;
+                }
+
+
+                function getAnchorSize() {
+                    var styleRegExp, execArr;
+
+                    if (vm.vertical) {
+                        styleRegExp = /height:\s*(\d{1,3}%)/;
+
+                    } else {
+                        styleRegExp = /width:\s*(\d{1,3}%)/;
+                    }
+
+                    execArr = styleRegExp.exec(anchorElt.attr('style'));
+                    return execArr && execArr[1];
+                }
+
+
+                function notifyResize(size, windowResized) {
+                    size = size || getAnchorSize();
+
+                    if (size) {
+                        var args = {
+                            identifier: identifier,
+                            anchorSizePx: convertSizeToPx(size),
+                            anchorSize: convertSizeToPercentage(size),
+                            isVerticalChange: vm.vertical,
+                            windowResized: windowResized
+                        };
+                        // the splitter bar values are saved to the api in the appComponent
+                        localStorage.setItem(args.identifier, JSON.stringify(args));
+                        console.log('$emit splitter.sizeChanged', args);
+                        scope.$emit('splitter.sizeChanged', args);
+                    }
+                }
+
+
+                function adjustResizeButtons() {
+                    $timeout(function () {
+                        var m = gatherMetrics();
+                        vm.isLeft = m.anchorSizeNum < 3;
+                        vm.isRight = m.anchorSizeNum > 98;
+                    });
+                }
+
+
+                function gatherMetrics() {
+                    var anchorSize = getAnchorSize(),
+                            anchorSizeNum = parseInt(anchorSize, 10),
+                            containerSize = vm.vertical ? containerElt.height() : containerElt.width();
+                    // convert the percentages as sometimes a 100% and 0% position defaults to 99% and 1%.
+                    return {
+                        anchorSize: anchorSize,
+                        anchorSizeNum: anchorSizeNum,
+                        containerSize: containerSize,
+                        isOnEdge: anchorSizeNum < 3 || anchorSizeNum > 98
+                    };
+                }
+            }
+        });
+    }())
+
+
+</script>
+
+</body>
+</html>

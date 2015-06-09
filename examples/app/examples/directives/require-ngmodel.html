@@ -3,8 +3,7 @@
 <head>
     <script src="/lib/angular-1.2/angular.js"></script>
 </head>
-<body ng-app="app">
-
+<body ng-app="app" ng-init="city={fity:'London'}">
 
 <input type="text" ng-model="city.fity" placeholder="Enter a city"/>
 
@@ -25,8 +24,8 @@
                 ngModel: '='
             },
             template: '<div class="sparkline"><h4>Weather for {{ngModel}}</h4></div>',
-            link: function (scope) {
-                debugger
+            link: function (scope, el, attrs, ngModelCtrl) {
+                console.log(1, scope.ngModel)
             }
 
         }

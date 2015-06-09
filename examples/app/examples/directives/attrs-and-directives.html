@@ -15,8 +15,8 @@
 
     });
 
-    app.directive('myAttrTest', function ($parse) {
-        return function (scope, element, attrs) {
+    app.directive('myAttrTest', function () {
+        return function link (scope, element, attrs) {
             var converted = angular.fromJson(attrs.test2);
             console.log(attrs)
             console.log(converted);
