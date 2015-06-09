@@ -9,7 +9,7 @@ var express = require('express'),
     _ = require('underscore');
 
 var staticDirs = ['css', 'lib', 'data'],
-    PATH = path.join(__dirname, 'app/examples'),
+    PATH = path.join(__dirname, 'app/src'),
     app = express();
 
 app.use(express.directory(PATH, {icons: true}));
