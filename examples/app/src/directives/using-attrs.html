@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="/lib/angular-1.3/angular.js"></script>
+</head>
+
+<body ng-app="myApp" ng-controller="BoxCtrl as boxCtrl">
+
+    <box-list boxes="boxCtrl.boxes"></box-list>
+
+<script>
+    // Code goes here
+    angular.module('myApp', [])
+            .controller('BoxCtrl', boxCtrl)
+            .directive('boxList', boxDirective);
+
+    function boxCtrl() {
+        this.boxes = [{value: 1}]
+    }
+
+    function boxDirective() {
+        return {
+            controllerAs: 'boxListCtrl',
+            controller : function ($scope, $attrs) {
+                // this only works without an isolated scope as it needs access to the properties
+                // on the scope chain
+                $scope.$eval($attrs.boxes);
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

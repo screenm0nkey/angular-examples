@@ -1,3 +1,4 @@
+// module declared in the splitter.js
 angular.module('bgDirectives', [])
     .directive('bgSplitter', function () {
         return {

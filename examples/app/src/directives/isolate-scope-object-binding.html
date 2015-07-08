@@ -1,37 +1,42 @@
 <!doctype html>
 <html>
 <head>
-    <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.3/angular.js"></script>
 </head>
 <body>
 
 <div ng-app="drinkApp">
-    <div ng-controller="AppCtrl">
-        Ctrl<br/>
-        <input type="text" ng-model="ctrlFlavor">
+    <div ng-controller="AppCtrl as ctrl">
+        Ctrl
         <br/>
+        <input type="text" ng-model="ctrl.flavor">
+        <br/>
+
         Directive
-        <div drink flavor="ctrlFlavor"></div>
+        <div drink="ctrl.flavor"></div>
     </div>
 </div>
 
 
 <script>
-    // '=' this example shows how to create two way binding with an object between
+    // '=' this example shows how to create two way binding with an string
     // '=' the controller and directive
     var app = angular.module("drinkApp", []);
 
-    app.controller("AppCtrl", function ($scope) {
-        $scope.ctrlFlavor = "blackberry";
+    app.controller("AppCtrl", function () {
+        this.flavor= 'Chocolate';
     });
 
     app.directive("drink", function () {
         return {
             scope: {
-                flavor: "="
+                drink: "="
             },
             //template: '<div>{{ flavor }}</div>'
-            template: '<input type="text" ng-model="flavor">'
+            template: '<input type="text" ng-model="drink">',
+            link : function(scope) {
+
+            }
         };
     });
 
