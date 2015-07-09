@@ -1,26 +1,29 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-    <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.3/angular.js"></script>
 </head>
 <body>
-<div ng-controller="MainCtrl as nick"></div>
+<div ng-controller="MainCtrl as vm">
+    {{vm.qty}} {{vm.cost}}
+</div>
 
 <script>
     window.app = angular.module('app', [])
 
     app.controller('MainCtrl', ['$scope', '$timeout',
         function MainCtrl($scope, $timeout) {
-            debugger
-            var self = this; // self = MainCtrl
-            // this === self === MainCtrl === $scope.nick
+            // this is an instance object of MainCtrl
+            // this.constructor === MainCtrl
+            // this === $scope.vm
+
             this.qty = 1;
             this.cost = 2;
 
             $timeout(function () {
                 console.log(self, $scope);
-                console.log($scope.nick === self); // true
-            });
+                console.log($scope.vm === this); // true
+            }.bind(this));
         }]);
 </script>
 </body>
