@@ -17,7 +17,7 @@
             restrict: 'E',
             replace: true,
             template: '<h3>Hello "{{vm.initialAnchorSize.msg}}"</h3>',
-            controller: angular.noop, // we only want the
+            controller: controller,
             link: link,
             controllerAs: 'vm',
             bindToController: true,
@@ -27,8 +27,19 @@
             }
         };
 
+        /*
+            bindToController takes the isolated scope properties i.e. direction and initialAnchorSize
+            and moves them on to the vm object. they will no longer be on the scope.
+            i.e $scope.vm.direction 
+         */
+        function controller ($scope) {
+            console.log($scope.vm === this); // this will be true even when bindToController is false
+            console.log($scope.vm.direction === this.direction); // true
+        }
+
         // notice that this link has access to the vm object and the injectable services
         function link(scope, element, attrs) {
+            debugger
             console.log('lowman', scope.vm);
         }
     });
