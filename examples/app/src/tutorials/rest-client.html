@@ -1,0 +1,228 @@
+<!doctype html>
+<html ng-app="RestClientApp">
+<head>
+    <title>Rest Client</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/yesmeck/jquery-jsonview/master/dist/jquery.jsonview.css">
+
+    <style>
+        h3 {
+            color: #fff;
+            font-size: 14px;
+        }
+        body {
+            background-color: #262a33;
+            font-size: 11px;
+
+        }
+        label {
+            color: #fff;
+        }
+        .jsonview .prop {
+            font-weight: bold;
+            color: rgb(210, 210, 210);
+        }
+        .jsonview li {
+            color: gray;
+        }
+        .form-control {
+            background-color: #121315;
+            border: 1px solid #353535;
+        }
+        .section-1 {
+            margin-top:10px;
+        }
+        .section-1 td{
+            padding:10px;
+        }
+        .section-3 {
+            height:700px;
+        }
+        .section-2 {
+            height: 200px;
+        }
+        table {
+            width:100%;
+            height:100%;
+        }
+        .form-control {
+            color: #E2E2E2;
+            font-weight: normal;
+        }
+
+        .form-control.error {
+            color: RED;
+        }
+
+        textarea{
+            resize: none;
+        }
+
+        .out {
+            height: 95%;
+            overflow: auto;
+            background-color: #121315;
+            border: 1px solid #353535;
+        }
+
+
+    </style>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdn.rawgit.com/yesmeck/jquery-jsonview/master/dist/jquery.jsonview.js"></script>
+
+</head>
+
+<body>
+<div ng-controller="restCtrl" ng-cloak>
+    <h3>Rest Client</h3>
+    <div class="section-1">
+        <table  style="width:100%">
+            <tr>
+                <td style="width:10%;">
+                    <label> Method: </label>
+                    <select ng-model="method" ng-options="item for item in verbs">
+                    </select>
+                </td>
+                <td style="width:80%"><input ng-model="url" placeholder="url" class="form-control" style="width:100%;" /></td>
+                <td style="width:10%"><button ng-click="send()" ng-disabled="!url" class="btn btn-primary">SEND</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section-2">
+        <table>
+            <tr>
+                <td>
+                    <label> Headers: </label>
+                    <textarea class="form-control"
+                              ng-change="headerChange()"
+                              ng-class="{true:'error'}[errorHeaders]"
+                              style="height:90%" ng-model="headers">
+                    </textarea>
+                </td>
+                <td>
+                    <label> Payload / Params (JSON): </label>
+                    <textarea class="form-control"
+                              ng-change="payloadChange()"
+                              ng-class="{true:'error'}[errorPayload]"
+                              style="height:90%" ng-model="payload">
+                    </textarea>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+
+    <div class="section-3">
+        <table>
+            <tr>
+                <td style="width:35%">
+                    <label> Request: </label>
+                    <div class="out" id="request"> </div>
+
+                </td>
+                <td>
+                    <label> Response: </label>
+                    <div class="out" id="response"> </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+</body>
+
+
+<script>
+    var restApp = angular.module("RestClientApp", []);
+
+
+    restApp.controller("restCtrl", function($scope, $http) {
+        $scope.method = "GET";
+        $scope.verbs = ["GET","POST","DELETE","PUT"];
+        $scope.headers = JSON.stringify({"Content-Type":"application/json"}, null, 2);
+        $scope.payload = JSON.stringify({}, null, 2);
+        $scope.url = "https://api.github.com/users/defunkt";
+
+        var methods = {
+            "GET":$http.get,
+            "POST":$http.post,
+            "DELETE":$http.delete,
+            "PUT":$http.put
+        };
+
+        function JSONize(str) {
+            return str.replace(/([\$\w]+)\s*:/g, function(_, $1){return '"'+$1+'":'}).replace(/'([^']+)'/g, function(_, $1){return '"'+$1+'"'})
+        }
+
+        function handleResponse(response) {
+            var res = JSON.stringify(response.data, null, 2);
+            var req = JSON.stringify(response.config, null, 2);
+            $("#request").JSONView(req);
+            $("#response").JSONView(res, { collapsed: true });
+        }
+
+
+        $scope.payloadChange = function () {
+            $scope.errorPayload = false;
+        };
+        $scope.headerChange = function () {
+            $scope.errorHeaders = false;
+        };
+
+        $scope.send = function($http) {
+            var payload, headers;
+            $scope.errorPayload = false;
+            $scope.errorHeaders = false;
+
+            if(!$scope.payload) {
+                $scope.payload = "{}";
+            }
+
+            if(!$scope.headers) {
+                $scope.headers = "{}";
+            }
+
+            $scope.payload = JSONize($scope.payload);
+            $scope.headers = JSONize( $scope.headers);
+
+            try {
+                payload = JSON.parse($scope.payload);
+            }catch(e) {
+                $scope.errorPayload = true;
+                return;
+            }
+
+            $scope.payload = JSON.stringify(payload, null, 2);
+
+            try {
+                headers = JSON.parse($scope.headers);
+            }catch(e) {
+                $scope.errorHeaders = true;
+                return;
+            }
+
+            $scope.headers = JSON.stringify(headers, null, 2);
+
+            $("#response").html("Loading... Please wait");
+
+            if($scope.method === "GET" || $scope.method === "DELETE") {
+                methods[$scope.method]($scope.url,{
+                    params: payload,
+                    headers:headers
+                }).then(handleResponse).catch(handleResponse);
+                return;
+            }
+
+            if($scope.method === "POST" || $scope.method === "PUT") {
+                methods[$scope.method]($scope.url, payload,{
+                    headers:headers
+                }).then(handleResponse).catch(handleResponse);
+            }
+        }
+    });
+</script>
+
+</html>
