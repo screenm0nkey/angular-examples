@@ -1,20 +1,23 @@
 <!doctype html>
 <html>
 <head>
-    <script src="/lib/angular-1.2/angular.js"></script>
+    <script src="/lib/angular-1.3/angular.js"></script>
 </head>
 <body ng-app="app" ng-controller="AppCtrl">
 {{title}}
 
 <script>
-
-
-
     var app = angular.module("app", []);
 
     app.factory("game", function () {
         return {title: "StarCraft"};
     });
+
+    function Car(game) {
+        console.log(game)
+    }
+    Car.$inject = ['game'];
+    app.factory("car", Car);
 
     // here we're using the injector to inject the service. it needs a module
     // note. this will not work if service has dependencies as we're injecting app
@@ -23,22 +26,15 @@
     });
 
     app.controller("AppCtrl", function ($scope, $injector) {
-        // here we're injecting the $injector. does the same as above but we dont
-        // need to supply a module
-        $injector.invoke(function (game) {
+        // here we're injecting the $injector. does the same as above but we dont need to supply a module
+        $injector.invoke(function (game, car) {
             $scope.title = game.title;
             console.log(2, $scope.title);
         });
     });
 
 
-    Car.$inject = ['game'];
 
-    function Car(game) {
-        debugger
-    }
-
-    app.factory("car", Car);
 
 </script>
 </body>
