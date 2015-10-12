@@ -17,6 +17,7 @@
     angular.module('app', []).directive('ntimes', function () {
         return {
             restrict: 'E',
+            scope : true,
             compile: function (tElement, attrs) {
                 var content = tElement.children();
 
@@ -24,7 +25,8 @@
                     tElement.append(content.clone());
                 }
 
-                return function link(scope, element, attributes, controller) {
+                return function link(scope, element, attributes) {
+                    console.log(scope.$id);
                     scope.count = attributes.repeat;
                     scope.hello = "Hi";
                 }

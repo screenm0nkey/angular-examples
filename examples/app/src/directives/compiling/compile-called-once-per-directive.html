@@ -58,8 +58,7 @@
     // and the link and and controller functions are called each time ng-repeat
     // add an element
     app.directive('announcer', function () {
-        // this directive announces creation/destruction to the parent notifier if
-        // any
+        // this directive announces creation/destruction to the parent notifier if any
         return {
             restrict: 'A',
             require: '?^notifier',
