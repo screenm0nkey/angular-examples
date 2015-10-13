@@ -20,10 +20,11 @@
     </li>
 </ul>
 
-<script src="/lib/angular-1.2/angular.js"></script>
+<script src="/lib/angular-1.3/angular.js"></script>
 <script>
     // Define a new module for our app
     var app = angular.module("instantSearch", []);
+
 
     // Create the instant search filter
     app.filter('searchFor', function () {
@@ -48,7 +49,7 @@
 
     // The controller
 
-    function InstantSearchController($scope) {
+    app.controller('InstantSearchController', function($scope) {
         $scope.items = [{
             url: 'http://tutorialzine.com/2013/07/50-must-have-plugins-for-extending-twitter-bootstrap/',
             title: '50 Must-have plugins for extending Twitter Bootstrap',
@@ -84,7 +85,7 @@
                 title: 'Your First Backbone.js App – Service Chooser',
                 image: 'http://cdn.tutorialzine.com/wp-content/uploads/2013/04/service_chooser_form-100x100.jpg'
             }];
-    }
+    })
 
 </script>
 </body>

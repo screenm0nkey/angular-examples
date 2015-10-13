@@ -14,7 +14,7 @@
     <a href="#">{{$index}} {{thing.idz}}</a>
 </div>
 
-<script src="/lib/angular-1.2/angular.js"></script>
+<script src="/lib/angular-1.3/angular.js"></script>
 <script>
     var app = angular.module('app', []);
 
@@ -25,7 +25,7 @@
                 console.log('compile', attrs.nickDir)
                 return function link(scope, element, attrs) {
                     // and this will be called each time the add button is clicked
-                    console.log('link', attrs.nickDir)
+                    console.log('link', attrs.nickDir);
                 }
             }
         }

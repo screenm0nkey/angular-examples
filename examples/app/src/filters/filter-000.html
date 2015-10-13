@@ -6,7 +6,7 @@
 <body>
 
 <div ng-repeat="n in [] | range:100">
-    {{ $index }} - do something
+    {{ n }} - do something {{$index}}
 </div>
 
 <script>
@@ -20,7 +20,8 @@
         // the input is the empty array and total is the value 100
         return function (input, total) {
             total = parseInt(total);
-            for (var i = 0; i < total; i++) {
+            total+=1;
+            for (var i = 1; i < total; i++) {
                 input.push(i);
             }
             return input;

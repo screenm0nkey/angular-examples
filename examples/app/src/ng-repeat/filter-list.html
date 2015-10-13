@@ -21,9 +21,10 @@
     </div>
 </div>
 
-<script src="/lib/angular-1.2/angular.js"></script>
+<script src="/lib/angular-1.3/angular.js"></script>
 <script>
     var myApp = angular.module('myApp', []);
+    myApp.controller('AvengersCtrl', AvengersCtrl)
 
     myApp.factory('Avengers', function () {
         var Avengers = {};
