@@ -20,12 +20,14 @@
         <p>Last clicked value: {{ data.lastClicked }}</p>
 
         <ul>
+            {{$log.log(this.$id)}}
             <li ng-repeat="i in [1,2,3,4]">
-                <a href="" my-click="data.lastClicked = i">{{ i }}</a>
+
+                <a href="" my-click="data.lastClicked = i">{{ i }} (scope id {{this.$id}})</a>
             </li>
         </ul>
 
-        <a href="" my-click="data.lastClicked = 0">Reset</a>
+        <button my-click="data.lastClicked = 0">Reset (scope id {{this.$id}})</button>
     </div>
 </div>
 <script>
@@ -46,7 +48,7 @@
 
                     element.on('click', function (event) {
                         scope.$apply(function () {
-                            debugger
+                            // $eval will look up up the scope chain for the data object
                             scope.$eval(attr.myClick, {
                                 $event: event
                             });

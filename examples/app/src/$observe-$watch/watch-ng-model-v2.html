@@ -18,13 +18,13 @@
     app.directive('watchy', function () {
         return {
             restrict: 'A',
-            scope: {
-                ngModel: '=?'
-            },
-            link: function (scope, element, attrs) {
-                scope.$watch('ngModel', function (newValue, oldValue) {
-                    console.log(2, newValue, oldValue);
-                }, true);
+            require: 'ngModel',
+            link: function(scope, element, attrs, ngModel) {
+                scope.$watch(function () {
+                    return ngModel.$modelValue;
+                }, function(newValue, oldValue) {
+                    console.log(newValue, oldValue);
+                });
             }
         }
     });

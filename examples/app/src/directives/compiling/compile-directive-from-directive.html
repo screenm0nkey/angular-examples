@@ -43,14 +43,13 @@
 
     app.directive('customDirective', function ($compile) {
         return {
-            template: '<a ng-click="addType(\'hi\')">Click me Hi</a><br/>' +
-            '<a ng-click="addType(\'hello\')">Click me Add Hello</a>',
-            link: function (scope, element, attr) {
+            template: '<a ng-click="addType(\'hi\')">Click me to add "Hi"</a><br/>' +
+            '<a ng-click="addType(\'hello\')">Click me to add "Hello"</a>',
+            link: function (scope) {
                 scope.addType = function (type) {
-                    // you can't $compile an element which contains a directive, without a
-                    // scope object
-                    var linkFn = $compile('<div ' + type + '></div>');
-                    var $el = linkFn(scope);
+                    // you can't $compile an element which contains a directive, without a scope object
+                    var linkFn = $compile('<div ' + type + '></div>'); // the directive's compile function is invoked after calling $compile
+                    var $el = linkFn(scope); // the directive's link function is invoked after calling linkFn
                     $('body').append($el);
 
                     // this does the same thing as the code above

@@ -5,8 +5,8 @@
 <body ng-controller="MainCtrl as main">
 
 <a nl-href="{{main.method().link}}" target="_blank">Link</a>
+<script src="/lib/angular-1.3/angular.js"></script>
 
-<script src="/lib/angular-1.2/angular.js"></script>
 <script>
     var app = angular.module('app', []);
 
@@ -18,11 +18,13 @@
                 if (val) {
                     return val
                 } else {
-                    active = true
-                    $http.get('/someurl').success(function (data) {
-                        active = false
-                        val = data
-                    })
+                    active = true;
+                    setTimeout(function(){
+                        $http.get('/someurl').success(function (data) {
+                            active = false;
+                            val = data
+                        })
+                    }, 2000);
                 }
             }
         }
@@ -33,6 +35,7 @@
             restrict: 'A',
             link: function (scope, element, attr) {
                 attr.$observe('nlHref', function (newValue) {
+                    console.log(newValue);
                     if (newValue) {
                         attr.$set('href', newValue)
                     }
