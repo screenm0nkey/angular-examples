@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html ng-app="plunker">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>RX Streams</title>
+    <script data-require="angular.js@1.4.x"
+            src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.min.js"
+            data-semver="1.4.6"></script>
+    <script data-require="rxjs@*" data-semver="2.5.3"
+            src="//cdnjs.cloudflare.com/ajax/libs/rxjs/2.5.3/rx.all.js"></script>
+    <script data-require="rx.angular.js@*" data-semver="0.0.14"
+            src="https://cdn.rawgit.com/Reactive-Extensions/rx.angular.js/v0.0.14/dist/rx.angular.js"></script>
+    <script data-require="rx.dom.js@*" data-semver="4.0.4"
+            src="https://cdn.rawgit.com/Reactive-Extensions/RxJS-DOM/v4.0.4/dist/rx.dom.js"></script>
+</head>
+
+<body ng-controller="MainCtrl">
+<input type="text" id="input" value="123">
+
+<p>Idle timeout triggers after 5 seconds of inactivity. You can stop with Quit and restart it refreshing the page. Check
+    console for messages.</p>
+<idle-user stopped="stopped()" resumed="resumed()"></idle-user>
+
+<script>
+    var app = angular.module('plunker', ['rx']);
+
+    app.controller('MainCtrl', function ($scope) {
+        $scope.stopped = stopped;
+        $scope.resumed = resumed;
+
+        function stopped() {
+            console.log('user wants to quit');
+        }
+
+        function resumed() {
+            console.log('user wants to stay');
+        }
+    });
+
+
+    app.directive('idleUser', ['rx', idleUser])
+
+    function idleUser(rx) {
+        return {
+            restrict: 'E',
+            scope: {
+                stopped: '&',
+                resumed: '&'
+            },
+            controller: function ($scope) {
+                var mergedStreams = rx.Observable.merge(
+                        rx.DOM.keydown(document),
+                        rx.DOM.click(document),
+                        rx.DOM.mousemove(document),
+                        rx.DOM.scroll(document),
+                        rx.DOM.touchstart(document)
+                );
+
+                var idleStream = mergedStreams
+                        .bufferWithTime(2000)
+                        .filter(function (arr) {
+                            return arr.length === 0;
+                        })
+                        .pausable();
+
+                var subscriber = idleStream.subscribeOnNext(
+                        function () {
+                            idleStream.pause();
+                            if (!confirm("Idle timeout. Quit?")) {
+                                idleStream.resume();
+                                $scope.resumed();
+                            } else {
+                                $scope.stopped();
+                            }
+                        },
+                        function (err) {
+                            console.log(err);
+                        });
+
+                $scope.$on("$destroy", function () {
+                    subscriber.unsubscribe();
+                });
+
+                //start
+                idleStream.resume();
+            }
+        };
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="plunker">
+
+<head>
+    <meta charset="utf-8" />
+    <title>RX JS search wiki</title>
+    <script data-require="angular.js@1.4.x" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js" data-semver="1.4.5"></script>
+    <script data-require="rxjs@*" data-semver="2.5.3" src="//cdnjs.cloudflare.com/ajax/libs/rxjs/2.5.3/rx.all.js"></script>
+    <script data-require="rx.angular.js@*" data-semver="0.0.14" src="https://cdn.rawgit.com/Reactive-Extensions/rx.angular.js/v0.0.14/dist/rx.angular.js"></script>
+</head>
+
+<body ng-controller="MainCtrl">
+<div>
+    Wikipedia Search
+    <input type="text" ng-model="search" />
+    <ul>
+        <li ng-repeat="result in results"><a href="{{result.url}}">{{result.title}}</a></li>
+    </ul>
+</div>
+
+<script>
+    var app = angular.module('plunker', ['rx']);
+
+    app.controller('MainCtrl', function($scope, rx, $http, observeOnScope) {
+
+        observeOnScope($scope, 'search')
+                .throttle(1000)
+                .map(function(change){
+                    return change.newValue || "";
+                })
+                .distinctUntilChanged() // Only if the value has changed
+                .flatMapLatest(searchWikipedia)
+                .safeApply($scope, function(result) {
+                    $scope.results = [];
+                    for(var i=0, ii = result.data[1].length; i<ii; i+=1){
+                        $scope.results.push({
+                            title: result.data[1][i],
+                            url: result.data[3][i]
+                        });
+                    }
+                })
+                .subscribe();
+
+        function searchWikipedia(term) {
+            return rx.Observable.fromPromise($http({
+                url: "http://en.wikipedia.org/w/api.php?&callback=JSON_CALLBACK",
+                method: "jsonp",
+                params: {
+                    action: "opensearch",
+                    search: encodeURI(term),
+                    format: "json"
+                }
+            }));
+        }
+
+    });
+</script>
+</body>
+
+</html>
