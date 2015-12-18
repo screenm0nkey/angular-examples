@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body ng-app="twitterapi">
+
+type something in and send it
+
+<div ng-controller="controller.View">
+    <input type="text" ng-model="stuff">
+    <button ng-click="onTweet($event, stuff)">Tweet</button>
+    <pre>{{ tweets | json }}</pre>
+</div>
+
+
+<script src="/lib/angular-1.2/angular.js"></script>
+<script>
+
+    angular.module('twitterapi', [
+        'twitterapi.controllers',
+        'twitterapi.services'
+    ])
+    .config(function($httpProvider) {
+        $httpProvider.defaults.transformRequest = function(data) {
+            return JSON.stringify({name: data});
+        }
+        $httpProvider.defaults.transformResponse = function(data) {
+            data = JSON.parse(data);
+            data.poo = 'yes';
+            return data;
+        }
+    });
+
+
+    angular.module('twitterapi.controllers', [])
+            .controller('controller.View', ['$scope', 'services.Api', function ($scope, api) {
+                $scope.request = {};
+                $scope.tweets = [];
+
+                $scope.onTweet = function (event, str) {
+                    event.preventDefault();
+                    api.tweet(str).then(function (result) {
+                        $scope.tweets.push(result);
+                    });
+                }
+            }]);
+
+
+    angular.module('twitterapi.services', [])
+            .factory('services.Api', ['$q', '$http', function ($q, $http) {
+                    return {
+                        tweet: function (tweet) {
+                            var deferred = $q.defer();
+                            $http({
+                                method: 'POST',
+                                url: '/twitter',
+                                headers: {'Content-Type': 'application/json'},
+                                data: tweet,
+                            }).success(function (data) {
+                                deferred.resolve(angular.fromJson(data));
+                            });
+                            return deferred.promise;
+                        }
+                    }
+                }
+            ])
+
+
+</script>
+
+</body>
+
+</html>

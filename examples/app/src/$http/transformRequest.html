@@ -58,7 +58,7 @@
                                 url: '/twitter',
                                 headers: {'Content-Type': 'application/json'},
                                 data: tweet,
-                                transformRequest: apiRequestTranformer
+                                transformRequest: apiRequestTranformer // this is going to transform the "data:tweet"
                             }).success(function (data) {
                                 deferred.resolve(angular.fromJson(data));
                             })
@@ -70,6 +70,7 @@
 
     angular.module('twitterapi.transformers', [])
             .factory('services.transformer.ApiRequest', function () {
+                // in this example the data arg will be the "data:tweet" value from the "twitterapi.services"
                 return function (data) {
                     if (data.commaSeparatedAutoTags) {
                         var ar = data.commaSeparatedAutoTags.split(/\s+/);
