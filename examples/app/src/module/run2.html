@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+
+
+<h3>Calling order of angulrs methods</h3>
+http://stackoverflow.com/questions/20663076/angularjs-app-run-documentation
+
+
+<div ng-app="myApp" ng-controller="myCtrl">
+    <div test1 test2></div>
+</div>
+
+
+<script src="/lib/angular-1.3/angular.js"></script>
+<script>
+    var myApp = angular.module('myApp', []);
+    myApp.factory('aProvider', function () {
+        console.log("factory");
+    });
+
+    myApp.directive("test1", function () {
+        console.log("directive setup");
+        return {
+            compile: function () {
+                console.log("directive compile");
+            }
+        }
+    });
+
+    myApp.directive("test2", function () {
+        return {
+            link: function () {
+                console.log("directive link");
+            }
+        }
+    });
+
+    myApp.run(function () {
+        console.log("app run");
+    });
+
+    myApp.config(function () {
+        console.log("app config");
+    });
+
+    myApp.controller('myCtrl', function ($scope) {
+        console.log("app controller");
+    });
+
+
+</script>
+</body>
+</html>
